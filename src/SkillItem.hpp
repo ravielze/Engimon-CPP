@@ -15,10 +15,13 @@ private:
 public:
     SkillItem();
     SkillItem(string itemName, Skill &skill);
+    ~SkillItem();
 
     void show() const;
 
     //buat dilearn ke engimon
     bool operator>>(Engimon &);
+    //Operator Assignment
+    SkillItem &operator=(const SkillItem &);
 };
 #endif // __SKILLITEM_H__

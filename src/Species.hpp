@@ -3,19 +3,20 @@
 #include <vector>
 #include <iostream>
 #include "Element.hpp"
-#include "Elementable.hpp"
+#include "Elementum.hpp"
 using namespace std;
 
-class Species : public Elementable
+class Species : public Elementum
 {
 protected:
+    int speciesNumber;
     string name;
-    string species;
     vector<string> message;
 
 public:
     Species();
-    Species(string name, string species, vector<Element> elements);
+    Species(const Species &);
+    Species(int speciesNumber, string name, vector<Element> elements);
     virtual ~Species();
 
     //Show random message ke layar

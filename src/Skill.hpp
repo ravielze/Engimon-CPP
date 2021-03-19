@@ -2,10 +2,10 @@
 #define __SKILL_H__
 #include <iostream>
 #include <vector>
-#include "Elementable.hpp"
+#include "Elementum.hpp"
 using namespace std;
 
-class Skill : public Elementable
+class Skill : public Elementum
 {
 protected:
     string name;

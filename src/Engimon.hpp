@@ -12,6 +12,7 @@ private:
     pair<Engimon, Engimon> parent;
     int level, exp, cum_exp;
     vector<Skill> skills;
+    static int const MAX_CUM_EXP;
 
 public:
     Engimon();

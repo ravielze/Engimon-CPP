@@ -7,24 +7,26 @@ using namespace std;
 class Engidex
 {
 private:
-    static const int SPECIES_PER_PAGE;
+    static int SPECIES_PER_PAGE;
     vector<Species> storage;
-    static int SPECIES_COUNT;
+    int speciesCount;
 
 public:
     Engidex();
-    ~Engidex();
 
     //Menambah species ke Engidex
-    Engidex &operator+(const Species &);
+    bool &operator+(const Species &);
 
     //Mengurangi species dari Engidex
-    Engidex &operator-(const Species &);
+    bool &operator-(const Species &);
 
     //Memunculkan species pada page tertentu
     void show(int page) const;
 
     //Operator Assignment
     Engidex &operator=(const Engidex &);
+
+    //Cek suatu species ada atau engga
+    bool operator%(const Engidex &) const;
 };
 #endif // __ENGIDEX_H__

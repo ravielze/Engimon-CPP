@@ -1,20 +1,33 @@
-#include <Inventory.hpp>
-using namespace std;
+#include "Inventory.hpp"
 
 template <class T>
-class Inventory
+Inventory<T>::Inventory()
 {
-private:
-    map<T, int> storage;
-    int maxCapacity;
+    this->maxCapacity = ;
+}
 
-public:
-    Inventory();
-    ~Inventory();
+template <class T>
+int Inventory<T>::getCapacity() const
+{
+}
 
-    int getCapacity() const;
-    int getMaxCapacity() const;
-    bool operator<<(const T &);
-    bool operator>>(const T &);
-    int operator%(const T &);
-};
+template <class T>
+int Inventory<T>::getMaxCapacity() const
+{
+    return this->maxCapacity;
+}
+
+template <class T>
+bool Inventory<T>::operator-(const T &)
+{
+}
+
+template <class T>
+int Inventory<T>::operator%(const T &)
+{
+}
+
+template <class T>
+bool Inventory<T>::operator+(const T &)
+{
+}

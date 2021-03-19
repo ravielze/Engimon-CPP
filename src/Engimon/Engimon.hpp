@@ -5,19 +5,22 @@
 #include <vector>
 #include "Species.hpp"
 #include "Skill.hpp"
+#include "EntitySource.hpp"
 
 class Engimon : public Species
 {
 private:
     pair<Engimon, Engimon> parent;
+    string name;
     int level, exp, cum_exp;
     vector<Skill> skills;
-    static int const MAX_CUM_EXP;
+    static int MAX_SKILL;
+    static int MAX_CUM_EXP;
+    EntitySource const livingSource;
 
 public:
     Engimon();
-    Engimon(string name, string species, vector<Element> elements);
-    ~Engimon();
+    Engimon(Species &, EntitySource);
 
     //Operator Assignment
     Engimon &operator=(const Engimon &);
@@ -28,10 +31,8 @@ public:
     //Getter
     string getName() const;
     string getSpecies() const;
-    Engimon &getFirstParent() const;
-    Engimon &getSecondParent() const;
-    Species &getFirstParentSpecies() const;
-    Species &getSecondParentSpecies() const;
+    EntitySource getEntitySource() const;
+
     //slot 0 sampe 4
     virtual Skill &getSkill(int slot) const;
     virtual void setSkill(int slot, const Skill &skill);

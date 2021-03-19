@@ -8,14 +8,14 @@ using namespace std;
 class Elementum
 {
 protected:
-    static const int MAX_SKILL;
     vector<Element> elements;
 
 public:
     Elementum();
     Elementum(vector<Element> elements);
     virtual ~Elementum();
-    //Check apakah Species tersebut memiliki suatu element
+
+    //Check apakah entitas ini memiliki suatu element
     bool operator%(Element) const;
 
     bool operator==(const Elementum &) const;

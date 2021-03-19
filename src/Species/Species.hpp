@@ -10,7 +10,7 @@ class Species : public Elementum
 {
 protected:
     int speciesNumber;
-    string name;
+    string speciesName;
     vector<string> message;
 
 public:

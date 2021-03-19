@@ -1,0 +1,12 @@
+#ifndef __ENGIMONEXCEPTION_H__
+#define __ENGIMONEXCEPTION_H__
+
+enum EngimonException
+{
+    ENGIMON_EXP_OVERFLOW,
+    ENGIMON_LOST_BATTLE,
+    ENGIMON_CANT_BREED,
+
+}
+
+#endif // __ENGIMONEXCEPTION_H__

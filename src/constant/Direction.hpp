@@ -1,7 +1,7 @@
 #ifndef __DIRECTION_H__
 #define __DIRECTION_H__
 
-enum Direction
+enum class Direction
 {
     NORTH,
     WEST,

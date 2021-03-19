@@ -1,7 +1,7 @@
 #ifndef __ELEMENT_H__
 #define __ELEMENT_H__
 
-enum Element
+enum class Element
 {
     FIRE,
     WATER,

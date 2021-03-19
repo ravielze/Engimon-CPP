@@ -32,7 +32,7 @@ Engimon &Engimon::operator=(const Engimon &engimon)
 }
 
 //Check apakah engimon sama atau tidak
-bool Engimon::operator==(const Species &)
+bool Engimon::operator==(const Species &engimon)
 {
 }
 
@@ -41,44 +41,71 @@ string Engimon::getName() const
 {
     return name;
 }
-string Engimon::getSpecies() const
-{
-    return speciesName;
-}
+
 EntitySource Engimon::getEntitySource() const
 {
+    return livingSource;
 }
 
 //slot 0 sampe 4
-Skill &Engimon::getSkill(int slot) const
+Skill &Engimon::getSkill(int slot)
 {
+    if (skills.size() - 1 < slot)
+    {
+        return skills[slot];
+    }
+    else
+    {
+        throw ""; // skill diluar batas slot
+    }
 }
 void Engimon::setSkill(int slot, const Skill &skill)
 {
+    skills[slot] = skill;
 }
 
 //throw kalau cumulative udah lewat
-void Engimon::addExp(int)
+void Engimon::addExp(int exp)
 {
+    cum_exp += exp;
+    this->exp += exp;
+
+    if (cum_exp > Engimon::MAX_CUM_EXP)
+    {
+        throw Exception::ENGIMON_EXP_OVERFLOW;
+    }
+
+    if (exp >= level * 100)
+    {
+        exp -= level * 100;
+        level += 1;
+    }
 }
-void Engimon::removeExp(int)
-{
-}
+
 int Engimon::getExp() const
 {
-}
-
-// untuk rumus exp ke level
-int Engimon::calculateExp(int level)
-{
+    return exp;
 }
 
 void Engimon::show() const
 {
+    // Nanti lah ya hehe
 }
 
-double Engimon::getPower(Element element) const
+double Engimon::getPower(vector<Element> element)
 {
+    double totalSkillPower = 0;
+    for (int i = 0; i < skills.size(); i++)
+    {
+        totalSkillPower += skills[i].getPower() * skills[i].getMasteryLevel();
+    }
+
+    return totalSkillPower + level * ElementManager::getInstance().getTotalMultiplier(this->elements, element);
+}
+
+vector<Skill> Engimon::getSkills() const
+{
+    return this->skills;
 }
 
 // Untuk breeding, this dengan engimon lain, result = anak
@@ -87,47 +114,41 @@ Engimon &Engimon::operator+(const Engimon &) const
 }
 
 // Untuk battle;
-void Engimon::operator*(Engimon &)
+Engimon &Engimon::operator*(Engimon &other)
 {
+    double ourPower = this->getPower(other.getElements());
+    double otherPower = other.getPower(this->elements);
+    if (ourPower >= otherPower) // Kita menang
+    {
+        this->addExp(100); // Masih statik exp yang didapatkan
+        return other;
+    }
+    else // Musuh menang
+    {
+        throw Exception::ENGIMON_LOST_BATTLE;
+    }
 }
 
 //Untuk buang skill pada slot ...;
-Skill &Engimon::operator>>(int)
+Skill &Engimon::operator>>(int slot)
 {
+    if (slot <= this->skills.size() - 1)
+    {
+        this->skills.erase(this->skills.begin() + slot);
+
+        return this->skills[slot];
+    }
 }
 //Untuk nambah skill;
-bool Engimon::operator<<(Skill &)
+bool Engimon::operator<<(Skill &skill)
 {
-}
-
-// untuk rumus exp ke level
-int Engimon::calculateExp(int level)
-{
-}
-
-void Engimon::show() const
-{
-}
-
-double Engimon::getPower(Element element) const
-{
-}
-
-// Untuk breeding, this dengan engimon lain, result = anak
-Engimon &Engimon::operator+(const Engimon &) const
-{
-}
-
-// Untuk battle;
-void Engimon::operator*(Engimon &)
-{
-}
-
-//Untuk buang skill pada slot ...;
-Skill &Engimon::operator>>(int)
-{
-}
-//Untuk nambah skill;
-bool Engimon::operator<<(Skill &)
-{
+    if (this->skills.size() < Engimon::MAX_SKILL)
+    {
+        this->skills.push_back(skill);
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }

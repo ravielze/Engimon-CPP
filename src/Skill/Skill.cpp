@@ -14,6 +14,13 @@ Skill::Skill(string name, double power, int masteryLevel, vector<Element> elemen
     this->masteryLevel = masteryLevel;
 }
 
+Skill::Skill(const Skill &other) : Elementum(other.elements)
+{
+    this->name = other.name;
+    this->power = other.power;
+    this->masteryLevel = other.masteryLevel;
+}
+
 string Skill::getName() const
 {
     return this->name;
@@ -39,14 +46,23 @@ void Skill::setMasteryLevel(int masteryLevel)
     this->masteryLevel = masteryLevel;
 }
 
-bool Skill::operator==(const Skill &X) const
+bool Skill::operator==(const Skill &x) const
 {
+    if (this->name == x.name && this->power == x.power && this->masteryLevel == x.masteryLevel)
+    {
+        return true && Elementum::operator==(x);
+    }
+    else
+    {
+        return false;
+    }
+}
+
+Skill &Skill::operator=(const Skill &x)
+{
+    Elementum::operator=(x);
     this->name = x.name;
     this->power = x.power;
     this->masteryLevel = x.masteryLevel;
-    return this->el
-}
-
-Skill &Skill::operator=(const Skill &)
-{
+    return *this;
 }

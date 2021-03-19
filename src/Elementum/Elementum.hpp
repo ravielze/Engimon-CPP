@@ -13,11 +13,16 @@ protected:
 public:
     Elementum();
     Elementum(vector<Element> elements);
-    virtual ~Elementum();
 
     //Check apakah entitas ini memiliki suatu element
     bool operator%(Element) const;
 
     bool operator==(const Elementum &) const;
+
+    Elementum &operator=(const Elementum &);
+
+    vector<Element> getElements();
+
+    void show() const;
 };
 #endif // __ELEMENTUM_H__

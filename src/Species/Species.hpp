@@ -1,6 +1,7 @@
 #ifndef __SPECIES_H__
 #define __SPECIES_H__
 #include <vector>
+#include <stdlib.h>
 #include <iostream>
 #include "Element.hpp"
 #include "Elementum.hpp"
@@ -16,19 +17,20 @@ protected:
 public:
     Species();
     Species(const Species &);
-    Species(int speciesNumber, string name, vector<Element> elements);
-    virtual ~Species();
+    Species(string name, vector<Element> elements);
 
     //Show random message ke layar
-    void sendMessage();
+    void sendMessage() const;
 
     //Show species ke layar
-    void show();
+    void show() const;
 
     //Check apakah species sama atau tidak
     bool operator==(const Species &) const;
 
     //Operator Assignment
     Species &operator=(const Species &);
+
+    void setSpeciesNumber(int);
 };
 #endif // __SPECIES_H__

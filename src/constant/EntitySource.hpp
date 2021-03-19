@@ -1,7 +1,7 @@
 #ifndef __ENTITYSOURCE_H__
 #define __ENTITYSOURCE_H__
 
-enum EntitySource
+enum class EntitySource
 {
     BREEDING,
     WILD,

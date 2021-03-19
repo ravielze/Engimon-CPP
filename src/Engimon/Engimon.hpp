@@ -5,7 +5,9 @@
 #include <vector>
 #include "Species.hpp"
 #include "Skill.hpp"
+#include "ElementManager.hpp"
 #include "EntitySource.hpp"
+#include "Exception.hpp"
 
 class Engimon : public Species
 {
@@ -30,30 +32,27 @@ public:
 
     //Getter
     string getName() const;
-    string getSpecies() const;
     EntitySource getEntitySource() const;
 
     //slot 0 sampe 4
-    virtual Skill &getSkill(int slot) const;
+    virtual Skill &getSkill(int slot);
     virtual void setSkill(int slot, const Skill &skill);
 
     //throw kalau cumulative udah lewat
     void addExp(int);
-    void removeExp(int);
     int getExp() const;
-
-    // untuk rumus exp ke level
-    static int calculateExp(int level);
 
     void show() const;
 
-    double getPower(Element element) const;
+    double getPower(vector<Element>);
+
+    vector<Skill> getSkills() const;
 
     // Untuk breeding, this dengan engimon lain, result = anak
     Engimon &operator+(const Engimon &) const;
 
     // Untuk battle;
-    void operator*(Engimon &);
+    Engimon &operator*(Engimon &other);
 
     //Untuk buang skill pada slot ...;
     Skill &operator>>(int);

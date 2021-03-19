@@ -2,7 +2,7 @@
 #define __SKILL_H__
 #include <iostream>
 #include <vector>
-#include "Elementum.hpp"
+#include "../Elementum/Elementum.hpp"
 using namespace std;
 
 class Skill : public Elementum
@@ -14,6 +14,7 @@ protected:
 
 public:
     Skill();
+    Skill(const Skill &);
     Skill(string name, double power, int masteryLevel, vector<Element> elements);
     virtual ~Skill();
 

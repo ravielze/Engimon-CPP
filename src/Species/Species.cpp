@@ -2,32 +2,59 @@
 
 Species::Species()
 {
+    this->speciesNumber = -1;
+    this->speciesName = "";
 }
 
-Species::Species(const Species &)
+Species::Species(const Species &aspecies)
 {
+    this->speciesNumber = aspecies.speciesNumber;
+    this->speciesName = aspecies.speciesName;
+    for (int i = 0; i < aspecies.message.size(); i++)
+    {
+        this->message[i] = aspecies.message[i];
+    }
 }
 
-Species::Species(int speciesNumber, string name, vector<Element> elements)
+Species::Species(string name, vector<Element> elements) : Elementum(elements)
 {
+    this->speciesNumber = -1;
+    this->speciesName = name;
 }
 
-Species::~Species()
+void Species::sendMessage() const
 {
+    int randomIdx;
+    randomIdx = rand() % this->message.size();
+    cout << this->speciesName << " says :" << this->message[randomIdx] << endl;
 }
 
-void Species::sendMessage()
+void Species::show() const
 {
+    cout << "Number : " << this->speciesNumber << endl;
+    cout << "Name : " << this->speciesName << endl;
+    Elementum::show();
 }
 
-void Species::show()
+bool Species::operator==(const Species &aspecies) const
 {
+    return (this->speciesNumber == aspecies.speciesNumber && Elementum::operator==(aspecies.elements));
 }
 
-bool Species::operator==(const Species &) const
+Species &Species::operator=(const Species &aspecies)
 {
+    Elementum::operator=(aspecies);
+    this->speciesNumber = aspecies.speciesNumber;
+    this->speciesName = aspecies.speciesNumber;
+    this->message.clear();
+    for (int i = 0; i < aspecies.message.size(); i++)
+    {
+        this->message[i] = aspecies.message[i];
+    }
+    return *this;
 }
 
-Species &Species::operator=(const Species &)
+void Species::setSpeciesNumber(int num)
 {
+    this->speciesNumber = num;
 }

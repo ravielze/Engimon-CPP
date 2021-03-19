@@ -14,7 +14,7 @@ private:
 
 public:
     SkillItem();
-    SkillItem(string itemName, Skill &skill);
+    SkillItem(string itemName, Skill &skill, ItemType it);
     ~SkillItem();
 
     void show() const;

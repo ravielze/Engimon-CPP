@@ -15,10 +15,7 @@ public:
     Engidex();
 
     //Menambah species ke Engidex
-    bool &operator+(const Species &);
-
-    //Mengurangi species dari Engidex
-    bool &operator-(const Species &);
+    bool operator+(Species &);
 
     //Memunculkan species pada page tertentu
     void show(int page) const;
@@ -27,6 +24,6 @@ public:
     Engidex &operator=(const Engidex &);
 
     //Cek suatu species ada atau engga
-    bool operator%(const Engidex &) const;
+    bool operator%(const Species &) const;
 };
 #endif // __ENGIDEX_H__

@@ -1,7 +1,7 @@
 #ifndef __ENGIMONEXCEPTION_H__
 #define __ENGIMONEXCEPTION_H__
 
-enum EngimonException
+enum class Exception
 {
     ENGIMON_EXP_OVERFLOW,
     ENGIMON_LOST_BATTLE,

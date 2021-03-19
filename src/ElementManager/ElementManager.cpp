@@ -26,6 +26,10 @@ double ElementManager::getTotalMultiplier(vector<Element> attacker, vector<Eleme
     }
     return totalMultiplier > 2 ? 2 : totalMultiplier;
 }
+double ElementManager::getMultiplier(Element atacker, Element defender)
+{
+    return ElementsMultiplier[pair<Element, Element>(atacker, defender)];
+}
 
 ElementManager &ElementManager::getInstance()
 {

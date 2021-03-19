@@ -109,8 +109,79 @@ vector<Skill> Engimon::getSkills() const
 }
 
 // Untuk breeding, this dengan engimon lain, result = anak
-Engimon &Engimon::operator+(const Engimon &) const
+Engimon &Engimon::operator+(const Engimon &other) const
 {
+    // GET SKILLS
+    vector<Skill> parentASkills = this->getSkills();
+    vector<Skill> parentBSkills = other.getSkills();
+    int maxSkills = parentASkills.size() + parentBSkills.size() > 4 ? 4 : parentASkills.size() + parentBSkills.size();
+    for (int i = 0; i < maxSkills; i++)
+    {
+        int chosenSkillsSlot = -1;
+        bool parentAChoosen = false;
+        int maxMastery = 0;
+    }
+    // GET ELEMENT AND SPESIES
+    ElementManager elementManager = ElementManager::getInstance();
+    Element parentAElement;
+    Element parentBElement;
+    Element childElement;
+    string childSpecies;
+    if (this->elements.size() > 1)
+    {
+        if (elementManager.getMultiplier(this->elements[0], this->elements[1]) > elementManager.getMultiplier(this->elements[1], this->elements[0]))
+        {
+            parentAElement = this->elements[0];
+        }
+        else
+        {
+            parentAElement = this->elements[1];
+        }
+    }
+    else
+    {
+        parentAElement = this->elements[0];
+    }
+
+    if (other.elements.size() > 1)
+    {
+        if (elementManager.getMultiplier(other.elements[0], other.elements[1]) > elementManager.getMultiplier(other.elements[1], other.elements[0]))
+        {
+            parentBElement = other.elements[0];
+        }
+        else
+        {
+            parentBElement = other.elements[1];
+        }
+    }
+    else
+    {
+        parentBElement = other.elements[0];
+    }
+
+    if (parentAElement == parentBElement) // point 5.e.i
+    {
+        childElement = parentAElement;
+        childSpecies = this->getSpeciesName(); // Ini bisa diganti. Baca point 5.e.1
+    }
+    else if (elementManager.getMultiplier(parentAElement, parentBElement) == elementManager.getMultiplier(parentBElement, parentAElement)) // point 5.e.3
+    {
+        // Cari engimon yang memiliki dual element di engidex dan itu jadi spesiesnya.
+        // Anaknya memiliki elemen dari parentA dan parentB
+    }
+    else // point 5.e.2
+    {
+        if (elementManager.getMultiplier(parentAElement, parentBElement) > elementManager.getMultiplier(parentBElement, parentAElement))
+        {
+            childElement = parentAElement;
+            childSpecies = this->getSpeciesName();
+        }
+        else
+        {
+            childElement = parentBElement;
+            childSpecies = other.getSpeciesName();
+        }
+    }
 }
 
 // Untuk battle;

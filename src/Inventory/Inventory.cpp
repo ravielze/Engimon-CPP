@@ -113,3 +113,8 @@ void Inventory<T>::show(int page) const
         }
     }
 }
+template <class T>
+Inventory<T>::Inventory()
+{
+    this->maxCapacity = 0;
+}

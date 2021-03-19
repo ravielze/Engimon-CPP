@@ -13,6 +13,7 @@ private:
     static int ITEM_PER_PAGE;
 
 public:
+    Inventory();
     Inventory(int maxsize);
 
     int getCapacity() const;

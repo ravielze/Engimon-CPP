@@ -17,6 +17,7 @@ public:
     ElementManager();
     void setMultiplier(Element, Element, double);
     double getTotalMultiplier(vector<Element>, vector<Element>);
+    double getMultiplier(Element, Element);
     static ElementManager &getInstance();
 };
 #endif // __ELEMENT_NAMAGER_H__

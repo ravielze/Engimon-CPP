@@ -19,6 +19,8 @@ public:
     Species(const Species &);
     Species(string name, vector<Element> elements);
 
+    string getSpeciesName() const;
+
     //Show random message ke layar
     void sendMessage() const;
 

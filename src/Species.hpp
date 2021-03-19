@@ -3,15 +3,15 @@
 #include <vector>
 #include <iostream>
 #include "Element.hpp"
+#include "Elementable.hpp"
 using namespace std;
 
-class Species
+class Species : public Elementable
 {
 protected:
     string name;
     string species;
     vector<string> message;
-    vector<Element> elements;
 
 public:
     Species();
@@ -24,11 +24,8 @@ public:
     //Show species ke layar
     void show();
 
-    //Check apakah Species tersebut memiliki suatu element
-    bool operator%(Element);
-
     //Check apakah species sama atau tidak
-    bool operator==(const Species &);
+    bool operator==(const Species &) const;
 
     //Operator Assignment
     Species &operator=(const Species &);

@@ -12,9 +12,9 @@ private:
     pair<Engimon, Engimon> parent;
     int level, exp, cum_exp;
     vector<Skill> skills;
-    static const int MAX_SKILL;
 
 public:
+    Engimon();
     Engimon(string name, string species, vector<Element> elements);
     ~Engimon();
 
@@ -31,10 +31,9 @@ public:
     Engimon &getSecondParent() const;
     Species &getFirstParentSpecies() const;
     Species &getSecondParentSpecies() const;
-
     //slot 0 sampe 4
-    Skill &getSkill(int slot) const;
-    void setSkill(int slot, const Skill &skill);
+    virtual Skill &getSkill(int slot) const;
+    virtual void setSkill(int slot, const Skill &skill);
 
     //throw kalau cumulative udah lewat
     void addExp(int);

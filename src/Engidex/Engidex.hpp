@@ -1,7 +1,7 @@
 #ifndef __ENGIDEX_H__
 #define __ENGIDEX_H__
 #include <iostream>
-#include "Species.hpp"
+#include "../Species/Species.hpp"
 using namespace std;
 
 class Engidex

@@ -1,5 +1,5 @@
-#ifndef __ENGIMONEXCEPTION_H__
-#define __ENGIMONEXCEPTION_H__
+#ifndef __EXCEPTION_H__
+#define __EXCEPTION_H__
 
 enum class Exception
 {
@@ -8,4 +8,4 @@ enum class Exception
     ENGIMON_CANT_BREED
 };
 
-#endif // __ENGIMONEXCEPTION_H__ION_H__
+#endif // __EXCEPTION_H__ION_H__

@@ -7,6 +7,6 @@ enum EngimonException
     ENGIMON_LOST_BATTLE,
     ENGIMON_CANT_BREED,
 
-}
+};
 
 #endif // __ENGIMONEXCEPTION_H__

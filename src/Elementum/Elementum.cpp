@@ -52,3 +52,8 @@ Elementum &Elementum::operator=(const Elementum &other)
     }
     return *this;
 }
+void Elementum::show() const 
+{
+    cout << "Elements : ";
+}
+

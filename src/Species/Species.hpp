@@ -1,10 +1,10 @@
 #ifndef __SPECIES_H__
 #define __SPECIES_H__
 #include <vector>
-#include <stdlib.h>
+#include <string.h>
 #include <iostream>
-#include "Element.hpp"
-#include "Elementum.hpp"
+#include "../constant/Element.hpp"
+#include "../Elementum/Elementum.hpp"
 using namespace std;
 
 class Species : public Elementum

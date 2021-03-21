@@ -1,5 +1,5 @@
 #include "Engimon.hpp"
-
+#include <iostream>
 int Engimon::MAX_SKILL = 4;
 int Engimon::MAX_CUM_EXP = 10000;
 
@@ -32,8 +32,9 @@ Engimon &Engimon::operator=(const Engimon &engimon)
 }
 
 //Check apakah engimon sama atau tidak
-bool Engimon::operator==(const Species &engimon)
+bool Engimon::operator==(const Engimon &engimon)
 {
+    return Species::operator==(engimon) && name == engimon.name && level == engimon.level && exp == engimon.exp && cum_exp == engimon.cum_exp && parent.first == engimon.parent.first && parent.second == engimon.parent.second;
 }
 
 //Getter
@@ -47,17 +48,10 @@ EntitySource Engimon::getEntitySource() const
     return livingSource;
 }
 
-//slot 0 sampe 4
+//slot 0 sampe 3
 Skill &Engimon::getSkill(int slot)
 {
-    if (skills.size() - 1 < slot)
-    {
-        return skills[slot];
-    }
-    else
-    {
-        throw ""; // skill diluar batas slot
-    }
+    return skills[slot];
 }
 void Engimon::setSkill(int slot, const Skill &skill)
 {
@@ -90,6 +84,9 @@ int Engimon::getExp() const
 void Engimon::show() const
 {
     // Nanti lah ya hehe
+    Species::show();
+    cout << "Name \t: " << name << endl;
+    
 }
 
 double Engimon::getPower(vector<Element> element)
@@ -114,12 +111,85 @@ Engimon &Engimon::operator+(const Engimon &other) const
     // GET SKILLS
     vector<Skill> parentASkills = this->getSkills();
     vector<Skill> parentBSkills = other.getSkills();
+    vector<Skill> choosenSkills;
     int maxSkills = parentASkills.size() + parentBSkills.size() > 4 ? 4 : parentASkills.size() + parentBSkills.size();
     for (int i = 0; i < maxSkills; i++)
     {
-        int chosenSkillsSlot = -1;
+        
         bool parentAChoosen = false;
-        int maxMastery = 0;
+        int parentAMaxMastery = -1;
+        int parentBMaxMastery = -1;
+        int parentASlot = -1;
+        int parentBSlot = -1;
+        for (int j = parentASkills.size() - 1; j >= 0;j--)
+        {
+            if (parentASkills[j].getMasteryLevel() >= parentAMaxMastery)
+            {
+                parentAMaxMastery = parentASkills[j].getMasteryLevel();
+                parentASlot = j;
+            }
+        }
+        for (int j = parentBSkills.size() - 1; j >= 0;j--)
+        {
+            if (parentBSkills[j].getMasteryLevel() >= parentBMaxMastery)
+            {
+                parentBMaxMastery = parentBSkills[j].getMasteryLevel();
+                parentBSlot = j;
+            }
+        }
+        // Sampe sekarang, slot yang dipilih itu udh slot dengan mastery level tertinggi dan kalau ada yg
+        // sama, dipilih slot terdepan
+        if (parentASlot == -1) // YANG KEPILIH DARI PARENT B karena parentA udh habis slotnya
+        {
+            choosenSkills.push_back(parentBSkills[parentBSlot]);
+            parentBSkills.erase(parentBSkills.begin() + parentBSlot);
+        }
+        else if (parentBSlot == -1) // YANG KEPILIH DARI PARENT A karena parentB udh habis slotnya
+        {
+            choosenSkills.push_back(parentASkills[parentASlot]);
+            parentASkills.erase(parentASkills.begin() + parentASlot);
+
+        }
+        else
+        {
+            Skill choosen;
+            if (parentAMaxMastery >= parentBMaxMastery) // Poin 5.d.i.2
+            {
+                choosen = parentASkills[parentASlot];
+                parentAChoosen = true;
+            }
+            else
+            {
+                choosen = parentBSkills[parentBSlot];
+                parentAChoosen = false;
+            }
+            vector<Skill> toCheck = parentAChoosen ? parentBSkills : parentASkills;
+            for (int j = 0; j < toCheck.size();j++)
+            {
+                if (toCheck[j] == choosen)
+                {
+                    if (toCheck[j].getMasteryLevel() == choosen.getMasteryLevel())// poin 5.d.ii.2
+                    {
+                        choosen.setMasteryLevel(choosen.getMasteryLevel() + 1);
+                    }
+                    else // poin 5.d.ii.2
+                    {
+                        choosen.setMasteryLevel(max(choosen.getMasteryLevel(), toCheck[j].getMasteryLevel()));
+                    }
+                    break;
+                }
+            }
+            choosenSkills.push_back(choosen);
+            if (parentAChoosen)
+            {
+                parentASkills.erase(parentASkills.begin() + parentASlot);
+            }
+            else
+            {
+                parentBSkills.erase(parentBSkills.begin() + parentBSlot);
+            }
+
+        }
     }
     // GET ELEMENT AND SPESIES
     ElementManager elementManager = ElementManager::getInstance();
@@ -215,6 +285,13 @@ bool Engimon::operator<<(Skill &skill)
 {
     if (this->skills.size() < Engimon::MAX_SKILL)
     {
+        for (int i = 0; i < this->skills.size();i++)
+        {
+            if (skills[i] == skill)
+            {
+                return false;
+            }
+        }
         this->skills.push_back(skill);
         return true;
     }

@@ -1,18 +1,18 @@
 #ifndef __ENGIMON_H__
 #define __ENGIMON_H__
-#include <iostream>
-#include <utility>
-#include <vector>
-#include "Species.hpp"
-#include "Skill.hpp"
-#include "ElementManager.hpp"
-#include "EntitySource.hpp"
-#include "Exception.hpp"
+#include "bits/stdc++.h"
+#include "../Species/Species.hpp"
+#include "../ElementManager/ElementManager.hpp"
+#include "../Skill/Skill.hpp"
+#include "../constant/EntitySource.hpp"
+#include "../constant/Exception.hpp"
+
+using namespace std;
 
 class Engimon : public Species
 {
 private:
-    pair<Engimon, Engimon> parent;
+    pair<Engimon*, Engimon*> parent;
     string name;
     int level, exp, cum_exp;
     vector<Skill> skills;
@@ -28,7 +28,7 @@ public:
     Engimon &operator=(const Engimon &);
 
     //Check apakah engimon sama atau tidak
-    bool operator==(const Species &);
+    bool operator==(const Engimon &);
 
     //Getter
     string getName() const;

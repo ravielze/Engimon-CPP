@@ -6,9 +6,9 @@ Elementum::Elementum()
 
 Elementum::Elementum(vector<Element> elements)
 {
-    for (int i = 0; i < elements.size(); i++)
+    for (auto x : elements)
     {
-        this->elements.push_back(elements[i]);
+        this->elements.push_back(x);
     }
 }
 
@@ -16,9 +16,9 @@ bool Elementum::operator%(Element el) const
 {
     if (this->elements.size() > 0)
     {
-        for (int i = 0; i < this->elements.size(); i++)
+        for (auto x : this->elements)
         {
-            if (this->elements[i] == el)
+            if (x == el)
             {
                 return true;
             }
@@ -33,9 +33,9 @@ bool Elementum::operator==(const Elementum &other) const
     {
         return false;
     }
-    for (int i = 0; i < other.elements.size(); i++)
+    for (auto x : other.elements)
     {
-        if (other.elements[i] != this->elements[i])
+        if (!(this->operator%(x)))
         {
             return false;
         }
@@ -46,9 +46,28 @@ bool Elementum::operator==(const Elementum &other) const
 Elementum &Elementum::operator=(const Elementum &other)
 {
     this->elements.clear();
-    for (int i = 0; i < other.elements.size(); i++)
+    for (auto el : other.elements)
     {
-        this->elements.push_back(elements[i]);
+        this->elements.push_back(el);
     }
     return *this;
+}
+
+void Elementum::show() const
+{
+    cout << "[";
+    bool first = true;
+    for (auto el : this->elements)
+    {
+        if (first)
+        {
+            first = false;
+        }
+        else
+        {
+            cout << ", ";
+        }
+        elementToString(el);
+    }
+    cout << "]";
 }

@@ -48,7 +48,7 @@ void Skill::setMasteryLevel(int masteryLevel)
 
 bool Skill::operator==(const Skill &x) const
 {
-    if (this->name == x.name && this->power == x.power && this->masteryLevel == x.masteryLevel)
+    if (this->masteryLevel == x.masteryLevel)
     {
         return true && Elementum::operator==(x);
     }

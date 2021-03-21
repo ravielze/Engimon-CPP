@@ -5,25 +5,27 @@
 #include "../Inventory/Inventory.hpp"
 #include "../Engimon/Engimon.hpp"
 #include "../SkillItem/SkillItem.hpp"
+#include "../constant/Direction.hpp"
+#include "../constant/Exception.hpp"
 using namespace std;
 
 class Player
 {
 private:
-    pair<int, int> playerPosition;
     Inventory<Engimon> engimonList;
     Inventory<SkillItem> ItemList;
     Engimon activeEngimon;
-    pair<int, int> engimonPosition;
+    Direction facing;
 
 public:
     Player();
     void addEngimon(Engimon);
     void removeEngimon(Engimon);
-    void move();
-    void battle();
-    void switchActiveEngimon();
+    void battle(Engimon, Engimon);
+    void switchActiveEngimon(Engimon);
     void interact();
+    void setDirection(Direction);
+    Direction getDirection() const;
 };
 
 #endif

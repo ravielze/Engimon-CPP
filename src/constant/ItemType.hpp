@@ -20,10 +20,9 @@ string toString(ItemType it)
     case ItemType::TM:
         return "TM";
     case ItemType::OTHER:
-        return "OTHER";
-    default:
-        return "UNKNOWN";
+        return "Other";
     }
+    return "Unknown";
 }
 
 #endif // __ITEMTYPE_H__

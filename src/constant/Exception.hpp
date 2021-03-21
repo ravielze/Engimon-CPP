@@ -1,11 +1,12 @@
-#ifndef __ENGIMONEXCEPTION_H__
-#define __ENGIMONEXCEPTION_H__
+#ifndef __EXCEPTIONE_H__
+#define __EXCEPTIONE_H__
 
 enum class Exception
 {
     ENGIMON_EXP_OVERFLOW,
     ENGIMON_LOST_BATTLE,
-    ENGIMON_CANT_BREED
+    ENGIMON_CANT_BREED,
+    UNKNOWN_ENGIMON
 };
 
-#endif // __ENGIMONEXCEPTION_H__ION_H__
+#endif // __EXCEPTIONE_H__

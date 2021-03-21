@@ -26,13 +26,13 @@ void Species::sendMessage() const
 {
     int randomIdx;
     randomIdx = rand() % this->message.size();
-    cout << this->speciesName << " says :" << this->message[randomIdx] << endl;
+    cout << "[" << this->speciesName << "]: " << this->message[randomIdx] << endl;
 }
 
 void Species::show() const
 {
-    cout << "Number : " << this->speciesNumber << endl;
-    cout << "Name : " << this->speciesName << endl;
+    cout << this->speciesNumber;
+    cout << "\t" << this->speciesName << "\t";
     Elementum::show();
 }
 

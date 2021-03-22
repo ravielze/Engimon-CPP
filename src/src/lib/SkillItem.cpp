@@ -1,5 +1,20 @@
 #include "lib/SkillItem.hpp"
 
+string toString(ItemType it)
+{
+    switch (it)
+    {
+    case ItemType::HM:
+        return "HM";
+    case ItemType::TM:
+        return "TM";
+    case ItemType::OTHER:
+        return "Other";
+    }
+    return "Unknown";
+}
+
+
 SkillItem::SkillItem() : Skill()
 {
     this->itemName = "";

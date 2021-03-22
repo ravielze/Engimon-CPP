@@ -2,7 +2,7 @@
 
 int main()
 {
-    Inventory<int> I1(50);
+    // Inventory<int> I1(50);
 
     // cout << "Maksimal kapasitas : " << I1.getMaxCapacity() << endl;
 

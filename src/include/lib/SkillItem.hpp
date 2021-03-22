@@ -3,7 +3,8 @@
 #include "lib/Skill.hpp"
 #include "lib/constant/ItemType.hpp"
 #include "lib/Engimon.hpp"
-#include <iostream>
+#include <string>
+
 using namespace std;
 
 class SkillItem : Skill
@@ -15,7 +16,6 @@ private:
 public:
     SkillItem();
     SkillItem(string itemName, Skill &skill, ItemType it);
-    ~SkillItem();
 
     void show() const;
 

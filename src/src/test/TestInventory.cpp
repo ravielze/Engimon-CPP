@@ -2,18 +2,20 @@
 
 int main()
 {
-    Inventory<SkillItem> a(10);
 
-    vector<Element> thunderBoltElement;
-    thunderBoltElement.push_back(Element::ELECTRIC);
+    Species randomPokemon("random", {Element::FIRE, Element::ELECTRIC});
+    Species lanturn("Lanturn", {Element::FIRE, Element::ELECTRIC});
+    Species pikachu("Pikachu", {Element::ELECTRIC, Element::GROUND});
 
-    Skill thunderbolt("Thunderbolt", 20, 0, thunderBoltElement);
+    Engimon myLanturn(lanturn, EntitySource::WILD, "mylanturn");
+    Engimon myPikachu(pikachu, EntitySource::WILD);
 
-    SkillItem skillItem("itemname", thunderbolt, ItemType::HM);
-    a + skillItem;
-    a.show(1);
-    cout << "Maksimal kapasitas : " << a.getCapacity() << endl;
+    Inventory<Engimon> engimonInventory(10);
 
+    engimonInventory + myLanturn;
+    engimonInventory + myPikachu;
+
+    engimonInventory.show(1);
     //     I1 + 5;
     //     I1 + 3;
     //     I1 + 2;

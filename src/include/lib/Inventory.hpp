@@ -172,7 +172,7 @@ void Inventory<Engimon>::show(int page) const
         {
             if (i < end && i >= start && i < size)
             {
-                itr->first.show();
+                itr->first.Species::show();
                 cout << " x" << itr->second;
             }
             else if (i >= end)

@@ -42,6 +42,3 @@ string convertEntitySourceToString(EntitySource es)
     }
     return "Unknown";
 }
-Engidex createEngidex()
-{
-}

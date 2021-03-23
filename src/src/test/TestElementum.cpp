@@ -34,10 +34,9 @@ int main()
     }
 
     //Testing operator%(element)
-    Element FIRE;
-    Elementum testElement3();
+    Elementum testElement3;
     //testElement3 tidak berisi elemen apa-apa
-    if (testElement3 % FIRE)
+    if (testElement3 % Element::FIRE)
     {
         cout << "operator % salah" << endl;
     }
@@ -46,7 +45,7 @@ int main()
         cout << "operator % benar" << endl;
     }
     //testElement1 berisi elemen fire
-    if (testElement1 % FIRE)
+    if (testElement1 % Element::FIRE)
     {
         cout << "operator % benar" << endl;
     }

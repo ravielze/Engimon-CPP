@@ -321,15 +321,7 @@ void Engimon::learn(const SkillItem &skill)
 }
 
 //Untuk buang skill pada slot ...;
-Skill &Engimon::operator>>(int slot)
-{
-    if (slot <= this->skills.size() - 1)
-    {
-        this->skills.erase(this->skills.begin() + slot);
 
-        return this->skills[slot];
-    }
-}
 //Untuk nambah skill;
 bool Engimon::operator<<(Skill &skill)
 {
@@ -357,10 +349,10 @@ bool Engimon::operator<<(Skill &skill)
 
 bool Engimon::operator>(const Engimon &other) const
 {
-    return this->speciesNumber > other.speciesNumber;
+    return this->speciesNumber > other.speciesNumber || this->speciesName > other.speciesName;
 }
 
 bool Engimon::operator<(const Engimon &other) const
 {
-    return this->speciesNumber < other.speciesNumber;
+    return this->speciesNumber < other.speciesNumber || this->speciesName < other.speciesName;
 }

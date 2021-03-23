@@ -107,5 +107,5 @@ void Elementum::show() const
         }
         cout << convertElementToString(el);
     }
-    cout << "]" << endl;
+    cout << "]";
 }

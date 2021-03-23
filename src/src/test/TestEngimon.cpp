@@ -12,11 +12,11 @@ int main()
 
     vector<Element> lanturnElement;
     lanturnElement.push_back(Element::FIRE);
-    // lanturnElement.push_back(Element::ELECTRIC);
+    lanturnElement.push_back(Element::ELECTRIC);
 
     vector<Element> pikachuElement;
     pikachuElement.push_back(Element::ELECTRIC);
-    // pikachuElement.push_back(Element::GROUND);
+    pikachuElement.push_back(Element::GROUND);
 
     vector<Element> randomPokemonElement;
     randomPokemonElement.push_back(Element::FIRE);

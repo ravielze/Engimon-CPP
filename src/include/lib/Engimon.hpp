@@ -4,6 +4,7 @@
 #include "lib/Species.hpp"
 #include "lib/ElementManager.hpp"
 #include "lib/Skill.hpp"
+#include "lib/Engidex.hpp"
 #include "lib/constant/EntitySource.hpp"
 #include "lib/constant/Exception.hpp"
 
@@ -12,7 +13,7 @@ using namespace std;
 class Engimon : public Species
 {
 private:
-    pair<Engimon*, Engimon*> parent;
+    pair<string, string> parent;
     string name;
     int level, exp, cum_exp;
     vector<Skill> skills;
@@ -43,6 +44,9 @@ public:
     void addExp(int);
     int getExp() const;
 
+    void setFirstParent (string);
+    void setSecondParent (string);
+
     void show() const;
 
     double getPower(vector<Element>);
@@ -50,7 +54,7 @@ public:
     vector<Skill> getSkills() const;
 
     // Untuk breeding, this dengan engimon lain, result = anak
-    Engimon &operator+(const Engimon &) const;
+    Engimon operator+(const Engimon &) const;
 
     // Untuk battle;
     Engimon &operator*(Engimon &other);

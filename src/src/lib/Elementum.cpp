@@ -1,22 +1,6 @@
 #include "lib/Elementum.hpp"
+#include "utils.hpp"
 
-string elementToString(Element e)
-{
-    switch (e)
-    {
-    case Element::ELECTRIC:
-        return "Electric";
-    case Element::FIRE:
-        return "Fire";
-    case Element::WATER:
-        return "Water";
-    case Element::GROUND:
-        return "Ground";
-    case Element::ICE:
-        return "Ice";
-    }
-    return "Unknown";
-}
 Elementum::Elementum()
 {
 }
@@ -88,7 +72,7 @@ void Elementum::show() const
         {
             cout << ", ";
         }
-        cout << elementToString(el);
+        cout << convertElementToString(el);
     }
     cout << "]" << endl;
 }

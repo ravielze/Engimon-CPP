@@ -1,6 +1,8 @@
 #include "lib/Engidex.hpp"
 
 int Engidex::SPECIES_PER_PAGE = 10;
+Engidex Engidex::instance;
+
 
 Engidex::Engidex()
 {
@@ -22,6 +24,29 @@ void Engidex::show(int page) const
             }
         }
     }
+}
+Species Engidex::getDualElementEngimon (Element firstElement, Element secondElement)
+{
+    for (int i = 0; i < storage.size(); i++)
+    {
+        if (storage[i].getElements().size() == 2 && ((storage[i].getElements()[0] == firstElement && storage[i].getElements()[1] == secondElement) || (storage[i].getElements()[0] == secondElement && storage[i].getElements()[1] == firstElement)))
+        {
+            return storage[i];
+        }
+    }
+    return Species();
+}
+
+Species Engidex::getSpeciesByString(string speciesName)
+{
+    for (int i = 0; i < storage.size(); i++)
+    {
+        if (speciesName == storage[i].getSpeciesName())
+        {
+            return storage[i];
+        }
+    }
+    return Species();
 }
 
 Engidex &Engidex::operator=(const Engidex &other)
@@ -53,4 +78,9 @@ bool Engidex::operator+(Species &newSpecies)
     newSpecies.setSpeciesNumber(speciesCount);
     speciesCount++;
     return true;
+}
+
+Engidex & Engidex::getInstance()
+{
+    return instance;
 }

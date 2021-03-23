@@ -1,10 +1,11 @@
 #include "lib/Engimon.hpp"
+#include "utils.hpp"
 int Engimon::MAX_SKILL = 4;
 int Engimon::MAX_CUM_EXP = 10000;
 
 Engimon::Engimon() : livingSource(EntitySource::UNKNOWN)
 {
-    this->level = 0;
+    this->level = 1;
     this->exp = 0;
     this->cum_exp = 0;
 }
@@ -94,6 +95,12 @@ void Engimon::show() const
     // Nanti lah ya hehe
     Species::show();
     cout << "Name \t: " << name << endl;
+    cout << "Engimon Source : " << convertEntitySourceToString(this->getEntitySource()) << endl;
+    if (this->getEntitySource() == EntitySource::BREEDING)
+    {
+        cout << "First parent : " << this->parent.first << endl;
+        cout << "Second parent : " << this->parent.second << endl;
+    }
     cout << "Skills : " << endl;
     for (int i = 0; i < skills.size();i++)
     {
@@ -113,13 +120,23 @@ double Engimon::getPower(vector<Element> element)
     return totalSkillPower + level * ElementManager::getInstance().getTotalMultiplier(this->elements, element);
 }
 
+void Engimon::setFirstParent(string name)
+{
+    this->parent.first = name;
+}
+
+void Engimon::setSecondParent(string name)
+{
+    this->parent.second = name;
+}
+
 vector<Skill> Engimon::getSkills() const
 {
     return this->skills;
 }
 
 // Untuk breeding, this dengan engimon lain, result = anak
-Engimon &Engimon::operator+(const Engimon &other) const
+Engimon Engimon::operator+(const Engimon &other) const
 {
     // GET SKILLS
     vector<Skill> parentASkills = this->getSkills();
@@ -208,8 +225,7 @@ Engimon &Engimon::operator+(const Engimon &other) const
     ElementManager elementManager = ElementManager::getInstance();
     Element parentAElement;
     Element parentBElement;
-    Element childElement;
-    string childSpecies;
+    Species childSpecies;
     if (this->elements.size() > 1)
     {
         if (elementManager.getMultiplier(this->elements[0], this->elements[1]) > elementManager.getMultiplier(this->elements[1], this->elements[0]))
@@ -244,27 +260,40 @@ Engimon &Engimon::operator+(const Engimon &other) const
 
     if (parentAElement == parentBElement) // point 5.e.i
     {
-        childElement = parentAElement;
-        childSpecies = this->getSpeciesName(); // Ini bisa diganti. Baca point 5.e.1
+        childSpecies = Engidex::getInstance().getSpeciesByString(this->getSpeciesName()); // Ini bisa diganti. Baca point 5.e.1
+        
     }
     else if (elementManager.getMultiplier(parentAElement, parentBElement) == elementManager.getMultiplier(parentBElement, parentAElement)) // point 5.e.3
     {
+        // INI TODO
         // Cari engimon yang memiliki dual element di engidex dan itu jadi spesiesnya.
         // Anaknya memiliki elemen dari parentA dan parentB
+        childSpecies = Engidex::getInstance().getDualElementEngimon(parentAElement, parentBElement);
     }
     else // point 5.e.2
     {
         if (elementManager.getMultiplier(parentAElement, parentBElement) > elementManager.getMultiplier(parentBElement, parentAElement))
         {
-            childElement = parentAElement;
-            childSpecies = this->getSpeciesName();
+            childSpecies = Engidex::getInstance().getSpeciesByString(this->getSpeciesName());
         }
         else
         {
-            childElement = parentBElement;
-            childSpecies = other.getSpeciesName();
+            childSpecies = Engidex::getInstance().getSpeciesByString(other.getSpeciesName());
         }
     }
+    cout << childSpecies.getSpeciesName() << endl;
+    string name;
+    cout << "Masukkan nama untuk anak : ";
+    cin >> name;
+    Engimon child(childSpecies, EntitySource::BREEDING, name);
+    for (int i = 0; i < choosenSkills.size(); i++)
+    {
+        child << choosenSkills[i];
+    }
+    child.setFirstParent(this->getName());
+    child.setSecondParent(other.getName());
+
+    return child;
 }
 
 // Untuk battle;

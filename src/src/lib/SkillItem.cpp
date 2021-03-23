@@ -1,18 +1,6 @@
 #include "lib/SkillItem.hpp"
+#include "utils.hpp"
 
-string toString(ItemType it)
-{
-    switch (it)
-    {
-    case ItemType::HM:
-        return "HM";
-    case ItemType::TM:
-        return "TM";
-    case ItemType::OTHER:
-        return "Other";
-    }
-    return "Unknown";
-}
 
 
 SkillItem::SkillItem() : Skill()
@@ -30,7 +18,7 @@ SkillItem::SkillItem(string itemName, Skill &skill, ItemType it) : Skill(skill)
 void SkillItem::show() const
 {
     cout << this->itemName << endl;
-    cout << toString(this->itemType) << endl;
+    cout << convertItemTypeToString(this->itemType) << endl;
 }
 
 bool SkillItem::operator>>(Engimon &x)

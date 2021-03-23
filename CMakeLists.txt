@@ -7,7 +7,7 @@ set(LIBRARY_OUTPUT_PATH  ${CMAKE_BINARY_DIR}/lib)
 include_directories(src/include)
   
 file(GLOB LIB_SOURCE "src/src/lib/*.cpp")
-add_library(engimon_lib STATIC ${LIB_SOURCE})
+add_library(engimon_lib STATIC ${LIB_SOURCE} src/src/utils.cpp)
 
 file(GLOB TEST_FILE "src/src/test/*.cpp")
 

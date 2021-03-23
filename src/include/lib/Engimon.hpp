@@ -5,6 +5,7 @@
 #include "lib/ElementManager.hpp"
 #include "lib/Skill.hpp"
 #include "lib/Engidex.hpp"
+#include "lib/SkillItem.hpp"
 #include "lib/constant/EntitySource.hpp"
 #include "lib/constant/Exception.hpp"
 
@@ -44,12 +45,12 @@ public:
     void addExp(int);
     int getExp() const;
 
-    void setFirstParent (string);
-    void setSecondParent (string);
+    void setFirstParent(string);
+    void setSecondParent(string);
 
     void show() const;
 
-    double getPower(const Elementum&);
+    double getPower(const Elementum &);
 
     vector<Skill> getSkills() const;
 
@@ -63,5 +64,10 @@ public:
     Skill &operator>>(int);
     //Untuk nambah skill;
     bool operator<<(Skill &);
+
+    bool operator>(const Engimon &) const;
+    bool operator<(const Engimon &) const;
+
+    void learn(const SkillItem &);
 };
 #endif // __ENGIMON_H__

@@ -1,8 +1,6 @@
 #include "lib/SkillItem.hpp"
 #include "utils.hpp"
 
-
-
 SkillItem::SkillItem() : Skill()
 {
     this->itemName = "";
@@ -17,13 +15,8 @@ SkillItem::SkillItem(string itemName, Skill &skill, ItemType it) : Skill(skill)
 
 void SkillItem::show() const
 {
-    cout << this->itemName << endl;
-    cout << convertItemTypeToString(this->itemType) << endl;
-}
-
-bool SkillItem::operator>>(Engimon &x)
-{
-    //TODO
+    cout << this->itemName << "\t";
+    cout << convertItemTypeToString(this->itemType);
 }
 
 SkillItem &SkillItem::operator=(const SkillItem &x)
@@ -31,4 +24,15 @@ SkillItem &SkillItem::operator=(const SkillItem &x)
     Skill::operator=(x);
     this->itemName = x.itemName;
     this->itemType = x.itemType;
+    return *this;
+}
+
+bool SkillItem::operator>(const SkillItem &other) const
+{
+    return this->itemName > other.itemName;
+}
+
+bool SkillItem::operator<(const SkillItem &other) const
+{
+    return this->itemName > other.itemName;
 }

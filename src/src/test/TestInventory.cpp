@@ -2,26 +2,35 @@
 
 int main()
 {
-    // Inventory<int> I1(50);
+    Inventory<SkillItem> a(10);
 
-    // cout << "Maksimal kapasitas : " << I1.getMaxCapacity() << endl;
+    vector<Element> thunderBoltElement;
+    thunderBoltElement.push_back(Element::ELECTRIC);
 
-    // I1 + 5;
-    // I1 + 3;
-    // I1 + 2;
-    // I1 + 3;
-    // I1 + 3;
-    // cout << "Kapasitas sekarang : " << I1.getCapacity() << endl;
-    // I1.show(0);
+    Skill thunderbolt("Thunderbolt", 20, 0, thunderBoltElement);
 
-    // I1 - 5;
-    // I1 - 3;
-    // cout << "Kapasitas sekarang : " << I1.getCapacity() << endl;
-    // I1.show(0);
+    SkillItem skillItem("itemname", thunderbolt, ItemType::HM);
+    a + skillItem;
+    a.show(1);
+    cout << "Maksimal kapasitas : " << a.getCapacity() << endl;
 
-    // I1 % 5;
-    // I1 % 3;
+    //     I1 + 5;
+    //     I1 + 3;
+    //     I1 + 2;
+    //     I1 + 3;
+    //     I1 + 3;
+    //     cout << "Kapasitas sekarang : " << I1.getCapacity() << endl;
+    //     I1.show(1);
 
-    // I1 ^ 5;
-    // I1 ^ 3;
+    //     I1 - 5;
+    //     I1 - 3;
+    //     cout << "Kapasitas sekarang : " << I1.getCapacity() << endl;
+    //     I1.show(1);
+
+    //     I1 % 5;
+    //     I1 % 3;
+
+    //     I1 ^ 5;
+    //     I1 ^ 3;
+    //
 }

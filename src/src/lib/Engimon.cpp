@@ -102,14 +102,13 @@ void Engimon::show() const
         cout << "Second parent : " << this->parent.second << endl;
     }
     cout << "Skills : " << endl;
-    for (int i = 0; i < skills.size();i++)
+    for (int i = 0; i < skills.size(); i++)
     {
         cout << skills[i].getName() << "\t" << skills[i].getPower() << endl;
     }
-    
 }
 
-double Engimon::getPower(const Elementum& other)
+double Engimon::getPower(const Elementum &other)
 {
     double totalSkillPower = 0;
     for (int i = 0; i < skills.size(); i++)
@@ -145,13 +144,13 @@ Engimon Engimon::operator+(const Engimon &other) const
     int maxSkills = parentASkills.size() + parentBSkills.size() > 4 ? 4 : parentASkills.size() + parentBSkills.size();
     for (int i = 0; i < maxSkills; i++)
     {
-        
+
         bool parentAChoosen = false;
         int parentAMaxMastery = -1;
         int parentBMaxMastery = -1;
         int parentASlot = -1;
         int parentBSlot = -1;
-        for (int j = parentASkills.size() - 1; j >= 0;j--)
+        for (int j = parentASkills.size() - 1; j >= 0; j--)
         {
             if (parentASkills[j].getMasteryLevel() >= parentAMaxMastery)
             {
@@ -159,7 +158,7 @@ Engimon Engimon::operator+(const Engimon &other) const
                 parentASlot = j;
             }
         }
-        for (int j = parentBSkills.size() - 1; j >= 0;j--)
+        for (int j = parentBSkills.size() - 1; j >= 0; j--)
         {
             if (parentBSkills[j].getMasteryLevel() >= parentBMaxMastery)
             {
@@ -178,7 +177,6 @@ Engimon Engimon::operator+(const Engimon &other) const
         {
             choosenSkills.push_back(parentASkills[parentASlot]);
             parentASkills.erase(parentASkills.begin() + parentASlot);
-
         }
         else
         {
@@ -194,11 +192,11 @@ Engimon Engimon::operator+(const Engimon &other) const
                 parentAChoosen = false;
             }
             vector<Skill> toCheck = parentAChoosen ? parentBSkills : parentASkills;
-            for (int j = 0; j < toCheck.size();j++)
+            for (int j = 0; j < toCheck.size(); j++)
             {
                 if (toCheck[j] == choosen)
                 {
-                    if (toCheck[j].getMasteryLevel() == choosen.getMasteryLevel())// poin 5.d.ii.2
+                    if (toCheck[j].getMasteryLevel() == choosen.getMasteryLevel()) // poin 5.d.ii.2
                     {
                         choosen.setMasteryLevel(choosen.getMasteryLevel() + 1);
                     }
@@ -218,7 +216,6 @@ Engimon Engimon::operator+(const Engimon &other) const
             {
                 parentBSkills.erase(parentBSkills.begin() + parentBSlot);
             }
-
         }
     }
     // GET ELEMENT AND SPESIES
@@ -258,16 +255,12 @@ Engimon Engimon::operator+(const Engimon &other) const
         parentBElement = other.elements[0];
     }
 
-    if (parentAElement == parentBElement) // point 5.e.i
+    if (parentAElement == parentBElement)
     {
         childSpecies = Engidex::getInstance().getSpeciesByString(this->getSpeciesName()); // Ini bisa diganti. Baca point 5.e.1
-        
     }
     else if (elementManager.getMultiplier(parentAElement, parentBElement) == elementManager.getMultiplier(parentBElement, parentAElement)) // point 5.e.3
     {
-        // INI TODO
-        // Cari engimon yang memiliki dual element di engidex dan itu jadi spesiesnya.
-        // Anaknya memiliki elemen dari parentA dan parentB
         childSpecies = Engidex::getInstance().getDualElementEngimon(parentAElement, parentBElement);
     }
     else // point 5.e.2
@@ -312,6 +305,21 @@ Engimon &Engimon::operator*(Engimon &other)
     }
 }
 
+void Engimon::learn(const SkillItem &skill)
+{
+    SkillItem si = skill;
+    bool canLearn = Elementum::operator%(si);
+    if (!canLearn)
+    {
+        throw Exception::CANNOT_LEARN_SKILL;
+    }
+    canLearn = Engimon::operator<<(si);
+    if (!canLearn)
+    {
+        throw Exception::CANNOT_LEARN_SKILL;
+    }
+}
+
 //Untuk buang skill pada slot ...;
 Skill &Engimon::operator>>(int slot)
 {
@@ -327,7 +335,7 @@ bool Engimon::operator<<(Skill &skill)
 {
     if (this->skills.size() < Engimon::MAX_SKILL)
     {
-        for (int i = 0; i < this->skills.size();i++)
+        for (int i = 0; i < this->skills.size(); i++)
         {
             if (skills[i] == skill)
             {
@@ -339,6 +347,20 @@ bool Engimon::operator<<(Skill &skill)
     }
     else
     {
-        return false;
+        int slot;
+        cout << "Mengganti skill di slot : ";
+        cin >> slot;
+        this->skills[slot] = skill;
+        return true;
     }
+}
+
+bool Engimon::operator>(const Engimon &other) const
+{
+    return this->speciesNumber > other.speciesNumber;
+}
+
+bool Engimon::operator<(const Engimon &other) const
+{
+    return this->speciesNumber < other.speciesNumber;
 }

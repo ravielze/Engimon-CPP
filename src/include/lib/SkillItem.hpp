@@ -2,12 +2,11 @@
 #define __SKILLITEM_H__
 #include "lib/Skill.hpp"
 #include "lib/constant/ItemType.hpp"
-#include "lib/Engimon.hpp"
-#include <string>
+#include <iostream>
 
 using namespace std;
 
-class SkillItem : Skill
+class SkillItem : public Skill
 {
 private:
     string itemName;
@@ -19,9 +18,11 @@ public:
 
     void show() const;
 
-    //buat dilearn ke engimon
-    bool operator>>(Engimon &);
     //Operator Assignment
     SkillItem &operator=(const SkillItem &);
+
+    //Operator > and < for map stl
+    bool operator>(const SkillItem &) const;
+    bool operator<(const SkillItem &) const;
 };
 #endif // __SKILLITEM_H__

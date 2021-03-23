@@ -17,6 +17,7 @@ Map::Map()
     this->sizeMap = 12;
     this->storageEntity = vector<vector<Entity>>(this->sizeMap, vector<Entity>(this->sizeMap, Entity::NONE));
     this->storageTerrain = vector<vector<MapTerrain>>(this->sizeMap, vector<MapTerrain>(this->sizeMap, MapTerrain::GL));
+    this->playerLocation = pair<int, int>(0, 0);
 }
 
 void Map::show() const

@@ -17,6 +17,7 @@ public:
 
     //Check apakah entitas ini memiliki suatu element
     bool operator%(Element) const;
+    bool operator%(const Elementum &el) const;
 
     bool operator==(const Elementum &) const;
 
@@ -25,6 +26,6 @@ public:
     void show() const;
 
     int getElementCount() const;
-    double getTotalMultiplier(const Elementum& other) const;
+    double getTotalMultiplier(const Elementum &other) const;
 };
 #endif // __ELEMENTUM_H__l

@@ -1,5 +1,6 @@
 #include "utils.hpp"
-string convertItemTypeToString(ItemType it) {
+string convertItemTypeToString(ItemType it)
+{
     switch (it)
     {
     case ItemType::HM:
@@ -34,10 +35,13 @@ string convertEntitySourceToString(EntitySource es)
 {
     switch (es)
     {
-        case EntitySource::BREEDING:
-            return "Breeding";
-        case EntitySource::WILD:
-            return "Wild";
+    case EntitySource::BREEDING:
+        return "Breeding";
+    case EntitySource::WILD:
+        return "Wild";
     }
     return "Unknown";
+}
+Engidex createEngidex()
+{
 }

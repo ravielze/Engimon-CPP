@@ -113,6 +113,7 @@ void Inventory<T>::show(int page) const
     //     }
     // }
 }
+
 template <typename T>
 Inventory<T>::Inventory()
 {

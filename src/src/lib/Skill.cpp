@@ -4,7 +4,7 @@ Skill::Skill() : Elementum()
 {
     this->name = "";
     this->power = 0;
-    this->masteryLevel = 0;
+    this->masteryLevel = 1;
 }
 
 Skill::Skill(string name, double power, int masteryLevel, vector<Element> elements) : Elementum(elements)

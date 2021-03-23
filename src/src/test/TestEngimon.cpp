@@ -1,8 +1,10 @@
 #include "lib/Engimon.hpp"
 #include "lib/ElementManager.hpp"
+#include "lib/constant/Exception.hpp"
 
-int main () {
-    
+int main()
+{
+
     ElementManager::getInstance().setMultiplier(Element::ELECTRIC, Element::WATER, 2);
     ElementManager::getInstance().setMultiplier(Element::WATER, Element::ELECTRIC, 0);
     ElementManager::getInstance().setMultiplier(Element::FIRE, Element::ELECTRIC, 1);
@@ -20,10 +22,9 @@ int main () {
     randomPokemonElement.push_back(Element::FIRE);
     randomPokemonElement.push_back(Element::ELECTRIC);
     string name = "Hello world";
-    Species randomPokemon (name, randomPokemonElement);
-    Species lanturn ("Lanturn", lanturnElement);
-    Species pikachu ("Pikachu", pikachuElement);
-
+    Species randomPokemon(name, randomPokemonElement);
+    Species lanturn("Lanturn", lanturnElement);
+    Species pikachu("Pikachu", pikachuElement);
 
     Engidex::getInstance() + lanturn;
     Engidex::getInstance() + pikachu;
@@ -39,7 +40,7 @@ int main () {
     digElement.push_back(Element::GROUND);
 
     Skill dig("Dig", 50, 0, digElement);
-    
+
     Engimon myLanturn(lanturn, EntitySource::WILD, "mylanturn");
     Engimon myPikachu(pikachu, EntitySource::WILD);
 
@@ -50,6 +51,15 @@ int main () {
 
     Engimon child = myLanturn + myPikachu;
     child.show();
+
+    try
+    {
+        Engimon other = myLanturn * myPikachu;
+        other.show();
+    }
+    catch (Exception &ex)
+    {
+    }
 
     return 0;
 }

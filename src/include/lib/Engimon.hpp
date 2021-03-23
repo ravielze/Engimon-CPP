@@ -49,7 +49,7 @@ public:
 
     void show() const;
 
-    double getPower(vector<Element>);
+    double getPower(const Elementum&);
 
     vector<Skill> getSkills() const;
 

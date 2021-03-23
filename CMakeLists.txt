@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.9)
+
 project(MANA_TELAT_KEBURU_SEMPAT)
 
 set(LIBRARY_OUTPUT_PATH  ${CMAKE_BINARY_DIR}/lib)

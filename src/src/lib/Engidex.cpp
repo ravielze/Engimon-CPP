@@ -3,7 +3,6 @@
 int Engidex::SPECIES_PER_PAGE = 10;
 Engidex Engidex::instance;
 
-
 Engidex::Engidex()
 {
     this->speciesCount = 0;
@@ -25,11 +24,12 @@ void Engidex::show(int page) const
         }
     }
 }
-Species Engidex::getDualElementEngimon (Element firstElement, Element secondElement)
+
+Species Engidex::getDualElementEngimon(Element firstElement, Element secondElement)
 {
     for (int i = 0; i < storage.size(); i++)
     {
-        if (storage[i].getElements().size() == 2 && ((storage[i].getElements()[0] == firstElement && storage[i].getElements()[1] == secondElement) || (storage[i].getElements()[0] == secondElement && storage[i].getElements()[1] == firstElement)))
+        if (storage[i].getElementCount() == 2 && (storage[i] % firstElement && storage[i] % secondElement))
         {
             return storage[i];
         }
@@ -74,13 +74,13 @@ bool Engidex::operator%(const Species &x) const
 
 bool Engidex::operator+(Species &newSpecies)
 {
-    this->storage.push_back(newSpecies);
     newSpecies.setSpeciesNumber(speciesCount);
+    this->storage.push_back(newSpecies);
     speciesCount++;
     return true;
 }
 
-Engidex & Engidex::getInstance()
+Engidex &Engidex::getInstance()
 {
     return instance;
 }

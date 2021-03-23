@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include "lib/constant/Element.hpp"
+#include "lib/ElementManager.hpp"
 using namespace std;
 
 class Elementum
@@ -21,8 +22,9 @@ public:
 
     Elementum &operator=(const Elementum &);
 
-    vector<Element> getElements();
-
     void show() const;
+
+    int getElementCount() const;
+    double getTotalMultiplier(const Elementum& other) const;
 };
-#endif // __ELEMENTUM_H__
+#endif // __ELEMENTUM_H__l

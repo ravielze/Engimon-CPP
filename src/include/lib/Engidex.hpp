@@ -21,8 +21,8 @@ public:
     //Memunculkan species pada page tertentu
     void show(int page) const;
 
-    Species getDualElementEngimon (Element, Element);
-    Species getSpeciesByString (string);
+    Species getDualElementEngimon(Element, Element);
+    Species getSpeciesByString(string);
 
     //Operator Assignment
     Engidex &operator=(const Engidex &);
@@ -30,6 +30,6 @@ public:
     //Cek suatu species ada atau engga
     bool operator%(const Species &) const;
 
-    static Engidex & getInstance();
+    static Engidex &getInstance();
 };
 #endif // __ENGIDEX_H__

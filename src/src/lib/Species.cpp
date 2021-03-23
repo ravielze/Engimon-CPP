@@ -28,16 +28,15 @@ void Species::sendMessage() const
     randomIdx = rand() % this->message.size();
     cout << "[" << this->speciesName << "]: " << this->message[randomIdx] << endl;
 }
-string Species::getSpeciesName() const 
+string Species::getSpeciesName() const
 {
     return this->speciesName;
 }
 
-
 void Species::show() const
 {
     cout << this->speciesNumber;
-    cout << "\t" << this->speciesName << "\t" << endl;
+    cout << "\t" << this->speciesName << "\t";
     Elementum::show();
 }
 
@@ -50,7 +49,7 @@ Species &Species::operator=(const Species &aspecies)
 {
     Elementum::operator=(aspecies);
     this->speciesNumber = aspecies.speciesNumber;
-    this->speciesName = aspecies.speciesNumber;
+    this->speciesName = aspecies.speciesName;
     this->message.clear();
     for (int i = 0; i < aspecies.message.size(); i++)
     {

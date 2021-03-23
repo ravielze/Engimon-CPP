@@ -12,10 +12,6 @@ Elementum::Elementum(vector<Element> otherElements)
         this->elements.push_back(x);
     }
 }
-vector<Element> Elementum::getElements()
-{
-    return elements;
-}
 
 bool Elementum::operator%(Element el) const
 {
@@ -31,6 +27,32 @@ bool Elementum::operator%(Element el) const
     }
     return false;
 }
+
+
+int Elementum::getElementCount() const
+{
+    return this->elements.size();
+}
+
+double Elementum::getTotalMultiplier(const Elementum& other) const {
+    
+    double totalMultiplier = 0;
+    for (auto ourElement : this->elements)
+    {
+        double maxMultiplier = 0;
+        for (auto enemyElement : other.elements)
+        {
+            double multiplier = ElementManager::getInstance().getMultiplier(ourElement, enemyElement);
+            if (multiplier > maxMultiplier)
+            {
+                maxMultiplier = multiplier;
+            }
+        }
+        totalMultiplier += maxMultiplier;
+    }
+    return totalMultiplier > 2 ? 2 : totalMultiplier;
+}
+
 
 bool Elementum::operator==(const Elementum &other) const
 {

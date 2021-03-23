@@ -38,9 +38,6 @@ string convertEntitySourceToString(EntitySource es)
             return "Breeding";
         case EntitySource::WILD:
             return "Wild";
-        case EntitySource::UNKNOWN:
-            return "Unknown";
-        default :
-            return "Unknown";
     }
+    return "Unknown";
 }

@@ -1,3 +1,3 @@
-cmake -H. -Bbuild
-cd build
+cmake -H. -Bbin
+cd bin
 make all

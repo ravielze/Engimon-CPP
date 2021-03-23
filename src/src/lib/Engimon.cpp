@@ -109,7 +109,7 @@ void Engimon::show() const
     
 }
 
-double Engimon::getPower(vector<Element> element)
+double Engimon::getPower(const Elementum& other)
 {
     double totalSkillPower = 0;
     for (int i = 0; i < skills.size(); i++)
@@ -117,7 +117,7 @@ double Engimon::getPower(vector<Element> element)
         totalSkillPower += skills[i].getPower() * skills[i].getMasteryLevel();
     }
 
-    return totalSkillPower + level * ElementManager::getInstance().getTotalMultiplier(this->elements, element);
+    return totalSkillPower + level * this->getTotalMultiplier(other);
 }
 
 void Engimon::setFirstParent(string name)
@@ -299,8 +299,8 @@ Engimon Engimon::operator+(const Engimon &other) const
 // Untuk battle;
 Engimon &Engimon::operator*(Engimon &other)
 {
-    double ourPower = this->getPower(other.getElements());
-    double otherPower = other.getPower(this->elements);
+    double ourPower = this->getPower(other);
+    double otherPower = other.getPower(*this);
     if (ourPower >= otherPower) // Kita menang
     {
         this->addExp(100); // Masih statik exp yang didapatkan

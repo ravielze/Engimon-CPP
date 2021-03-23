@@ -1,1 +1,1 @@
-./build/Engimon
+./bin/Engimon

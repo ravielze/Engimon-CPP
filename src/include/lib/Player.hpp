@@ -21,7 +21,7 @@ public:
     Player();
     void addEngimon(Engimon);
     void removeEngimon(Engimon);
-    void battle(Engimon, Engimon);
+    void battle(Engimon);
     void switchActiveEngimon(Engimon);
     void interact();
     void setDirection(Direction);

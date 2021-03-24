@@ -8,6 +8,7 @@
 #include "lib/constant/Direction.hpp"
 #include "lib/Engimon.hpp"
 #include "lib/Player.hpp"
+#include "utils.hpp"
 using namespace std;
 
 class Map
@@ -15,7 +16,6 @@ class Map
 private:
     vector<vector<MapTerrain>> storageTerrain;
     vector<vector<Entity>> storageEntity;
-    map<pair<int, int>, Engimon> entityMData;
     int sizeMap;
     Player player;
     pair<int, int> playerLocation;
@@ -23,7 +23,8 @@ private:
 
     void generateTerrain();
     void generateEngimon();
-    void isObstruct(int, int);
+    void moveWildEngimon();
+    bool isObstruct(int, int);
 
 public:
     Map();

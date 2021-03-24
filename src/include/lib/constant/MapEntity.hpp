@@ -28,6 +28,15 @@ enum class Entity
     NONE // No Entity
 };
 
+enum class EntityType
+{
+    PLAYER_ENGIMON,
+    WILD_ENGIMON,
+    PLAYER,
+    STRUCTURE,
+    NONE
+};
+
 enum class MapTerrain
 {
 
@@ -35,60 +44,4 @@ enum class MapTerrain
     o   // Sea
 };
 
-string mapLegend(Entity e, MapTerrain t)
-{
-    switch (e)
-    {
-    case Entity::W:
-        return "W";
-    case Entity::w:
-        return "w";
-    case Entity::I:
-        return "I";
-    case Entity::i:
-        return "i";
-    case Entity::F:
-        return "F";
-    case Entity::f:
-        return "f";
-    case Entity::G:
-        return "G";
-    case Entity::g:
-        return "g";
-    case Entity::E:
-        return "E";
-    case Entity::e:
-        return "e";
-    case Entity::L:
-        return "L";
-    case Entity::l:
-        return "l";
-    case Entity::S:
-        return "S";
-    case Entity::s:
-        return "s";
-    case Entity::N:
-        return "N";
-    case Entity::n:
-        return "n";
-    case Entity::P:
-        return "P";
-    case Entity::X:
-        return "X";
-    case Entity::T:
-        return "T";
-    case Entity::R:
-        return "R";
-    default:
-        break;
-    }
-    switch (t)
-    {
-    case MapTerrain::GL:
-        return "-";
-    case MapTerrain::o:
-        return "o";
-    }
-    return "?";
-}
 #endif // __MAPENTITY_H__

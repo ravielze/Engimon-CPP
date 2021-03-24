@@ -17,8 +17,39 @@ void Player::removeEngimon(Engimon Engi)
     this->engimonList = this->engimonList - Engi;
 }
 
-void Player::battle(Engimon myEngimon, Engimon wildEngimon)
+void Player::battle(Engimon wildEngimon)
 {
+    try
+    {
+        Engimon engimon = activeEngimon * wildEngimon;
+        // Engimon kita menang
+        cout << "You have won the battle" << endl;
+        cout << "Here is the wild engimon as a reward for you : " << endl;
+        engimon.show();
+        bool canAdd = engimonList + engimon;
+
+        if (!canAdd)
+        {
+            cout << "Oops your engimon inventory is full" << endl;
+        }
+        // TODO : Generate random skill item
+    }
+    catch (Exception e)
+    {
+        // Engimon kita mati
+
+        cout << "Cacad engimon lu..." << endl;
+        bool canRemove = engimonList - activeEngimon;
+
+        // Show engimon list
+        engimonList.show(1);
+
+        // Pilih engimon untuk diganti
+        int index;
+        cout << "Choose engimon index to replace : ";
+        cin >> index;
+        switchActiveEngimon(engimonList.getItemOnIndex(index));
+    }
     // pake method battle dari engimon jgn lupa try catch dri battle
 
     // if (myEngimon.getPower(myEngimon.getElements()) > wildEngimon.getPower(wildEngimon.getElements()))

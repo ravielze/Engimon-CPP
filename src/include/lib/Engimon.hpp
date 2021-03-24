@@ -59,9 +59,6 @@ public:
 
     // Untuk battle;
     Engimon &operator*(Engimon &other);
-
-    //Untuk buang skill pada slot ...;
-    Skill &operator>>(int);
     //Untuk nambah skill;
     bool operator<<(Skill &);
 

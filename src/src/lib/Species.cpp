@@ -16,14 +16,20 @@ Species::Species(const Species &aspecies) : Elementum(aspecies.elements)
     }
 }
 
-Species::Species(string name, vector<Element> elements) : Elementum(elements)
+Species::Species(string name, vector<Element> elements, vector<string> messages) : Elementum(elements)
 {
     this->speciesNumber = -1;
     this->speciesName = name;
+    this->message = messages;
 }
 
 void Species::sendMessage() const
 {
+    if (this->message.empty())
+    {
+        cout << "[" << this->speciesName << "]: hmmm" << endl;
+        return;
+    }
     int randomIdx;
     randomIdx = rand() % this->message.size();
     cout << "[" << this->speciesName << "]: " << this->message[randomIdx] << endl;

@@ -3,6 +3,7 @@
 int main()
 {
     Map m;
+    Player p;
     m.show();
     m.movePlayer(Direction::EAST);
     m.show();

@@ -17,7 +17,7 @@ protected:
 public:
     Species();
     Species(const Species &);
-    Species(string name, vector<Element> elements);
+    Species(string name, vector<Element> elements, vector<string> messages);
 
     string getSpeciesName() const;
 

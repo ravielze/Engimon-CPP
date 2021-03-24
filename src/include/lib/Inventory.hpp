@@ -97,6 +97,7 @@ public:
 
     // Menunjukkan barang di inventory
     void show(int page) const;
+    T getItemOnIndex(int index) const;
 };
 
 template <typename T>
@@ -105,6 +106,15 @@ int Inventory<T>::ITEM_PER_PAGE = 10;
 template <typename T>
 void Inventory<T>::show(int page) const
 {
+}
+
+template <typename T>
+T Inventory<T>::getItemOnIndex(int index) const
+{
+    auto itr = this->storage.begin();
+    itr += index;
+
+    return itr->first;
 }
 
 template <>

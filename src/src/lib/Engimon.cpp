@@ -1,5 +1,5 @@
 #include "lib/Engimon.hpp"
-#include "utils.hpp"
+
 int Engimon::MAX_SKILL = 4;
 int Engimon::MAX_CUM_EXP = 10000;
 
@@ -78,7 +78,7 @@ void Engimon::addExp(int exp)
         throw Exception::ENGIMON_EXP_OVERFLOW;
     }
 
-    if (exp >= level * 100)
+    while (exp >= level)
     {
         exp -= level * 100;
         level += 1;
@@ -349,10 +349,10 @@ bool Engimon::operator<<(Skill &skill)
 
 bool Engimon::operator>(const Engimon &other) const
 {
-    return this->speciesNumber > other.speciesNumber || this->speciesName > other.speciesName;
+    return false; //|| this->speciesName > other.speciesName;
 }
 
 bool Engimon::operator<(const Engimon &other) const
 {
-    return this->speciesNumber < other.speciesNumber || this->speciesName < other.speciesName;
+    return false; //|| this->speciesName < other.speciesName;
 }

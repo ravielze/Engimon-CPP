@@ -1,7 +1,6 @@
 #ifndef __SPECIES_H__
 #define __SPECIES_H__
 #include <vector>
-#include <string.h>
 #include <iostream>
 #include "lib/constant/Element.hpp"
 #include "lib/Elementum.hpp"

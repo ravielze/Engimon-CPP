@@ -1,9 +1,10 @@
 #ifndef __ENGIDEX_H__
 #define __ENGIDEX_H__
 #include <iostream>
+#include <vector>
+#include "utils.hpp"
 #include "lib/Species.hpp"
 #include "lib/Engimon.hpp"
-#include "lib/Skill.hpp"
 #include "lib/SkillItem.hpp"
 using namespace std;
 
@@ -12,7 +13,7 @@ class Engidex
 private:
     static int SPECIES_PER_PAGE;
     vector<Species> speciesStorage;
-    vector<Skill> skillStorage;
+    vector<SkillItem> skillStorage;
     int speciesCount;
     int skillCount;
     static Engidex instance;
@@ -22,7 +23,7 @@ public:
 
     //Menambah species ke Engidex
     bool operator+(Species);
-    bool operator+(Skill);
+    bool operator+(SkillItem);
 
     //Memunculkan species pada page tertentu
     void show(int page) const;
@@ -37,11 +38,11 @@ public:
     bool operator%(const Species &) const;
 
     // Cek suatu skill ada atau engga
-    bool operator%(const Skill &) const;
+    bool operator%(const SkillItem &) const;
 
     static Engidex &getInstance();
 
-    Engimon &createRandomEngimon() const;
-    SkillItem &createRandomSkillItem(Element) const;
+    Species &getRandomSpecies(Element) const;
+    SkillItem createRandomSkillItem(Element) const;
 };
 #endif // __ENGIDEX_H__

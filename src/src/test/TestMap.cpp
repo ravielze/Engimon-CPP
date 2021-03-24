@@ -6,5 +6,4 @@ int main()
     Player p;
     m.show();
     m.movePlayer(Direction::EAST);
-    m.show();
 }

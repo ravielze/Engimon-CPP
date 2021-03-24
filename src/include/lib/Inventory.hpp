@@ -3,8 +3,8 @@
 #include <iostream>
 #include <type_traits>
 #include <map>
-#include "SkillItem.hpp"
-#include "Engimon.hpp"
+#include "lib/SkillItem.hpp"
+#include "lib/Engimon.hpp"
 using namespace std;
 
 template <typename T>
@@ -13,22 +13,25 @@ class Inventory
 private:
     map<T, int> storage;
     int maxCapacity;
+    int size;
     static int ITEM_PER_PAGE;
 
 public:
     Inventory()
     {
         this->maxCapacity = 0;
+        this->size = 0;
     }
 
     Inventory(int maxsize)
     {
         this->maxCapacity = maxsize;
+        this->size = 0;
     }
 
     int getCapacity() const
     {
-        return this->storage.size();
+        return this->size;
     }
     int getMaxCapacity() const
     {
@@ -38,9 +41,10 @@ public:
     // Add item ke inventoryperator+(const T &);
     bool operator+(const T &i)
     {
-        // Apabila storage masih mempunyai stage
+        // Apabila storage masih mempunyai space
         if (this->getCapacity() < this->maxCapacity)
         {
+            this->size++;
             // Item belum ada di inventory
             if (this->storage.find(i) == this->storage.end())
             {
@@ -68,7 +72,15 @@ public:
         }
         int jml = this->storage[i];
         jml--;
-        this->storage[i] = jml;
+        if (jml > 0)
+        {
+            this->storage[i] = jml;
+        }
+        else
+        {
+            this->storage.erase(i);
+        }
+        this->size--;
         return true;
     }
 
@@ -97,102 +109,6 @@ public:
 
     // Menunjukkan barang di inventory
     void show(int page) const;
-    T getItemOnIndex(int index) const;
 };
-
-template <typename T>
-int Inventory<T>::ITEM_PER_PAGE = 10;
-
-template <typename T>
-void Inventory<T>::show(int page) const
-{
-}
-
-template <typename T>
-T Inventory<T>::getItemOnIndex(int index) const
-{
-    auto itr = this->storage.begin();
-    itr += index;
-
-    return itr->first;
-}
-
-template <>
-void Inventory<int>::show(int page) const
-{
-    if (this->storage.size() > 0 && page >= 1)
-    {
-        int start = (page - 1) * ITEM_PER_PAGE;
-        int end = page * ITEM_PER_PAGE;
-        int i = 0;
-        int size = this->getCapacity();
-        for (auto itr = this->storage.begin(); itr != this->storage.end(); itr++)
-        {
-            if (i < end && i >= start && i < size)
-            {
-                cout << itr->first << " x" << itr->second;
-            }
-            else if (i >= end)
-            {
-                break;
-            }
-            i++;
-            cout << endl;
-        }
-    }
-    cout << endl;
-}
-
-template <>
-void Inventory<SkillItem>::show(int page) const
-{
-    if (this->storage.size() > 0 && page >= 1)
-    {
-        int start = (page - 1) * ITEM_PER_PAGE;
-        int end = page * ITEM_PER_PAGE;
-        int i = 0;
-        int size = this->getCapacity();
-        for (auto itr = this->storage.begin(); itr != this->storage.end(); itr++)
-        {
-            if (i < end && i >= start && i < size)
-            {
-                itr->first.show();
-                cout << " x" << itr->second;
-            }
-            else if (i >= end)
-            {
-                break;
-            }
-            i++;
-            cout << endl;
-        }
-    }
-}
-
-template <>
-void Inventory<Engimon>::show(int page) const
-{
-    if (this->storage.size() > 0 && page >= 1)
-    {
-        int start = (page - 1) * ITEM_PER_PAGE;
-        int end = page * ITEM_PER_PAGE;
-        int i = 0;
-        int size = this->getCapacity();
-        for (auto itr = this->storage.begin(); itr != this->storage.end(); itr++)
-        {
-            if (i < end && i >= start && i < size)
-            {
-                itr->first.Species::show();
-                cout << " x" << itr->second;
-            }
-            else if (i >= end)
-            {
-                break;
-            }
-            i++;
-            cout << endl;
-        }
-    }
-}
 
 #endif // __INVENTORY_H__

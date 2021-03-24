@@ -10,13 +10,14 @@ Species::Species(const Species &aspecies) : Elementum(aspecies.elements)
 {
     this->speciesNumber = aspecies.speciesNumber;
     this->speciesName = aspecies.speciesName;
+    this->message.clear();
     for (int i = 0; i < aspecies.message.size(); i++)
     {
-        this->message[i] = aspecies.message[i];
+        this->message.push_back(aspecies.message[i]);
     }
 }
 
-Species::Species(string name, vector<Element> elements, vector<string> messages) : Elementum(elements)
+Species::Species(string name, vector<Element> elem, vector<string> messages) : Elementum(elem)
 {
     this->speciesNumber = -1;
     this->speciesName = name;

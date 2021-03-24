@@ -9,10 +9,30 @@ public:
         cout << "(" << x << "," << y << ")";
     }
 
+    Point()
+    {
+        this->x = 5;
+        this->y = 20;
+        cout << "ctor called" << endl;
+    }
+
+    Point(const Point &other)
+    {
+        cout << "cctor called" << endl;
+    }
+
     Point(int x, int y)
     {
         this->x = x;
         this->y = y;
+    }
+
+    Point &operator=(const Point &other)
+    {
+        cout << "op= called" << endl;
+        this->x = other.x;
+        this->y = other.y;
+        return *this;
     }
 
     ~Point()
@@ -29,13 +49,22 @@ Point &createPoint(int x, int y)
     return *created;
 }
 
+Point &something()
+{
+    cout << "HAA" << endl;
+    Point *array = new Point[5];
+    return *array;
+}
+
 int main()
 {
-    Point test = createPoint(1, 1);
-    Point test2 = createPoint(5, 1);
-    Point test3 = createPoint(1, 2);
     cout << "TRALALA TRILILI" << endl;
     string a;
+    Point x = createPoint(1, 1);
+    Point y = x;
+    //something();
+    //something();
+    cout << "TRALALA TRILILI" << endl;
     while (1)
     {
         cin >> a;

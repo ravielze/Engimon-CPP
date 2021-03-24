@@ -48,7 +48,7 @@ void Player::battle(Engimon wildEngimon)
         int index;
         cout << "Choose engimon index to replace : ";
         cin >> index;
-        switchActiveEngimon(engimonList.getItemOnIndex(index));
+        // switchActiveEngimon(engimonList.getItemOnIndex(index));
     }
     // pake method battle dari engimon jgn lupa try catch dri battle
 

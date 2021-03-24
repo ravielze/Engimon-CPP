@@ -2,10 +2,74 @@
 
 void Map::generateTerrain()
 {
+    srand(time(NULL) % getpid());
+    int waterVein = (rand() % 7) + 2; //2 sampai 8
+    int waterPond = (rand() % 5) + 3; //3 sampai 7
+    for (int i = 0; i < waterPond; i++)
+    {
+        int centerX = rand() % this->sizeMap;
+        int centerY = rand() % this->sizeMap;
+        int currentWaterVein = waterVein;
+        while (currentWaterVein > 0)
+        {
+            for (int j = -1; j <= 1; j++)
+            {
+                if (centerX + j < 0 || centerX + j >= this->sizeMap)
+                {
+                    continue;
+                }
+                int chance = rand() % 100;
+                if (chance >= 50)
+                {
+                    this->storageTerrain[centerY][centerX + j] = MapTerrain::o;
+                }
+            }
+            for (int j = -1; j <= 1; j++)
+            {
+                if (centerY + j < 0 || centerY + j >= this->sizeMap)
+                {
+                    continue;
+                }
+                int chance = rand() % 100;
+                if (chance >= 50)
+                {
+                    this->storageTerrain[centerY + j][centerX] = MapTerrain::o;
+                }
+            }
+            this->storageTerrain[centerY][centerX] = MapTerrain::o;
+            int countWater = 0;
+            for (int k = -1; k <= 1; k++)
+            {
+                for (int l = -1; l <= 1; l++)
+                {
+                    if (centerY + l < 0 || centerY + l >= this->sizeMap || centerX + k < 0 || centerX + k >= this->sizeMap)
+                    {
+                        continue;
+                    }
+                    if (this->storageTerrain[centerY + l][centerX + k] == MapTerrain::o)
+                    {
+                        countWater++;
+                    }
+                }
+            }
+            int dCenterX = rand() % 3 - 1; //-1 sampai 1
+            int dCenterY = rand() % 3 - 1;
+            while (!(centerY + dCenterY >= 0 && centerY + dCenterY < this->sizeMap && centerX + dCenterX >= 0 && centerX + dCenterX < this->sizeMap))
+            {
+                dCenterY = rand() % 3 - 1;
+                dCenterX = rand() % 3 - 1;
+            }
+            this->storageTerrain[centerY + dCenterY][centerX + dCenterX] = MapTerrain::o;
+            centerX += dCenterX;
+            centerY += dCenterY;
+            currentWaterVein--;
+        }
+    }
 }
 
 void Map::generateEngimon()
 {
+    //TODO
 }
 
 bool Map::isObstruct(int x, int y)
@@ -20,10 +84,11 @@ bool Map::isObstruct(int x, int y)
 
 Map::Map()
 {
-    this->sizeMap = 12;
+    this->sizeMap = 15;
     this->storageEntity = vector<vector<Entity>>(this->sizeMap, vector<Entity>(this->sizeMap, Entity::NONE));
     this->storageTerrain = vector<vector<MapTerrain>>(this->sizeMap, vector<MapTerrain>(this->sizeMap, MapTerrain::GL));
     this->playerLocation = pair<int, int>(0, 0);
+    this->generateTerrain();
 }
 
 void Map::show() const
@@ -100,7 +165,7 @@ void Map::movePlayer(Direction direct)
 
 void Map::moveWildEngimon()
 {
-    srand(time(0));
+    srand(time(NULL));
     // Looping untuk semua wild engimon
     int x = 0, y = 0;
     for (x = 0; x < this->storageEntity[0].size(); x++)
@@ -152,4 +217,34 @@ void Map::moveWildEngimon()
             }
         }
     }
+}
+
+vector<Engimon> Map::getSurroundingEngimon(int xi, int yi)
+{
+    vector<Engimon> surroundingEngimon;
+
+    for (int y = yi - 1; y <= yi + 1; y++)
+    {
+        for (int x = xi - 1; xi <= xi + 1; x++)
+        {
+            if (x == xi and y == yi)
+            {
+                continue;
+            }
+            if (getEntity(x, y) != Entity::NONE)
+            {
+                surroundingEngimon.push_back(wildEngimonData[getEntity(x, y)]);
+            }
+        }
+    }
+    return surroundingEngimon;
+}
+
+Entity Map::getEntity(int x, int y)
+{
+    if (x >= this->sizeMap || y >= this->sizeMap || x < 0 || y < 0)
+    {
+        return Entity::NONE;
+    }
+    return storageEntity[y][x];
 }

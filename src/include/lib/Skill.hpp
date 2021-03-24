@@ -2,7 +2,6 @@
 #define __SKILL_H__
 #include <iostream>
 #include <vector>
-#include <string>
 #include "lib/Elementum.hpp"
 using namespace std;
 

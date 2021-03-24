@@ -9,7 +9,7 @@ include_directories(src/include)
 file(GLOB LIB_SOURCE "src/src/lib/*.cpp")
 add_library(engimon_lib STATIC ${LIB_SOURCE} src/src/utils.cpp)
 
-file(GLOB TEST_FILE "src/src/test/TestInventory.cpp")
+file(GLOB TEST_FILE "src/src/test/TestMap.cpp")
 
 foreach(testsourcefile ${TEST_FILE})
     string( REPLACE ".cpp" "" testname ${testsourcefile} )

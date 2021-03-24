@@ -9,6 +9,7 @@
 #include "lib/Engimon.hpp"
 #include "lib/Player.hpp"
 #include "utils.hpp"
+#include <unistd.h>
 using namespace std;
 
 class Map
@@ -20,11 +21,15 @@ private:
     Player player;
     pair<int, int> playerLocation;
     pair<int, int> engimonLocation;
+    map<Entity, Engimon> wildEngimonData;
 
     void generateTerrain();
     void generateEngimon();
     void moveWildEngimon();
     bool isObstruct(int, int);
+
+    vector<Engimon> getSurroundingEngimon(int, int);
+    Entity getEntity(int, int);
 
 public:
     Map();

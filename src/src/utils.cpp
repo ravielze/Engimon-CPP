@@ -93,9 +93,9 @@ string mapLegend(Entity e, MapTerrain t)
     switch (t)
     {
     case MapTerrain::GL:
-        return "-";
+        return "\033[1;32m- ";
     case MapTerrain::o:
-        return "o";
+        return "\033[1;34mo ";
     }
     return "?";
 }

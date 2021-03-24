@@ -7,8 +7,15 @@ Engidex::Engidex()
 {
     this->speciesCount = 0;
     this->operator+(Species("Jason <3 <3 <3", {Element::ICE}, {"gatau", "liat nanti"}));
-    (*this) + Species("Tikus Listrik", {Element::ELECTRIC}, {});
-    this->operator+(Species("Keong", {Element::ICE}, {"gatau", "liat nanti"}));
+    this->operator+(Species("Tikus Listrik", {Element::ELECTRIC}, {"hachim hachim", "brrrrr"}));
+    this->operator+(Species("Cuma Keong", {Element::FIRE, Element::ELECTRIC}, {"gaskeun", "keos"}));
+    this->operator+(Species("Canis lupus familiaris", {Element::FIRE}, {"guk-guk", "aik-aik", "rilis tubes"}));
+    this->operator+(Species("Belut Batu", {Element::WATER, Element::GROUND}, {"gelud sini", "meliat-liat gmn gt"}));
+    this->operator+(Species("Kucing ITB", {Element::WATER, Element::GROUND}, {"bukan kucing biasa", "whiskas mana whiskas"}));
+    this->operator+(Species("Ikan", {Element::WATER}, {"swimming-swimming", "just keep swimming"}));
+    this->operator+(Species("Penghuni Sekre", {Element::GROUND}, {"gabut itu mindset", "ngapain sok sibuk"}));
+    this->operator+(Species("Dosen tercinta", {Element::WATER, Element::ICE}, {"absen sudah dibuka di six"}));
+    this->operator+(Species("Tubes 3 biji dedline sama", {Element::GROUND}, {"Mana Sempat", "Keburu Telat"}));
 }
 
 void Engidex::show(int page) const
@@ -32,7 +39,7 @@ Species Engidex::getDualElementEngimon(Element firstElement, Element secondEleme
 {
     for (int i = 0; i < speciesStorage.size(); i++)
     {
-        if (speciesStorage[i].getElementCount() == 2 && (speciesStorage[i] % firstElement && speciesStorage[i] % secondElement))
+        if (speciesStorage[i].getElementCount() >= 2 && (speciesStorage[i] % firstElement && speciesStorage[i] % secondElement))
         {
             return speciesStorage[i];
         }
@@ -82,7 +89,7 @@ bool Engidex::operator%(const Species &x) const
     return false;
 }
 
-bool Engidex::operator%(const Skill &) const
+bool Engidex::operator%(const SkillItem &x) const
 {
     for (int i = 0; i < this->skillCount; i++)
     {
@@ -102,7 +109,7 @@ bool Engidex::operator+(Species newSpecies)
     return true;
 }
 
-bool Engidex::operator+(Skill skill)
+bool Engidex::operator+(SkillItem skill)
 {
     this->skillStorage.push_back(skill);
     skillCount++;
@@ -114,17 +121,44 @@ Engidex &Engidex::getInstance()
     return instance;
 }
 
-Engimon &Engidex::createRandomEngimon() const
+// Engimon &Engidex::createRandomEngimon() const
+// {
+//     srand(time(NULL));
+//     int generateRandomExp = rand() % 1500;
+//     int idxspesies = rand() % this->speciesCount;
+//     Species engimonSpecies = this->speciesStorage[idxspesies];
+//     Engimon *engi = new Engimon(engimonSpecies, EntitySource::WILD);
+
+//     engi->addExp(generateRandomExp);
+
+//     return *engi;
+// }
+
+Species &Engidex::getRandomSpecies(Element element) const
 {
-    //TODO
+    Species *s = new Species();
+    return *s;
 }
 
-SkillItem &Engidex::createRandomSkillItem(Element) const
+SkillItem Engidex::createRandomSkillItem(Element element) const
 {
-    //TODO
-}
-
-bool Engidex::operator+(Skill)
-{
-    //TODO
+    SkillItem tempItem;
+    bool first = true;
+    srand(time(NULL));
+    for (int i = 0; i < skillCount; i++)
+    {
+        if (skillStorage[i] % element)
+        {
+            if (first)
+            {
+                tempItem = skillStorage[i];
+            }
+            int random = rand() % 2;
+            if (random)
+            {
+                return skillStorage[i];
+            }
+        }
+    }
+    return tempItem;
 }

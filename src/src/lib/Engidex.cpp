@@ -17,7 +17,7 @@ Engidex::Engidex()
     this->operator+(Species("Lightning McQueen", {Element::ELECTRIC}, "Kechaw Kechaw"));
 
     // Fire
-    this->operator+(Species("Cans lupus familiaris", {Element::FIRE}, "guk guk"));
+    this->operator+(Species("Canis lupus familiaris", {Element::FIRE}, "guk guk"));
     this->operator+(Species("Spark Knight", {Element::FIRE}, "da da da"));
     this->operator+(Species("Grenade Laut", {Element::FIRE}, "DHUAR"));
 
@@ -166,9 +166,9 @@ bool Engidex::operator%(const Species &x) const
 
 bool Engidex::operator+(Species newSpecies)
 {
+    speciesCount++;
     newSpecies.setSpeciesNumber(speciesCount);
     this->speciesStorage.push_back(newSpecies);
-    speciesCount++;
     return true;
 }
 

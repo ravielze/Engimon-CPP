@@ -11,7 +11,7 @@ Player::Player()
     cout << "There are 3 Engimon here! Haha! They are inside the Engi Balls.\n";
     cout << "When I was young, I was a serious Engimon trainer! In my old age, I only have 3 left, but you can have one! Choose!\n";
     int index = -1;
-    while (index < 1 || index > 3)
+    while (index < 1 || index > 6)
     {
         cout << "1.\t";
         Engidex::getInstance().getSpeciesBySpeciesNumber(0).simpleShow();
@@ -21,25 +21,22 @@ Player::Player()
         cout << endl;
         cout << "3.\t";
         Engidex::getInstance().getSpeciesBySpeciesNumber(6).simpleShow();
+        cout << endl;
+        cout << "4.\t";
+        Engidex::getInstance().getSpeciesBySpeciesNumber(9).simpleShow();
+        cout << endl;
+        cout << "5.\t";
+        Engidex::getInstance().getSpeciesBySpeciesNumber(12).simpleShow();
+        cout << endl;
+        cout << "6.\t";
+        Engidex::getInstance().getSpeciesBySpeciesNumber(15).simpleShow();
         cout << endl
              << "Pick Number: ";
-        //cin >> index;
-        index = 3;
+        cin >> index;
     }
     cout << endl;
     Species starterSpecies;
-    if (index == 1)
-    {
-        starterSpecies = Engidex::getInstance().getSpeciesBySpeciesNumber(0);
-    }
-    else if (index == 2)
-    {
-        starterSpecies = Engidex::getInstance().getSpeciesBySpeciesNumber(3);
-    }
-    else if (index == 3)
-    {
-        starterSpecies = Engidex::getInstance().getSpeciesBySpeciesNumber(6);
-    }
+    starterSpecies = Engidex::getInstance().getSpeciesBySpeciesNumber((index - 1) * 3);
     Engimon starter = Engimon(starterSpecies, EntitySource::WILD);
     starter.show();
     cout << endl;
@@ -77,6 +74,16 @@ bool Player::battle(Engimon wildEngimon)
             cout << "Oops your engimon inventory is full" << endl;
         }
         // TODO : Generate random skill item
+        SkillItem item = Engidex::getInstance().createRandomSkillItem(wildEngimon.getFirstElement());
+        if (!ItemList.isFull())
+        {
+            cout << "You got an extra skill item for defeating wild engimon" << endl;
+            this->ItemList + item;
+        }
+        else
+        {
+            cout << "Inventory udh full hehe" << endl;
+        }
         return true;
     }
     catch (Exception e)
@@ -88,19 +95,6 @@ bool Player::battle(Engimon wildEngimon)
         switchActiveEngimon();
         return false;
     }
-    // pake method battle dari engimon jgn lupa try catch dri battle
-
-    // if (myEngimon.getPower(myEngimon.getElements()) > wildEngimon.getPower(wildEngimon.getElements()))
-    // {
-    //     addEngimon(wildEngimon);
-    //     myEngimon.addExp(100);
-    //     // dapat random skill item yang kompatibel dengan elemen wildEngimon
-    // }
-    // else
-    // {
-    //     // engimon kita mati
-    //     // dapat memilih engimon active baru
-    // }
 }
 
 void Player::switchActiveEngimon()

@@ -314,6 +314,8 @@ Engimon Engimon::operator+(const Engimon &other) const
     child.setSecondParent(other.getName());
     // TODO : Kurangi level engimon sebesar 30
 
+    // Set level engimon
+
     return child;
 }
 
@@ -324,7 +326,7 @@ Engimon &Engimon::operator*(Engimon &other)
     double otherPower = other.getPower(*this);
     if (ourPower >= otherPower) // Kita menang
     {
-        this->addExp(100); // Masih statik exp yang didapatkan
+        this->addExp(other.cum_exp * 0.3); // Masih statik exp yang didapatkan
         return other;
     }
     else // Musuh menang

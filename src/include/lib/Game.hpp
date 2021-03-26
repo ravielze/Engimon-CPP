@@ -24,12 +24,11 @@ private:
     void swap();
     void breed();
     void cut();
+    void quitGame();
 
 public:
     Game();
     void startGame();
-    void quitGame();
-    void advanceRound();
 };
 
 #endif

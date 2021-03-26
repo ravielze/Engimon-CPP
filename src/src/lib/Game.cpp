@@ -34,15 +34,6 @@ void Game::quitGame()
     gameEnd = true;
 }
 
-void Game::advanceRound()
-{
-    this->round++;
-    // TODO : Kalau turn mod sesuatu == 0, wild engimon gerak
-    if (this->round % 8 == 0)
-    {
-        }
-}
-
 string Game::askCommand()
 {
     vector<string> availableCommand = {"w", "a", "s", "d", "battle", "interact", "learn", "cut", "quit"};
@@ -102,7 +93,6 @@ void Game::processCommand(string command)
         cout << "Command lu salah cuk ...." << endl;
         return;
     }
-    advanceRound();
 }
 
 void Game::movePlayer(string command)
@@ -156,7 +146,6 @@ void Game::battle()
     bool isWinning = this->gameMap.getPlayer().battle(choosenEngimon);
     if (isWinning)
     {
-        // TODO: Hilangkan engimon dari map
         this->gameMap.killEngimon(choosenEngimonLocation.first, choosenEngimonLocation.second);
     }
 }

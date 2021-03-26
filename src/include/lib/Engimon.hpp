@@ -23,7 +23,7 @@ private:
     vector<Skill> skills;
     static int MAX_SKILL;
     static int MAX_CUM_EXP;
-    EntitySource const livingSource;
+    EntitySource livingSource;
 
 public:
     Engimon();

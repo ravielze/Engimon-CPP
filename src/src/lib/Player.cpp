@@ -38,9 +38,12 @@ Player::Player()
     Species starterSpecies;
     starterSpecies = Engidex::getInstance().getSpeciesBySpeciesNumber((index - 1) * 3);
     Engimon starter = Engimon(starterSpecies, EntitySource::WILD);
+    SkillItem si = Engidex::getInstance().createRandomSkillItem(starter.getFirstElement());
+    starter.learn(si);
     starter.show();
     cout << endl;
     this->engimonList + starter;
+    this->activeEngimon = starter;
 }
 
 Engimon Player::getActiveEngimon()
@@ -92,13 +95,24 @@ bool Player::battle(Engimon wildEngimon)
 
         cout << "Cacad engimon lu..." << endl;
         bool canRemove = engimonList - activeEngimon;
-        switchActiveEngimon();
+        try
+        {
+            switchActiveEngimon();
+        }
+        catch (Exception e)
+        {
+            cout << "You have no engimon left in your inventory. huhu" << endl;
+        }
         return false;
     }
 }
 
 void Player::switchActiveEngimon()
 {
+    if (this->engimonList.getCapacity() == 0)
+    {
+        throw Exception::NO_ENGIMON_LEFT;
+    }
     showEngimon();
     cout << "Engimon number to switch : " << endl;
     int index;
@@ -136,7 +150,10 @@ void Player::learn()
     }
     this->engimonList + chosenEngimon;
 }
-
+bool Player::isLost()
+{
+    return this->engimonList.getCapacity() == 0;
+}
 void Player::breed()
 {
     if (this->engimonList.isFull())

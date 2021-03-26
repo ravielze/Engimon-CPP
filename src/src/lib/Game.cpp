@@ -12,6 +12,7 @@ void Game::startGame()
 
     while (!gameEnd)
     {
+        this->gameMap.show();
         printMessage();
         string command = askCommand();
         processCommand(command);
@@ -36,7 +37,7 @@ void Game::quitGame()
 
 string Game::askCommand()
 {
-    vector<string> availableCommand = {"w", "a", "s", "d", "battle", "interact", "learn", "cut", "quit"};
+    vector<string> availableCommand = {"w", "a", "s", "d", "battle", "interact", "learn", "cut", "quit", "engidex"};
 
     while (true)
     {
@@ -87,6 +88,13 @@ void Game::processCommand(string command)
     else if (command == "quit")
     {
         quitGame();
+        exit(0);
+    }
+    else if (command == "engidex")
+    {
+        int page = 1;
+        cin >> page;
+        Engidex::getInstance().show(page);
     }
     else
     {
@@ -128,14 +136,15 @@ void Game::battle()
         cout << "No surrounding Engimon to battle" << endl;
         return;
     }
-    cout << "Choose engimon to battle : " << endl;
+    cout << "Available engimon to battle : " << endl;
     int index = 1;
     for (auto itr = surroundingEngimon.begin(); itr != surroundingEngimon.end(); itr++)
     {
-        cout << index << "\t";
+        cout << index << ".\t";
         itr->second.show();
         index++;
     }
+    cout << "Choose engimon to battle : ";
     cin >> index;
     pair<int, int> choosenEngimonLocation;
     Engimon choosenEngimon;
@@ -143,11 +152,14 @@ void Game::battle()
     advance(itr, index - 1);
     choosenEngimonLocation = itr->first;
     choosenEngimon = itr->second;
+    cout << "You choose : " << endl;
+    choosenEngimon.show();
     bool isWinning = this->gameMap.getPlayer().battle(choosenEngimon);
     if (isWinning)
     {
         this->gameMap.killEngimon(choosenEngimonLocation.first, choosenEngimonLocation.second);
     }
+    //if (this->gameMap.getPlayer().)
 }
 
 void Game::interact()

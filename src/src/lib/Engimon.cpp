@@ -43,6 +43,7 @@ Engimon &Engimon::operator=(const Engimon &engimon)
 {
     Species::operator=(engimon);
     this->name = engimon.name;
+    this->livingSource = engimon.livingSource;
     this->parent.first = engimon.parent.first;
     this->parent.second = engimon.parent.second;
     this->level = engimon.level;
@@ -107,22 +108,29 @@ void Engimon::show() const
 {
     // Nanti lah ya hehe
     Species::show();
-    cout << endl;
     if (this->name != this->speciesName)
     {
-        cout << "Name \t: " << name << endl;
+        cout << "\t" << name;
     }
-    cout << "Engimon Source : " << convertEntitySourceToString(this->getEntitySource()) << endl;
+    cout << "\t" << convertEntitySourceToString(this->getEntitySource()) << endl;
     if (this->getEntitySource() == EntitySource::BREEDING)
     {
-        cout << "First parent : " << this->parent.first << endl;
-        cout << "Second parent : " << this->parent.second << endl;
+        cout << "\t(" << this->parent.first << ",";
+        cout << "" << this->parent.second << ")";
     }
-    cout << "Skills : " << endl;
-    for (int i = 0; i < skills.size(); i++)
+    if (skills.size() > 0)
     {
-        cout << skills[i].getName() << "\t" << skills[i].getPower() << endl;
+        cout << "Skills : " << endl;
+        for (int i = 0; i < skills.size(); i++)
+        {
+            cout << skills[i].getName() << "\t" << skills[i].getPower() << endl;
+        }
     }
+    else
+    {
+        cout << "No Skills." << endl;
+    }
+    cout << endl;
 }
 
 double Engimon::getPower(const Elementum &other)
@@ -324,6 +332,8 @@ Engimon &Engimon::operator*(Engimon &other)
 {
     double ourPower = this->getPower(other);
     double otherPower = other.getPower(*this);
+    cout << "Your power : \t" << ourPower << endl;
+    cout << "Enemy power : \t" << otherPower << endl;
     if (ourPower >= otherPower) // Kita menang
     {
         this->addExp(other.cum_exp * 0.3); // Masih statik exp yang didapatkan

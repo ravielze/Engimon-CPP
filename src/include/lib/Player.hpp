@@ -28,6 +28,7 @@ public:
     void showSkillItem();
     void learn();
     void breed();
+    bool isLost();
 };
 
 #endif

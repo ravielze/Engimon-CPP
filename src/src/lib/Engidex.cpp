@@ -33,7 +33,7 @@ Engidex::Engidex()
 
     // Fire x Electric
     this->operator+(Species("Cuma Keong", {Element::FIRE, Element::ELECTRIC}, "gaskeun"));
-    this->operator+(Species("Naga api kesetrum", {Element::FIRE, Element::ELECTRIC}, "oof"));
+    this->operator+(Species("Api halilintar", {Element::FIRE, Element::ELECTRIC}, "oof"));
     this->operator+(Species("Laprak", {Element::FIRE, Element::ELECTRIC}, "tpb"));
 
     // Water x Ground
@@ -48,44 +48,44 @@ Engidex::Engidex()
 
     // Add skill SkillItem(string itemName, Skill skill, ItemType it);
     // Ice
-    this->operator+(SkillItem("Tergelincir es", Skill("Tergelincir Es", 1, {Element::ICE}), ItemType::HM));
-    this->operator+(SkillItem("Email asisten st*ma", Skill("Email asisten st*ma", 1, {Element::ICE}), ItemType::HM));
-    this->operator+(SkillItem("Terserah kamu aja", Skill("Terserah kamu aja", 2, {Element::ICE}), ItemType::HM));
-    this->operator+(SkillItem("Tatapan dingin", Skill("Tatapan dingin", 2, {Element::ICE}), ItemType::HM));
-    this->operator+(SkillItem("Penenggelam Titanic", Skill("Penenggelam Titanic", 3, {Element::ICE}), ItemType::HM));
-    this->operator+(SkillItem("Molding type: Ice Bridge", Skill("Molding type: Ice Bridge", 3, {Element::ICE}), ItemType::HM));
+    this->operator+(SkillItem("Tergelincir es", Skill("Tergelincir Es", 3, {Element::ICE}), ItemType::HM));
+    this->operator+(SkillItem("Email asisten st*ma", Skill("Email asisten st*ma", 4, {Element::ICE}), ItemType::HM));
+    this->operator+(SkillItem("Terserah kamu aja", Skill("Terserah kamu aja", 5, {Element::ICE}), ItemType::HM));
+    this->operator+(SkillItem("Tatapan dingin", Skill("Tatapan dingin", 6, {Element::ICE}), ItemType::HM));
+    this->operator+(SkillItem("Penenggelam Titanic", Skill("Penenggelam Titanic", 7, {Element::ICE}), ItemType::HM));
+    this->operator+(SkillItem("Molding type: Ice Bridge", Skill("Molding type: Ice Bridge", 8, {Element::ICE}), ItemType::HM));
 
     // Electric
-    this->operator+(SkillItem("Rolling Thunder", Skill("Rolling Thunder", 1, {Element::ELECTRIC}), ItemType::HM));
-    this->operator+(SkillItem("Aliran singkat", Skill("Aliran singkat", 1, {Element::ELECTRIC}), ItemType::HM));
-    this->operator+(SkillItem("Driving Thunder", Skill("Driving Thunder", 2, {Element::ELECTRIC}), ItemType::HM));
-    this->operator+(SkillItem("Colokan listrik", Skill("Colokan listrik", 2, {Element::ELECTRIC}), ItemType::HM));
-    this->operator+(SkillItem("Thunder Apocalypse", Skill("Thunder Apocalypse", 3, {Element::ELECTRIC}), ItemType::HM));
-    this->operator+(SkillItem("Ara ara shock", Skill("Ara ara shock", 3, {Element::ELECTRIC}), ItemType::HM));
+    this->operator+(SkillItem("Rolling Thunder", Skill("Rolling Thunder", 3, {Element::ELECTRIC}), ItemType::HM));
+    this->operator+(SkillItem("Aliran singkat", Skill("Aliran singkat", 4, {Element::ELECTRIC}), ItemType::HM));
+    this->operator+(SkillItem("Driving Thunder", Skill("Driving Thunder", 5, {Element::ELECTRIC}), ItemType::HM));
+    this->operator+(SkillItem("Colokan listrik", Skill("Colokan listrik", 6, {Element::ELECTRIC}), ItemType::HM));
+    this->operator+(SkillItem("Thunder Apocalypse", Skill("Thunder Apocalypse", 7, {Element::ELECTRIC}), ItemType::HM));
+    this->operator+(SkillItem("Ara ara shock", Skill("Ara ara shock", 8, {Element::ELECTRIC}), ItemType::HM));
 
     // Fire
-    this->operator+(SkillItem("Semprotan Api", Skill("Semprotan Api", 1, {Element::FIRE}), ItemType::HM));
-    this->operator+(SkillItem("Mata Api", Skill("Mata Api", 1, {Element::FIRE}), ItemType::HM));
-    this->operator+(SkillItem("Hell Fire", Skill("Hell Fire", 2, {Element::FIRE}), ItemType::HM));
-    this->operator+(SkillItem("Fluter By", Skill("Fluter By", 2, {Element::FIRE}), ItemType::HM));
-    this->operator+(SkillItem("Baron Bunny", Skill("Baron Bunny", 3, {Element::FIRE}), ItemType::HM));
-    this->operator+(SkillItem("Jumpty Dumpty", Skill("Jumpty Dumpty", 3, {Element::FIRE}), ItemType::HM));
+    this->operator+(SkillItem("Semprotan Api", Skill("Semprotan Api", 3, {Element::FIRE}), ItemType::HM));
+    this->operator+(SkillItem("Mata Api", Skill("Mata Api", 4, {Element::FIRE}), ItemType::HM));
+    this->operator+(SkillItem("Hell Fire", Skill("Hell Fire", 5, {Element::FIRE}), ItemType::HM));
+    this->operator+(SkillItem("Fluter By", Skill("Fluter By", 6, {Element::FIRE}), ItemType::HM));
+    this->operator+(SkillItem("Baron Bunny", Skill("Baron Bunny", 7, {Element::FIRE}), ItemType::HM));
+    this->operator+(SkillItem("Jumpty Dumpty", Skill("Jumpty Dumpty", 8, {Element::FIRE}), ItemType::HM));
 
     // Ground
-    this->operator+(SkillItem("Goyangan Albedo", Skill("Goyangan Albedo", 1, {Element::GROUND}), ItemType::HM));
-    this->operator+(SkillItem("Batu jatoh", Skill("Batu jatoh", 1, {Element::GROUND}), ItemType::HM));
-    this->operator+(SkillItem("Tiang Batu", Skill("Tiang Batu", 2, {Element::GROUND}), ItemType::HM));
-    this->operator+(SkillItem("Rock Throw", Skill("Rock Throw", 2, {Element::GROUND}), ItemType::HM));
-    this->operator+(SkillItem("Bumi bergetar", Skill("Bumi bergetar", 3, {Element::GROUND}), ItemType::HM));
-    this->operator+(SkillItem("Tendou Banshou", Skill("Tendou Banshou", 3, {Element::GROUND}), ItemType::HM));
+    this->operator+(SkillItem("Goyangan Albedo", Skill("Goyangan Albedo", 3, {Element::GROUND}), ItemType::HM));
+    this->operator+(SkillItem("Batu jatoh", Skill("Batu jatoh", 4, {Element::GROUND}), ItemType::HM));
+    this->operator+(SkillItem("Tiang Batu", Skill("Tiang Batu", 5, {Element::GROUND}), ItemType::HM));
+    this->operator+(SkillItem("Rock Throw", Skill("Rock Throw", 6, {Element::GROUND}), ItemType::HM));
+    this->operator+(SkillItem("Bumi bergetar", Skill("Bumi bergetar", 7, {Element::GROUND}), ItemType::HM));
+    this->operator+(SkillItem("Tendou Banshou", Skill("Tendou Banshou", 8, {Element::GROUND}), ItemType::HM));
 
     // Water
-    this->operator+(SkillItem("Splash splash", Skill("Splash splash", 1, {Element::WATER}), ItemType::HM));
-    this->operator+(SkillItem("Swimming swimming", Skill("Swimming swimming", 1, {Element::WATER}), ItemType::HM));
-    this->operator+(SkillItem("Siraman rohani", Skill("Siraman rohani", 2, {Element::WATER}), ItemType::HM));
-    this->operator+(SkillItem("Gelembung air", Skill("Gelembung air", 2, {Element::WATER}), ItemType::HM));
-    this->operator+(SkillItem("Siraman Oceanid", Skill("Siraman Oceanid", 3, {Element::WATER}), ItemType::HM));
-    this->operator+(SkillItem("Barbara Beam", Skill("Barbara Beam", 3, {Element::WATER}), ItemType::HM));
+    this->operator+(SkillItem("Splash splash", Skill("Splash splash", 3, {Element::WATER}), ItemType::HM));
+    this->operator+(SkillItem("Swimming swimming", Skill("Swimming swimming", 4, {Element::WATER}), ItemType::HM));
+    this->operator+(SkillItem("Siraman rohani", Skill("Siraman rohani", 5, {Element::WATER}), ItemType::HM));
+    this->operator+(SkillItem("Gelembung air", Skill("Gelembung air", 6, {Element::WATER}), ItemType::HM));
+    this->operator+(SkillItem("Siraman Oceanid", Skill("Siraman Oceanid", 7, {Element::WATER}), ItemType::HM));
+    this->operator+(SkillItem("Barbara Beam", Skill("Barbara Beam", 8, {Element::WATER}), ItemType::HM));
 }
 
 void Engidex::show(int page) const
@@ -101,7 +101,9 @@ void Engidex::show(int page) const
             {
                 break;
             }
+            cout << endl;
         }
+        cout << endl;
     }
 }
 

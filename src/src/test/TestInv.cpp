@@ -4,19 +4,19 @@ using namespace std;
 int main()
 {
 
-    Species randomPokemon("random", {Element::FIRE, Element::ELECTRIC}, {"test"});
-    Species lanturn("Lanturn", {Element::FIRE, Element::ELECTRIC}, {"test"});
-    Species pikachu("Pikachu", {Element::ELECTRIC, Element::GROUND}, {"te"});
+    // Species randomPokemon("random", {Element::FIRE, Element::ELECTRIC}, {"test"});
+    // Species lanturn("Lanturn", {Element::FIRE, Element::ELECTRIC}, {"test"});
+    // Species pikachu("Pikachu", {Element::ELECTRIC, Element::GROUND}, {"te"});
 
-    Engimon myLanturn(lanturn, EntitySource::WILD, "mylanturn");
-    Engimon myPikachu(pikachu, EntitySource::WILD);
+    // Engimon myLanturn(lanturn, EntitySource::WILD, "mylanturn");
+    // Engimon myPikachu(pikachu, EntitySource::WILD);
 
-    Inventory<Engimon> engimonInventory(10);
+    // Inventory<Engimon> engimonInventory(10);
 
-    engimonInventory + myLanturn;
-    engimonInventory + myPikachu;
+    // engimonInventory + myLanturn;
+    // engimonInventory + myPikachu;
 
-    engimonInventory.show(1);
+    // engimonInventory.show(1);
     // Skill s;
     // SkillItem si1("ABCD", s, ItemType::OTHER);
     // SkillItem si2("LALA", s, ItemType::OTHER);

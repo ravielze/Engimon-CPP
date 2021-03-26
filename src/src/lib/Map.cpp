@@ -1,6 +1,6 @@
 #include "lib/Map.hpp"
 #define VEIN_CHANCE 65
-#define ENGIMON_MOVE_1_PER_CHANCE 3
+#define ENGIMON_MOVE_1_PER_CHANCE 2
 #define TREE_CHANCE 10
 #define VEIN_TREE_CHANCE 28
 #define ROCK_CHANCE 9
@@ -146,6 +146,7 @@ void Map::generateTerrainEngimon()
         }
     }
 
+    this->spawnPlayer();
     int amountsmallEngimon = randomInt(3, 7);
     int amountbigEngimon = randomInt(4, 6);
     Species unknownSpecies;
@@ -266,13 +267,16 @@ void Map::cutTree()
 {
     int x = this->playerLocation.first;
     int y = this->playerLocation.second;
-    for (int i = x - 1; i < x + 1; i++)
+    for (int i = x - 1; i <= x + 1; i++)
     {
-        for (int j = y - 1; i < y + 1; i++)
+        for (int j = y - 1; j <= y + 1; j++)
         {
-            if (this->storageEntity[j][i] == Entity::T)
+            if (isValidCoordinate(i, j))
             {
-                modifyEntity(i, j, Entity::NONE);
+                if (this->storageEntity[j][i] == Entity::T)
+                {
+                    modifyEntity(i, j, Entity::NONE);
+                }
             }
         }
     }
@@ -294,6 +298,29 @@ void Map::spawnPlayer()
     this->storageEntity[y][x] = Entity::P;
     this->playerLocation.first = x;
     this->playerLocation.second = y;
+    bool found = false;
+    for (int yi = y - 1; yi <= y + 1; yi++)
+    {
+        for (int xi = x - 1; xi <= x + 1; xi++)
+        {
+            if (!isObstruct(xi, yi))
+            {
+                this->engimonLocation.first = xi;
+                this->engimonLocation.second = yi;
+                found = true;
+                break;
+            }
+        }
+        if (found)
+        {
+            break;
+        }
+    }
+    if (!found)
+    {
+        spawnPlayer();
+    }
+    //todo engimon location
 }
 
 bool Map::isObstruct(int x, int y)
@@ -315,7 +342,6 @@ Map::Map()
     this->playerLocation = pair<int, int>(-1, -1);
     this->engimonLocation = pair<int, int>(-1, -1);
     this->generateTerrainEngimon();
-    this->spawnPlayer();
 }
 
 void Map::show() const
@@ -334,62 +360,77 @@ void Map::movePlayer(Direction direct)
 {
     int x = this->playerLocation.first;
     int y = this->playerLocation.second;
+    bool switchPlaceWithEngimon = false;
     switch (direct)
     {
     case Direction::NORTH:
-        if (isObstruct(x, y - 1))
+        if (isObstruct(x, y - 1) && this->storageEntity[y - 1][x] != Entity::X)
         {
             return;
         }
-        if (this->storageEntity[x][y + 1] == Entity::NONE)
+        if (this->storageEntity[y - 1][x] != Entity::X)
         {
-            this->playerLocation = pair<int, int>(x, y + 1);
-            this->storageEntity[y][x] = Entity::NONE;
-            this->storageEntity[y + 1][x] = Entity::P;
+            switchPlaceWithEngimon = true;
         }
+        this->playerLocation = pair<int, int>(x, y - 1);
+        this->storageEntity[y][x] = Entity::NONE;
+        this->storageEntity[y - 1][x] = Entity::P;
+        break;
 
     case Direction::WEST:
-        if (isObstruct(x + 1, y))
+        if (isObstruct(x - 1, y) && this->storageEntity[y][x - 1] != Entity::X)
         {
             return;
         }
-        if (this->storageEntity[x - 1][y] == Entity::NONE)
+        if (this->storageEntity[y][x - 1] != Entity::X)
         {
-            this->playerLocation = pair<int, int>(x - 1, y);
-            this->storageEntity[y][x] = Entity::NONE;
-            this->storageEntity[y][x - 1] = Entity::P;
+            switchPlaceWithEngimon = true;
         }
+        this->playerLocation = pair<int, int>(x - 1, y);
+        this->storageEntity[y][x] = Entity::NONE;
+        this->storageEntity[y][x - 1] = Entity::P;
+        break;
 
     case Direction::EAST:
-        if (isObstruct(x - 1, y))
+        if (isObstruct(x + 1, y) && this->storageEntity[y][x + 1] != Entity::X)
         {
             return;
         }
-        if (this->storageEntity[x + 1][y] == Entity::NONE)
+        if (this->storageEntity[y][x + 1] != Entity::X)
         {
-            this->playerLocation = pair<int, int>(x + 1, y);
-            this->storageEntity[y][x] = Entity::NONE;
-            this->storageEntity[y][x + 1] = Entity::P;
+            switchPlaceWithEngimon = true;
         }
+        this->playerLocation = pair<int, int>(x + 1, y);
+        this->storageEntity[y][x] = Entity::NONE;
+        this->storageEntity[y][x + 1] = Entity::P;
+        break;
 
     case Direction::SOUTH:
-        if (isObstruct(x, y + 1))
+        if (isObstruct(x, y + 1) && this->storageEntity[y + 1][x] != Entity::X)
         {
             return;
         }
-        if (this->storageEntity[x][y - 1] == Entity::NONE)
+
+        if (this->storageEntity[y + 1][x] != Entity::X)
         {
-            this->playerLocation = pair<int, int>(x, y - 1);
-            this->storageEntity[y][x] = Entity::NONE;
-            this->storageEntity[y - 1][x] = Entity::P;
+            switchPlaceWithEngimon = true;
         }
+        this->playerLocation = pair<int, int>(x, y + 1);
+        this->storageEntity[y][x] = Entity::NONE;
+        this->storageEntity[y + 1][x] = Entity::P;
+        break;
     }
+    int engimonBeforeX = this->engimonLocation.first;
+    int engimonBeforeY = this->engimonLocation.second;
     this->engimonLocation.first = x;
     this->engimonLocation.second = y;
     //engimon sendiri nabrak blom dibuat
 
     this->storageEntity[y][x] = Entity::X;
-    moveWildEngimon();
+    if (switchPlaceWithEngimon)
+    {
+        this->storageEntity[engimonBeforeY][engimonBeforeX] = Entity::NONE;
+    }
 }
 
 bool Map::canWildEngimonWalk(int x, int y, Entity ent)
@@ -434,7 +475,7 @@ void Map::moveWildEngimon()
                     {
                     // Bergerak ke north
                     case (0):
-                        if (!isObstruct(x, y - 1) && !canWildEngimonWalk(x, y - 1, ent))
+                        if (!isObstruct(x, y - 1) && canWildEngimonWalk(x, y - 1, ent))
                         {
                             this->storageEntity[y][x] = Entity::NONE;
                             this->storageEntity[y - 1][x] = ent;
@@ -445,7 +486,7 @@ void Map::moveWildEngimon()
 
                     // Bergerak ke west
                     case (1):
-                        if (!isObstruct(x + 1, y) && !canWildEngimonWalk(x + 1, y, ent))
+                        if (!isObstruct(x + 1, y) && canWildEngimonWalk(x + 1, y, ent))
                         {
                             this->storageEntity[y][x] = Entity::NONE;
                             this->storageEntity[y][x + 1] = ent;
@@ -456,7 +497,7 @@ void Map::moveWildEngimon()
 
                     // Bergerak ke east
                     case (2):
-                        if (!isObstruct(x - 1, y) && !canWildEngimonWalk(x - 1, y, ent))
+                        if (!isObstruct(x - 1, y) && canWildEngimonWalk(x - 1, y, ent))
                         {
                             this->storageEntity[y][x] = Entity::NONE;
                             this->storageEntity[y][x - 1] = ent;
@@ -467,7 +508,7 @@ void Map::moveWildEngimon()
 
                     // Bergerak ke south
                     case (3):
-                        if (!isObstruct(x, y + 1) && !canWildEngimonWalk(x, y + 1, ent))
+                        if (!isObstruct(x, y + 1) && canWildEngimonWalk(x, y + 1, ent))
                         {
                             this->storageEntity[y][x] = Entity::NONE;
                             this->storageEntity[y + 1][x] = ent;
@@ -477,6 +518,7 @@ void Map::moveWildEngimon()
                         }
                     }
                 }
+                break;
             }
         }
     }
@@ -485,18 +527,21 @@ void Map::moveWildEngimon()
 map<pair<int, int>, Engimon> Map::getSurroundingEngimon(int xi, int yi)
 {
     map<pair<int, int>, Engimon> surroundingEngimon;
-
+    cout << xi << " " << yi << endl;
     for (int y = yi - 1; y <= yi + 1; y++)
     {
-        for (int x = xi - 1; xi <= xi + 1; x++)
+        for (int x = xi - 1; x <= xi + 1; x++)
         {
-            if (x == xi and y == yi)
+            if (isValidCoordinate(x, y))
             {
-                continue;
-            }
-            if (mapEntityType(getEntity(x, y)) == EntityType::WILD_ENGIMON)
-            {
-                surroundingEngimon.insert({pair<int, int>(x, y), this->storageWildEngimon[y][x]});
+                if (x == xi and y == yi)
+                {
+                    continue;
+                }
+                if (mapEntityType(getEntity(x, y)) == EntityType::WILD_ENGIMON)
+                {
+                    surroundingEngimon.insert({pair<int, int>(x, y), this->storageWildEngimon[y][x]});
+                }
             }
         }
     }
@@ -516,4 +561,9 @@ void Map::killEngimon(int x, int y)
 {
     this->storageEntity[y][x] = Entity::NONE;
     this->storageWildEngimon[y][x] = Engimon();
+}
+
+pair<int, int> Map::getPlayerLocation()
+{
+    return this->playerLocation;
 }

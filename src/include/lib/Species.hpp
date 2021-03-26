@@ -11,13 +11,13 @@ class Species : public Elementum
 protected:
     int speciesNumber;
     string speciesName;
-    vector<string> message;
+    string message;
     static int TAB_COUNT;
 
 public:
     Species();
     Species(const Species &);
-    Species(string name, vector<Element> elements, vector<string> messages);
+    Species(string name, vector<Element> elements, string message);
 
     string getSpeciesName() const;
 

@@ -27,6 +27,7 @@ public:
     void showEngimon();
     void showSkillItem();
     void learn();
+    void breed();
 };
 
 #endif

@@ -2,11 +2,11 @@
 #define VEIN_CHANCE 65
 #define ENGIMON_MOVE_1_PER_CHANCE 3
 #define TREE_CHANCE 10
-#define VEIN_TREE_CHANCE 32
+#define VEIN_TREE_CHANCE 28
 #define ROCK_CHANCE 9
-#define TREE_LIMIT 110
+#define TREE_LIMIT 130
 
-Player Map::getPlayer()
+Player &Map::getPlayer()
 {
     return this->player;
 }
@@ -44,9 +44,8 @@ void Map::modifyEntity(int x, int y, Entity e)
     this->storageEntity[y][x] = e;
 }
 
-void Map::generateTerrain()
+void Map::generateTerrainEngimon()
 {
-    srand(time(NULL) % getpid());
     int waterVein = randomInt(5, 10);
     int waterPond = randomInt(4, 8);
     for (int i = 0; i < waterPond; i++)
@@ -146,22 +145,135 @@ void Map::generateTerrain()
             }
         }
     }
-}
 
-void Map::generateEngimon()
-{
-    srand(time(NULL) % getpid());
-    int amountsmallEngimon = randomInt(3, 10); //3 sampai 10
-    int amountbigEngimon = randomInt(2, 5);    //2 sampai 5
-    vector<Entity> entities(amountsmallEngimon + amountbigEngimon);
-    vector<Engimon> engimon(amountsmallEngimon + amountbigEngimon);
+    int amountsmallEngimon = randomInt(3, 7);
+    int amountbigEngimon = randomInt(4, 6);
+    Species unknownSpecies;
+    Engimon wildEngimon(unknownSpecies, EntitySource::WILD);
     for (int i = 0; i < amountsmallEngimon; i++)
     {
-        int randomSmall = (randomInt(0, 7) * 2) + 1;
+        int randomSmall = randomInt(0, 7) * 2 + 1;
         Entity currentEntity = static_cast<Entity>(randomSmall);
-        entities.push_back(currentEntity);
-        switch (currentEntity)
+        if (currentEntity == Entity::w)
         {
+            wildEngimon = Engimon(Engidex::getInstance().getRandomSpecies(Element::WATER), EntitySource::WILD);
+        }
+        else if (currentEntity == Entity::i)
+        {
+            wildEngimon = Engimon(Engidex::getInstance().getRandomSpecies(Element::ICE), EntitySource::WILD);
+        }
+        else if (currentEntity == Entity::f)
+        {
+            wildEngimon = Engimon(Engidex::getInstance().getRandomSpecies(Element::FIRE), EntitySource::WILD);
+        }
+        else if (currentEntity == Entity::g)
+        {
+            wildEngimon = Engimon(Engidex::getInstance().getRandomSpecies(Element::GROUND), EntitySource::WILD);
+        }
+        else if (currentEntity == Entity::e)
+        {
+            wildEngimon = Engimon(Engidex::getInstance().getRandomSpecies(Element::ELECTRIC), EntitySource::WILD);
+        }
+        else if (currentEntity == Entity::l)
+        {
+            wildEngimon = Engimon(Engidex::getInstance().getRandomSpecies(Element::ELECTRIC, Element::FIRE), EntitySource::WILD);
+        }
+        else if (currentEntity == Entity::s)
+        {
+            wildEngimon = Engimon(Engidex::getInstance().getRandomSpecies(Element::WATER, Element::ICE), EntitySource::WILD);
+        }
+        else if (currentEntity == Entity::n)
+        {
+            wildEngimon = Engimon(Engidex::getInstance().getRandomSpecies(Element::WATER, Element::GROUND), EntitySource::WILD);
+        }
+        wildEngimon.addExp(randomInt(0, 1000));
+        int X = randomInt(0, this->sizeMap - 1);
+        int Y = randomInt(0, this->sizeMap - 1);
+        while (isObstruct(X, Y) || !canWildEngimonWalk(X, Y, currentEntity))
+        {
+            X++;
+            if (X >= this->sizeMap)
+            {
+                Y++;
+                X = 0;
+                if (Y >= this->sizeMap)
+                {
+                    Y = 0;
+                }
+            }
+        }
+        this->storageWildEngimon[Y][X] = wildEngimon;
+        this->storageEntity[Y][X] = currentEntity;
+    }
+    for (int i = 0; i < amountbigEngimon; i++)
+    {
+        int randomBig = randomInt(0, 7) * 2;
+        Entity currentEntity = static_cast<Entity>(randomBig);
+        if (currentEntity == Entity::W)
+        {
+            wildEngimon = Engimon(Engidex::getInstance().getRandomSpecies(Element::WATER), EntitySource::WILD);
+        }
+        else if (currentEntity == Entity::I)
+        {
+            wildEngimon = Engimon(Engidex::getInstance().getRandomSpecies(Element::ICE), EntitySource::WILD);
+        }
+        else if (currentEntity == Entity::F)
+        {
+            wildEngimon = Engimon(Engidex::getInstance().getRandomSpecies(Element::FIRE), EntitySource::WILD);
+        }
+        else if (currentEntity == Entity::G)
+        {
+            wildEngimon = Engimon(Engidex::getInstance().getRandomSpecies(Element::GROUND), EntitySource::WILD);
+        }
+        else if (currentEntity == Entity::E)
+        {
+            wildEngimon = Engimon(Engidex::getInstance().getRandomSpecies(Element::ELECTRIC), EntitySource::WILD);
+        }
+        else if (currentEntity == Entity::L)
+        {
+            wildEngimon = Engimon(Engidex::getInstance().getRandomSpecies(Element::ELECTRIC, Element::FIRE), EntitySource::WILD);
+        }
+        else if (currentEntity == Entity::S)
+        {
+            wildEngimon = Engimon(Engidex::getInstance().getRandomSpecies(Element::WATER, Element::ICE), EntitySource::WILD);
+        }
+        else if (currentEntity == Entity::N)
+        {
+            wildEngimon = Engimon(Engidex::getInstance().getRandomSpecies(Element::WATER, Element::GROUND), EntitySource::WILD);
+        }
+        wildEngimon.addExp(randomInt(1000, 2000));
+        int X = randomInt(0, this->sizeMap - 1);
+        int Y = randomInt(0, this->sizeMap - 1);
+        while (isObstruct(X, Y) || !canWildEngimonWalk(X, Y, currentEntity))
+        {
+            X++;
+            if (X >= this->sizeMap)
+            {
+                Y++;
+                X = 0;
+                if (Y >= this->sizeMap)
+                {
+                    Y = 0;
+                }
+            }
+        }
+        this->storageWildEngimon[Y][X] = wildEngimon;
+        this->storageEntity[Y][X] = currentEntity;
+    }
+}
+
+void Map::cutTree()
+{
+    int x = this->playerLocation.first;
+    int y = this->playerLocation.second;
+    for (int i = x - 1; i < x + 1; i++)
+    {
+        for (int j = y - 1; i < y + 1; i++)
+        {
+            if (this->storageEntity[j][i] == Entity::T)
+            {
+                modifyEntity(i, j, Entity::NONE);
+            }
         }
     }
 }
@@ -202,11 +314,8 @@ Map::Map()
     this->storageWildEngimon = vector<vector<Engimon>>(this->sizeMap, vector<Engimon>(this->sizeMap, Engimon()));
     this->playerLocation = pair<int, int>(-1, -1);
     this->engimonLocation = pair<int, int>(-1, -1);
-    this->generateTerrain();
-    this->generateEngimon();
+    this->generateTerrainEngimon();
     this->spawnPlayer();
-    this->canWildEngimonWalk(0, 0, Entity::W);
-    this->canWildEngimonWalk(0, 0, Entity::G);
 }
 
 void Map::show() const
@@ -279,7 +388,7 @@ void Map::movePlayer(Direction direct)
     this->engimonLocation.second = y;
     //engimon sendiri nabrak blom dibuat
 
-    // Engimon juga move
+    this->storageEntity[y][x] = Entity::X;
     moveWildEngimon();
 }
 
@@ -297,14 +406,13 @@ bool Map::canWildEngimonWalk(int x, int y, Entity ent)
     }
     else if (this->storageTerrain[y][x] == MapTerrain::o)
     {
-        return (entityID < 6 && entityID > 11);
+        return (entityID < 6 || entityID > 11);
     }
     return true;
 }
 
 void Map::moveWildEngimon()
 {
-    srand(time(NULL));
     // Looping untuk semua wild engimon
     int x = 0, y = 0;
     for (x = 0; x < this->storageEntity[0].size(); x++)
@@ -402,4 +510,10 @@ Entity Map::getEntity(int x, int y)
         return Entity::NONE;
     }
     return storageEntity[y][x];
+}
+
+void Map::killEngimon(int x, int y)
+{
+    this->storageEntity[y][x] = Entity::NONE;
+    this->storageWildEngimon[y][x] = Engimon();
 }

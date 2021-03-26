@@ -2,26 +2,50 @@
 
 Game::Game()
 {
+    gameEnd = true;
 }
 
 void Game::startGame()
 {
     this->round = 1;
+    gameEnd = false;
+
+    while (!gameEnd)
+    {
+        printMessage();
+        string command = askCommand();
+        processCommand(command);
+    }
+    deadMessage();
+}
+
+void Game::deadMessage()
+{
+    cout << "Cupu kamu cuk" << endl;
+}
+
+void Game::printMessage()
+{
+    cout << "Ronde sekarang : " << this->round << endl;
 }
 
 void Game::quitGame()
 {
+    gameEnd = true;
 }
 
 void Game::advanceRound()
 {
     this->round++;
     // TODO : Kalau turn mod sesuatu == 0, wild engimon gerak
+    if (this->round % 8 == 0)
+    {
+        }
 }
 
 string Game::askCommand()
 {
-    vector<string> availableCommand = {"w", "a", "s", "d", "battle", "interact", "learn", "cut"};
+    vector<string> availableCommand = {"w", "a", "s", "d", "battle", "interact", "learn", "cut", "quit"};
 
     while (true)
     {
@@ -44,7 +68,6 @@ void Game::processCommand(string command)
     if (command == "w" || command == "a" || command == "s" || command == "d")
     {
         movePlayer(command);
-        return;
     }
     else if (command == "battle")
     {
@@ -70,10 +93,16 @@ void Game::processCommand(string command)
     {
         breed();
     }
+    else if (command == "quit")
+    {
+        quitGame();
+    }
     else
     {
         cout << "Command lu salah cuk ...." << endl;
+        return;
     }
+    advanceRound();
 }
 
 void Game::movePlayer(string command)
@@ -128,6 +157,7 @@ void Game::battle()
     if (isWinning)
     {
         // TODO: Hilangkan engimon dari map
+        this->gameMap.killEngimon(choosenEngimonLocation.first, choosenEngimonLocation.second);
     }
 }
 
@@ -138,6 +168,7 @@ void Game::interact()
 
 void Game::learn()
 {
+    this->gameMap.getPlayer().learn();
 }
 
 void Game::swap()
@@ -145,6 +176,12 @@ void Game::swap()
     this->gameMap.getPlayer().switchActiveEngimon();
 }
 
+void Game::breed()
+{
+    this->gameMap.getPlayer().breed();
+}
+
 void Game::cut()
 {
+    this->gameMap.cutTree();
 }

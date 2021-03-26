@@ -1,23 +1,24 @@
 #include "lib/Species.hpp"
 int Species::TAB_COUNT = 1;
 
-Species::Species() : message(vector<string>(0))
+Species::Species()
 {
     this->speciesNumber = -1;
-    this->speciesName = "";
+    this->speciesName = "Unspecified";
+    this->message = "";
 }
 
 Species::Species(const Species &aspecies) : Elementum(aspecies)
 {
-    this->speciesNumber = aspecies.speciesNumber;
-    this->speciesName = aspecies.speciesName;
-    if (aspecies.message.capacity() > 0)
+    if (aspecies.speciesName.size() != 0)
     {
-        this->message = vector<string>(aspecies.message);
+        this->speciesName = aspecies.speciesName;
     }
+    this->speciesNumber = aspecies.speciesNumber;
+    this->message = aspecies.message;
 }
 
-Species::Species(string name, vector<Element> elem, vector<string> messages) : Elementum(elem)
+Species::Species(string name, vector<Element> elem, string message) : Elementum(elem)
 {
     this->speciesNumber = -1;
     this->speciesName = name;
@@ -25,22 +26,13 @@ Species::Species(string name, vector<Element> elem, vector<string> messages) : E
     {
         TAB_COUNT = (this->speciesName.size() + 8) / 8;
     }
-    if (messages.capacity() > 0)
-    {
-        this->message = messages;
-    }
+    this->message.clear();
+    this->message = message;
 }
 
 void Species::sendMessage() const
 {
-    if (this->message.empty())
-    {
-        cout << "[" << this->speciesName << "]: hmmm" << endl;
-        return;
-    }
-    int randomIdx;
-    randomIdx = rand() % this->message.size();
-    cout << "[" << this->speciesName << "]: " << this->message[randomIdx] << endl;
+    cout << "[" << this->speciesName << "]: " << this->message << endl;
 }
 string Species::getSpeciesName() const
 {
@@ -78,10 +70,7 @@ Species &Species::operator=(const Species &aspecies)
     Elementum::operator=(aspecies);
     this->speciesNumber = aspecies.speciesNumber;
     this->speciesName = aspecies.speciesName;
-    if (aspecies.message.size() > 0)
-    {
-        this->message = vector<string>(aspecies.message);
-    }
+    this->message = aspecies.message;
     // this->message.clear();
     // for (int i = 0; i < aspecies.message.size(); i++)
     // {

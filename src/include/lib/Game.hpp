@@ -12,12 +12,9 @@ class Game
 private:
     Map gameMap;
     int round;
-
-public:
-    Game();
-    void startGame();
-    void quitGame();
-    void advanceRound();
+    bool gameEnd;
+    void printMessage();
+    void deadMessage();
     string askCommand();
     void processCommand(string command);
     void movePlayer(string command);
@@ -25,8 +22,14 @@ public:
     void interact();
     void learn();
     void swap();
-    void cut();
     void breed();
+    void cut();
+
+public:
+    Game();
+    void startGame();
+    void quitGame();
+    void advanceRound();
 };
 
 #endif

@@ -37,6 +37,10 @@ public:
     {
         return this->maxCapacity;
     }
+    bool isFull() const
+    {
+        return this->size == this->maxCapacity;
+    }
 
     // Add item ke inventoryperator+(const T &);
     bool operator+(const T &i)
@@ -109,7 +113,8 @@ public:
 
     // Menunjukkan barang di inventory
     void show(int page) const;
-    T &getItemOnIndex(int index)
+
+    T getItemOnIndex(int index)
     {
         auto itr = storage.begin();
         advance(itr, index);
@@ -117,4 +122,4 @@ public:
     }
 };
 
-#endif // __INVENTORY_H__
+#endif // __INVENTORY_H__o

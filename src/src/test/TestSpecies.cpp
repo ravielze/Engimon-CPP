@@ -3,8 +3,7 @@
 int main()
 {
     vector<Element> lanturnElement;
-    lanturnElement.push_back(Element::FIRE);
-    Species lanturn("Lanturn", lanturnElement);
+    //Species lanturn("Lanturn", lanturnElement);
 
     //test fungsi show()
     lanturn.show();
@@ -12,7 +11,7 @@ int main()
     //test setSpeciesNumber dan operator ==
     vector<Element> minumElement;
     minumElement.push_back(Element::FIRE);
-    Species minum("Minum", minumElement);
+    //Species minum("Minum", minumElement);
 
     lanturn.setSpeciesNumber(201);
     minum.setSpeciesNumber(201);

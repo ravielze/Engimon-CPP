@@ -49,6 +49,8 @@ public:
     void addExp(int);
     int getExp() const;
 
+    int getLevel() const;
+
     void setFirstParent(string);
     void setSecondParent(string);
 

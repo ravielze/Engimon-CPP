@@ -60,7 +60,7 @@ public:
     }
 };
 
-Point &getItemOnIndex(vector<Point> array, int index)
+Point &getItemOnIndex(vector<Point> &array, int index)
 {
     return array[index];
 }
@@ -110,8 +110,28 @@ int main()
     //     }
     // }
     // return 0;
-    vector<Point> arrayPoint = {Point(1, 2),
-                                Point(2, 3),
-                                Point(4, 5)};
-    showArray(arrayPoint);
+    // vector<Point> arrayPoint = {Point(1, 2),
+    //                             Point(2, 3),
+    //                             Point(4, 5)};
+    // showArray(arrayPoint);
+    // getItemOnIndex(arrayPoint, 0).x = 5;
+    // showArray(arrayPoint);
+    // string a;
+    // while (1)
+    // {
+    //     cin >> a;
+    //     if (a == "exit")
+    //     {
+    //         break;
+    //     }
+    //     else if (a == "1")
+    //     {
+    //         arrayPoint.pop_back();
+    //     }
+    // }
+    int i = 5;
+    int &k = i;
+    int &j = k;
+    j = 10;
+    cout << i << endl;
 }

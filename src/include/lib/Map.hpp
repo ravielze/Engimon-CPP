@@ -23,8 +23,7 @@ private:
     pair<int, int> playerLocation;
     pair<int, int> engimonLocation;
 
-    void generateTerrain();
-    void generateEngimon();
+    void generateTerrainEngimon();
     void moveWildEngimon();
     void spawnPlayer();
     bool isObstruct(int, int);
@@ -40,7 +39,9 @@ public:
     Map();
     void show() const;
     void movePlayer(Direction);
-    Player getPlayer();
+    void killEngimon(int, int);
+    void cutTree();
+    Player &getPlayer();
     map<pair<int, int>, Engimon> getSurroundingEngimon(int, int);
 
     pair<int, int> getPlayerLocation();

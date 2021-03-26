@@ -3,26 +3,26 @@
 int Engimon::MAX_SKILL = 4;
 int Engimon::MAX_CUM_EXP = 10000;
 
-Engimon::Engimon() : livingSource(EntitySource::UNKNOWN)
+Engimon::Engimon() : livingSource(EntitySource::UNKNOWN), parent(pair<string, string>("", ""))
 {
     this->level = 1;
     this->exp = 0;
     this->cum_exp = 0;
 }
 
-Engimon::Engimon(const Engimon &engimon) : Species(engimon), livingSource(engimon.livingSource)
+Engimon::Engimon(const Engimon &engimon) : Species(engimon), livingSource(engimon.livingSource), parent(pair<string, string>("", ""))
 {
     Species::operator=(engimon);
+    this->name = engimon.name;
     this->parent.first = engimon.parent.first;
     this->parent.second = engimon.parent.second;
     this->level = engimon.level;
     this->exp = engimon.exp;
     this->cum_exp = engimon.cum_exp;
     this->skills = vector<Skill>(engimon.skills);
-    this->name = engimon.name;
 }
 
-Engimon::Engimon(Species &s, EntitySource es) : Species(s), livingSource(es)
+Engimon::Engimon(Species &s, EntitySource es) : Species(s), livingSource(es), parent(pair<string, string>("", ""))
 {
     this->level = 1;
     this->exp = 0;
@@ -30,7 +30,7 @@ Engimon::Engimon(Species &s, EntitySource es) : Species(s), livingSource(es)
     this->name = s.getSpeciesName();
 }
 
-Engimon::Engimon(Species &s, EntitySource es, string name) : Species(s), livingSource(es)
+Engimon::Engimon(Species &s, EntitySource es, string name) : Species(s), livingSource(es), parent(pair<string, string>("", ""))
 {
     this->level = 1;
     this->exp = 0;
@@ -42,13 +42,13 @@ Engimon::Engimon(Species &s, EntitySource es, string name) : Species(s), livingS
 Engimon &Engimon::operator=(const Engimon &engimon)
 {
     Species::operator=(engimon);
+    this->name = engimon.name;
     this->parent.first = engimon.parent.first;
     this->parent.second = engimon.parent.second;
     this->level = engimon.level;
     this->exp = engimon.exp;
     this->cum_exp = engimon.cum_exp;
     this->skills = vector<Skill>(engimon.skills);
-    this->name = engimon.name;
 
     return *this;
 }
@@ -136,6 +136,11 @@ double Engimon::getPower(const Elementum &other)
     return totalSkillPower + level * this->getTotalMultiplier(other);
 }
 
+int Engimon::getLevel() const
+{
+    return this->level;
+}
+
 void Engimon::setFirstParent(string name)
 {
     this->parent.first = name;
@@ -154,6 +159,11 @@ vector<Skill> Engimon::getSkills() const
 // Untuk breeding, this dengan engimon lain, result = anak
 Engimon Engimon::operator+(const Engimon &other) const
 {
+    if (this->getLevel() < 30 || other.getLevel() < 30)
+    {
+        throw Exception::ENGIMON_CANT_BREED;
+    }
+
     // GET SKILLS
     vector<Skill> parentASkills = this->getSkills();
     vector<Skill> parentBSkills = other.getSkills();
@@ -302,6 +312,7 @@ Engimon Engimon::operator+(const Engimon &other) const
     }
     child.setFirstParent(this->getName());
     child.setSecondParent(other.getName());
+    // TODO : Kurangi level engimon sebesar 30
 
     return child;
 }

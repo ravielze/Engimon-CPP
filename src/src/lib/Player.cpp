@@ -23,7 +23,8 @@ Player::Player()
         Engidex::getInstance().getSpeciesBySpeciesNumber(6).simpleShow();
         cout << endl
              << "Pick Number: ";
-        cin >> index;
+        //cin >> index;
+        index = 3;
     }
     cout << endl;
     Species starterSpecies;
@@ -116,18 +117,64 @@ void Player::learn()
 {
     int engimonIndex;
     showEngimon();
+    cout << "Choose Engimon : ";
     cin >> engimonIndex;
+    cout << endl;
     int skillIndex;
     showSkillItem();
+    cout << "Choose Skill Item: ";
     cin >> skillIndex;
+    cout << endl;
+
+    Engimon chosenEngimon = engimonList.getItemOnIndex(engimonIndex);
+    SkillItem chosenSkillItem = ItemList.getItemOnIndex(skillIndex);
+    this->engimonList - chosenEngimon;
     try
     {
-        engimonList.getItemOnIndex(engimonIndex).learn(ItemList.getItemOnIndex(skillIndex));
+        chosenEngimon.learn(chosenSkillItem);
+        // Berhasil learn
+        this->ItemList - chosenSkillItem;
     }
     catch (Exception e)
     {
         // Engimon gabisa learn skill
+        cout << "Skill item that you chose is not compatible with the engimon" << endl;
     }
+    this->engimonList + chosenEngimon;
+}
+
+void Player::breed()
+{
+    if (this->engimonList.isFull())
+    {
+        cout << "Slot engimon sudah penuh" << endl;
+        return;
+    }
+    int parentAIndex;
+    int parentBIndex;
+    showEngimon();
+    cout << "Parent A Index : ";
+    cin >> parentAIndex;
+    cout << endl;
+    cout << "Parent B Index : ";
+    cin >> parentBIndex;
+    cout << endl;
+    Engimon parentA = this->engimonList.getItemOnIndex(parentAIndex);
+    Engimon parentB = this->engimonList.getItemOnIndex(parentBIndex);
+    this->engimonList - parentA;
+    this->engimonList - parentB;
+    try
+    {
+        Engimon baby = parentA + parentB;
+        this->engimonList + baby;
+    }
+    catch (Exception e)
+    {
+        cout << "Engimon belum cukup level untuk melakukan breeding" << endl;
+    }
+
+    this->engimonList + parentA;
+    this->engimonList + parentB;
 }
 
 void Player::interact()

@@ -7,72 +7,85 @@ Engidex::Engidex()
 {
     this->speciesCount = 0;
     // Ice
-    this->operator+(Species("Jason <3 <3 <3", {Element::ICE}, {"gatau", "liat nanti"}));
-    this->operator+(Species("Cermin realita", {Element::ICE}, {"move on mas", "dia punya yang lain"}));
-    this->operator+(Species("Es kental manis", {Element::ICE}, {"ada lima varian rasa", "rasanya selangit"}));
+    this->operator+(Species("Jason <3 <3 <3", {Element::ICE}, "gatau"));
+    this->operator+(Species("Cermin realita", {Element::ICE}, "move on mas"));
+    this->operator+(Species("Es kental manis", {Element::ICE}, "ada lima varian rasa"));
 
     // Electric
-    this->operator+(Species("Tikus Listrik", {Element::ELECTRIC}, {"hachim hachim", "brrrrr"}));
-    this->operator+(Species("Antena", {Element::ELECTRIC}, {"Bad connection", "Lost connection"}));
-    this->operator+(Species("Lightning McQueen", {Element::ELECTRIC}, {"Kechaw", "Kechaw Kechaw"}));
+    this->operator+(Species("Tikus Listrik", {Element::ELECTRIC}, "hachim hachim"));
+    this->operator+(Species("Antena", {Element::ELECTRIC}, "Bad connection"));
+    this->operator+(Species("Lightning McQueen", {Element::ELECTRIC}, "Kechaw Kechaw"));
 
     // Fire
-    this->operator+(Species("Cans lupus familiaris", {Element::FIRE}, {"guk-guk", "aik-aik", "rilis tubes"}));
-    this->operator+(Species("Spark Knight", {Element::FIRE}, {"da-da-da", "uuh-aah"}));
-    this->operator+(Species("Grenade Laut", {Element::FIRE}, {"BOOM", "DHUAR", "BLARR"}));
+    this->operator+(Species("Cans lupus familiaris", {Element::FIRE}, "guk guk"));
+    this->operator+(Species("Spark Knight", {Element::FIRE}, "da da da"));
+    this->operator+(Species("Grenade Laut", {Element::FIRE}, "DHUAR"));
 
     // Ground
-    this->operator+(Species("Penghuni Sekre", {Element::GROUND}, {"gabut itu mindset", "ngapain sok sibuk"}));
-    this->operator+(Species("Tubes 3 biji dedline sama", {Element::GROUND}, {"Mana Sempat", "Keburu Telat"}));
-    this->operator+(Species("Kaum Rebahan", {Element::GROUND}, {"chaos? apa tu", "rebahan dulu gan", "dedline masih lama, chill."}));
+    this->operator+(Species("Penghuni Sekre", {Element::GROUND}, "ngapain sok sibuk"));
+    this->operator+(Species("Tubes 3 biji dedline sama", {Element::GROUND}, "Mana Sempat Keburu Telat"));
+    this->operator+(Species("Kaum Rebahan", {Element::GROUND}, "chill"));
 
     // Water
-    this->operator+(Species("Ikan", {Element::WATER}, {"swimming-swimming", "just keep swimming"}));
-    this->operator+(Species("Kutu air", {Element::WATER}, {"Jaga kebersihan kaki", "Kaki jangan lembab"}));
-    this->operator+(Species("Bintang Laut", {Element::WATER}, {"https://www.youtube.com/watch?v=DtL_giO-EB8"}));
+    this->operator+(Species("Ikan", {Element::WATER}, "swimming swimming"));
+    this->operator+(Species("Kutu air", {Element::WATER}, "Oink"));
+    this->operator+(Species("Bintang Laut", {Element::WATER}, "Patrick"));
 
     // Fire x Electric
-    this->operator+(Species("Cuma Keong", {Element::FIRE, Element::ELECTRIC}, {"gaskeun", "keos"}));
-    this->operator+(Species("Naga api kesetrum", {Element::FIRE, Element::ELECTRIC}, {"oof", "drrrttt"}));
-    this->operator+(Species("Laprak", {Element::FIRE, Element::ELECTRIC}, {"menggelitik dan mencetarkan", "perih dan membakar hati"}));
+    this->operator+(Species("Cuma Keong", {Element::FIRE, Element::ELECTRIC}, "gaskeun"));
+    this->operator+(Species("Naga api kesetrum", {Element::FIRE, Element::ELECTRIC}, "oof"));
+    this->operator+(Species("Laprak", {Element::FIRE, Element::ELECTRIC}, "tpb"));
 
     // Water x Ground
-    this->operator+(Species("Belut Batu", {Element::WATER, Element::GROUND}, {"gelud sini", "meliat-liat gmn gt"}));
-    this->operator+(Species("Kucing ITB", {Element::WATER, Element::GROUND}, {"bukan kucing biasa", "whiskas mana whiskas"}));
-    this->operator+(Species("Buaya Darat", {Element::WATER, Element::GROUND}, {"Sini sama abang", "Abang hanya suka kamu kok"}));
+    this->operator+(Species("Belut Batu", {Element::WATER, Element::GROUND}, "gelud sini"));
+    this->operator+(Species("Kucing ITB", {Element::WATER, Element::GROUND}, "whiskas mana"));
+    this->operator+(Species("Buaya Darat", {Element::WATER, Element::GROUND}, "Abangg"));
 
     // Water x Ice
-    this->operator+(Species("Alarm", {Element::WATER, Element::ICE}, {"absen sudah dibuka di s*x"}));
-    this->operator+(Species("Ekhm Ekhm", {Element::WATER, Element::ICE}, {"https://www.youtube.com/watch?v=dQw4w9WgXcQ"}));
-    this->operator+(Species("Kelas basd*t", {Element::WATER, Element::ICE}, {"asumsi kalian sudah mempelajari materi terkait", "kerjakan latihan di s*x"}));
+    this->operator+(Species("Alarm", {Element::WATER, Element::ICE}, "absen sudah dibuka"));
+    this->operator+(Species("Ekhm Ekhm", {Element::WATER, Element::ICE}, "https://www.youtube.com/watch?v=dQw4w9WgXcQ"));
+    this->operator+(Species("Kelas basd*t", {Element::WATER, Element::ICE}, "asumsi kalian sudah mempelajari materi terkait"));
 
     // Add skill SkillItem(string itemName, Skill skill, ItemType it);
     // Ice
     this->operator+(SkillItem("Tergelincir es", Skill("Tergelincir Es", 1, {Element::ICE}), ItemType::HM));
-    this->operator+(SkillItem("terserah kamu aja", Skill("terserah kamu aja", 2, {Element::ICE}), ItemType::HM));
-    this->operator+(SkillItem("tatapan dingin", Skill("tatapan dingin", 2, {Element::ICE}), ItemType::HM));
+    this->operator+(SkillItem("Email asisten st*ma", Skill("Email asisten st*ma", 1, {Element::ICE}), ItemType::HM));
+    this->operator+(SkillItem("Terserah kamu aja", Skill("Terserah kamu aja", 2, {Element::ICE}), ItemType::HM));
+    this->operator+(SkillItem("Tatapan dingin", Skill("Tatapan dingin", 2, {Element::ICE}), ItemType::HM));
     this->operator+(SkillItem("Penenggelam Titanic", Skill("Penenggelam Titanic", 3, {Element::ICE}), ItemType::HM));
+    this->operator+(SkillItem("Molding type: Ice Bridge", Skill("Molding type: Ice Bridge", 3, {Element::ICE}), ItemType::HM));
 
     // Electric
     this->operator+(SkillItem("Rolling Thunder", Skill("Rolling Thunder", 1, {Element::ELECTRIC}), ItemType::HM));
+    this->operator+(SkillItem("Aliran singkat", Skill("Aliran singkat", 1, {Element::ELECTRIC}), ItemType::HM));
     this->operator+(SkillItem("Driving Thunder", Skill("Driving Thunder", 2, {Element::ELECTRIC}), ItemType::HM));
     this->operator+(SkillItem("Colokan listrik", Skill("Colokan listrik", 2, {Element::ELECTRIC}), ItemType::HM));
     this->operator+(SkillItem("Thunder Apocalypse", Skill("Thunder Apocalypse", 3, {Element::ELECTRIC}), ItemType::HM));
+    this->operator+(SkillItem("Ara ara shock", Skill("Ara ara shock", 3, {Element::ELECTRIC}), ItemType::HM));
 
     // Fire
+    this->operator+(SkillItem("Semprotan Api", Skill("Semprotan Api", 1, {Element::FIRE}), ItemType::HM));
     this->operator+(SkillItem("Mata Api", Skill("Mata Api", 1, {Element::FIRE}), ItemType::HM));
     this->operator+(SkillItem("Hell Fire", Skill("Hell Fire", 2, {Element::FIRE}), ItemType::HM));
+    this->operator+(SkillItem("Fluter By", Skill("Fluter By", 2, {Element::FIRE}), ItemType::HM));
     this->operator+(SkillItem("Baron Bunny", Skill("Baron Bunny", 3, {Element::FIRE}), ItemType::HM));
+    this->operator+(SkillItem("Jumpty Dumpty", Skill("Jumpty Dumpty", 3, {Element::FIRE}), ItemType::HM));
 
     // Ground
     this->operator+(SkillItem("Goyangan Albedo", Skill("Goyangan Albedo", 1, {Element::GROUND}), ItemType::HM));
+    this->operator+(SkillItem("Batu jatoh", Skill("Batu jatoh", 1, {Element::GROUND}), ItemType::HM));
     this->operator+(SkillItem("Tiang Batu", Skill("Tiang Batu", 2, {Element::GROUND}), ItemType::HM));
-    this->operator+(SkillItem("Tendou Bashou", Skill("Tendou Bashou", 3, {Element::GROUND}), ItemType::HM));
+    this->operator+(SkillItem("Rock Throw", Skill("Rock Throw", 2, {Element::GROUND}), ItemType::HM));
+    this->operator+(SkillItem("Bumi bergetar", Skill("Bumi bergetar", 3, {Element::GROUND}), ItemType::HM));
+    this->operator+(SkillItem("Tendou Banshou", Skill("Tendou Banshou", 3, {Element::GROUND}), ItemType::HM));
 
     // Water
+    this->operator+(SkillItem("Splash splash", Skill("Splash splash", 1, {Element::WATER}), ItemType::HM));
     this->operator+(SkillItem("Swimming swimming", Skill("Swimming swimming", 1, {Element::WATER}), ItemType::HM));
     this->operator+(SkillItem("Siraman rohani", Skill("Siraman rohani", 2, {Element::WATER}), ItemType::HM));
-    this->operator+(SkillItem("Barbara Ikuyo", Skill("Barbara Ikuyo", 3, {Element::WATER}), ItemType::HM));
+    this->operator+(SkillItem("Gelembung air", Skill("Gelembung air", 2, {Element::WATER}), ItemType::HM));
+    this->operator+(SkillItem("Siraman Oceanid", Skill("Siraman Oceanid", 3, {Element::WATER}), ItemType::HM));
+    this->operator+(SkillItem("Barbara Beam", Skill("Barbara Beam", 3, {Element::WATER}), ItemType::HM));
 }
 
 void Engidex::show(int page) const
@@ -186,8 +199,7 @@ Engidex &Engidex::getInstance()
 
 Species &Engidex::getRandomSpecies(Element element) const
 {
-    srand(time(NULL));
-    vector<Species &> sameElement;
+    vector<Species> sameElement;
     for (Species t : this->speciesStorage)
     {
         if (t % element)
@@ -201,8 +213,7 @@ Species &Engidex::getRandomSpecies(Element element) const
 
 Species &Engidex::getRandomSpecies(Element element, Element element2) const
 {
-    srand(time(NULL));
-    vector<Species &> sameElement;
+    vector<Species> sameElement;
     for (Species t : this->speciesStorage)
     {
         if (t % element && t % element2)
@@ -218,7 +229,6 @@ SkillItem Engidex::createRandomSkillItem(Element element) const
 {
     SkillItem tempItem;
     bool first = true;
-    srand(time(NULL));
     for (int i = 0; i < skillCount; i++)
     {
         if (skillStorage[i] % element)

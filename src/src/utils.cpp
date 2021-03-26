@@ -48,41 +48,41 @@ string mapLegend(Entity e, MapTerrain t)
     switch (e)
     {
     case Entity::W:
-        return "W ";
+        return "\033[35mW\033[0m ";
     case Entity::w:
-        return "w ";
+        return "\033[35mw\033[0m ";
     case Entity::I:
-        return "I ";
+        return "\033[35mI\033[0m ";
     case Entity::i:
-        return "i ";
+        return "\033[35mi\033[0m ";
     case Entity::F:
-        return "F ";
+        return "\033[35mF\033[0m ";
     case Entity::f:
-        return "f ";
+        return "\033[35mf\033[0m ";
     case Entity::G:
-        return "G ";
+        return "\033[35mG\033[0m ";
     case Entity::g:
-        return "g ";
+        return "\033[35mg\033[0m ";
     case Entity::E:
-        return "E ";
+        return "\033[35mE\033[0m ";
     case Entity::e:
-        return "e ";
+        return "\033[35me\033[0m ";
     case Entity::L:
-        return "L ";
+        return "\033[35mL\033[0m ";
     case Entity::l:
-        return "l ";
+        return "\033[35ml\033[0m ";
     case Entity::S:
-        return "S ";
+        return "\033[35mS\033[0m ";
     case Entity::s:
-        return "s ";
+        return "\033[35ms\033[0m ";
     case Entity::N:
-        return "N ";
+        return "\033[35mN\033[0m ";
     case Entity::n:
-        return "n ";
+        return "\033[35mn\033[0m ";
     case Entity::P:
         return "\033[31mP\033[0m ";
     case Entity::X:
-        return "X ";
+        return "\033[31mX\033[0m ";
     case Entity::T:
         return "\033[37mT\033[0m ";
     case Entity::R:
@@ -152,10 +152,7 @@ bool chancePercent(int chance)
 
 int randomInt(int min, int max)
 {
-    int x = rand();
-    int y = rand();
-    int xyxor = x ^ y;
     int mod = max - min + 1;
-    int i = (xyxor % mod) + min;
+    int i = (rand() % mod) + min;
     return i;
 }

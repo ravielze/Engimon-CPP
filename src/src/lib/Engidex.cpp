@@ -158,8 +158,10 @@ Engidex &Engidex::getInstance()
 
 Species &Engidex::getRandomSpecies(Element element) const
 {
-    Species *s = new Species();
-    return *s;
+    srand(time(NULL));
+    int index = randomInt(0, this->speciesStorage.size() - 1);
+    Species x = this->speciesStorage[index];
+    return x;
 }
 
 SkillItem Engidex::createRandomSkillItem(Element element) const

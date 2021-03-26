@@ -151,8 +151,8 @@ void Map::generateTerrain()
 void Map::generateEngimon()
 {
     srand(time(NULL) % getpid());
-    int amountsmallEngimon = rand() % 8 + 3; //3 sampai 10
-    int amountbigEngimon = rand() % 4 + 2;   //2 sampai 5
+    int amountsmallEngimon = randomInt(3, 10); //3 sampai 10
+    int amountbigEngimon = randomInt(2, 5);    //2 sampai 5
 }
 
 void Map::spawnPlayer()
@@ -194,6 +194,8 @@ Map::Map()
     this->generateTerrain();
     this->generateEngimon();
     this->spawnPlayer();
+    this->canWildEngimonWalk(0, 0, Entity::W);
+    this->canWildEngimonWalk(0, 0, Entity::G);
 }
 
 void Map::show() const
@@ -270,6 +272,25 @@ void Map::movePlayer(Direction direct)
     moveWildEngimon();
 }
 
+bool Map::canWildEngimonWalk(int x, int y, Entity ent)
+{
+    if (!isValidCoordinate(x, y))
+    {
+        return false;
+    }
+
+    int entityID = static_cast<int>(ent);
+    if (this->storageTerrain[y][x] == MapTerrain::GL)
+    {
+        return (entityID >= 6 && entityID <= 11);
+    }
+    else if (this->storageTerrain[y][x] == MapTerrain::o)
+    {
+        return (entityID < 6 && entityID > 11);
+    }
+    return true;
+}
+
 void Map::moveWildEngimon()
 {
     srand(time(NULL));
@@ -294,7 +315,7 @@ void Map::moveWildEngimon()
                     {
                     // Bergerak ke north
                     case (0):
-                        if (!isObstruct(x, y - 1))
+                        if (!isObstruct(x, y - 1) && !canWildEngimonWalk(x, y - 1, ent))
                         {
                             this->storageEntity[y][x] = Entity::NONE;
                             this->storageEntity[y - 1][x] = ent;
@@ -305,7 +326,7 @@ void Map::moveWildEngimon()
 
                     // Bergerak ke west
                     case (1):
-                        if (!isObstruct(x + 1, y))
+                        if (!isObstruct(x + 1, y) && !canWildEngimonWalk(x + 1, y, ent))
                         {
                             this->storageEntity[y][x] = Entity::NONE;
                             this->storageEntity[y][x + 1] = ent;
@@ -316,7 +337,7 @@ void Map::moveWildEngimon()
 
                     // Bergerak ke east
                     case (2):
-                        if (!isObstruct(x - 1, y))
+                        if (!isObstruct(x - 1, y) && !canWildEngimonWalk(x - 1, y, ent))
                         {
                             this->storageEntity[y][x] = Entity::NONE;
                             this->storageEntity[y][x - 1] = ent;
@@ -327,7 +348,7 @@ void Map::moveWildEngimon()
 
                     // Bergerak ke south
                     case (3):
-                        if (!isObstruct(x, y + 1))
+                        if (!isObstruct(x, y + 1) && !canWildEngimonWalk(x, y + 1, ent))
                         {
                             this->storageEntity[y][x] = Entity::NONE;
                             this->storageEntity[y + 1][x] = ent;

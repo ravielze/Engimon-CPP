@@ -15,7 +15,6 @@ private:
     Inventory<Engimon> engimonList;
     Inventory<SkillItem> ItemList;
     Engimon activeEngimon;
-    Direction facing;
 
 public:
     Player();
@@ -25,8 +24,7 @@ public:
     void battle(Engimon);
     void switchActiveEngimon(Engimon);
     void interact();
-    void setDirection(Direction);
-    Direction getDirection() const;
+    void showEngimon();
 };
 
 #endif

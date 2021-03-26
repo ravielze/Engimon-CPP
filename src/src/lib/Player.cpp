@@ -8,7 +8,6 @@ Player::Player()
     cout << "Others use them for fights. Myself...I study engimon just for fun, obviously.\n";
     this->engimonList = Inventory<Engimon>(6);
     this->ItemList = Inventory<SkillItem>(30);
-    this->facing = Direction::NORTH;
     cout << "There are 3 Engimon here! Haha! They are inside the Engi Balls.\n";
     cout << "When I was young, I was a serious Engimon trainer! In my old age, I only have 3 left, but you can have one! Choose!\n";
     int index = -1;
@@ -92,7 +91,7 @@ void Player::battle(Engimon wildEngimon)
         int index;
         cout << "Choose engimon index to replace : ";
         cin >> index;
-        // switchActiveEngimon(engimonList.getItemOnIndex(index));
+        switchActiveEngimon(engimonList.getItemOnIndex(index - 1));
     }
     // pake method battle dari engimon jgn lupa try catch dri battle
 
@@ -124,14 +123,4 @@ void Player::switchActiveEngimon(Engimon engi)
 void Player::interact()
 {
     this->activeEngimon.sendMessage();
-}
-
-void Player::setDirection(Direction direct)
-{
-    this->facing = direct;
-}
-
-Direction Player::getDirection() const
-{
-    return this->facing;
 }

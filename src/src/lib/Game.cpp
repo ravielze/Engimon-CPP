@@ -46,43 +46,58 @@ void Game::processCommand(string command)
         movePlayer(command);
         return;
     }
-
-    // switch (command)
-    // {
-    // case "battle":
-    //     battle();
-    //     return;
-    // case "interact":
-    //     interact();
-    //     return;
-    // case "learn":
-    //     learn();
-    //     return;
-    // case "cut":
-    //     cut();
-    //     return;
-    // }
+    else if (command == "battle")
+    {
+        battle();
+    }
+    else if (command == "interact")
+    {
+        interact();
+    }
+    else if (command == "learn")
+    {
+        learn();
+    }
+    else if (command == "swap")
+    {
+        swap();
+    }
+    else if (command == "cut")
+    {
+        cut();
+    }
+    else if (command == "breed")
+    {
+        breed();
+    }
+    else
+    {
+        cout << "Command lu salah cuk ...." << endl;
+    }
 }
 
 void Game::movePlayer(string command)
 {
-    // switch (command)
-    // {
-    // case "w":
-    //     gameMap.movePlayer(Direction::NORTH);
-    //     break;
-    // case "a":
-    //     gameMap.movePlayer(Direction::WEST);
-    //     break;
-    // case "s":
-    //     gameMap.movePlayer(Direction::SOUTH);
-    //     break;
-    // case "d":
-    //     gameMap.movePlayer(Direction::EAST);
-    //     break;
-    // default:
-    //     cout << "Invalid Move Command" << endl;
-    // }
+    if (command == "w")
+    {
+        gameMap.movePlayer(Direction::NORTH);
+    }
+    else if (command == "a")
+    {
+        gameMap.movePlayer(Direction::WEST);
+    }
+    else if (command == "s")
+    {
+        gameMap.movePlayer(Direction::SOUTH);
+    }
+    else if (command == "d")
+    {
+        gameMap.movePlayer(Direction::EAST);
+    }
+    else
+    {
+        cout << "Invalid Move Command" << endl;
+    }
 }
 
 void Game::battle()
@@ -94,21 +109,46 @@ void Game::battle()
         cout << "No surrounding Engimon to battle" << endl;
         return;
     }
+    cout << "Choose engimon to battle : " << endl;
+    int index = 1;
+    for (auto itr = surroundingEngimon.begin(); itr != surroundingEngimon.end(); itr++)
+    {
+        cout << index << "\t";
+        itr->second.show();
+        index++;
+    }
+    cin >> index;
+    pair<int, int> choosenEngimonLocation;
+    Engimon choosenEngimon;
+    auto itr = surroundingEngimon.begin();
+    advance(itr, index - 1);
+    choosenEngimonLocation = itr->first;
+    choosenEngimon = itr->second;
+
+    this->gameMap.getPlayer().battle(choosenEngimon);
 }
 
 void Game::interact()
 {
-    this->gameMap.getPlayer().getActiveEngimon().sendMessage();
-    //harusnya yg baris di atas dh bener
-    //Udah
+    this->gameMap.getPlayer().interact();
 }
 
 void Game::learn()
 {
     //blom ada skillnya
+    // son,
+}
+
+void Game::swap()
+{
+    // this->gameMap.getPlayer().showEngimon();
+    // int idxchoosenpokemon;
+    // cout << "Pilih indeks engimon : ";
+    // cin >> idxchoosenpokemon;
+
+    // this->gameMap.getPlayer().switchActiveEngimon(choosenEngimon);
 }
 
 void Game::cut()
 {
-    //elemen air, bs water cutter :V, HEM subur pohonnya nanti, industrial water cutter sadis woy wwkwk, limbah pump
 }

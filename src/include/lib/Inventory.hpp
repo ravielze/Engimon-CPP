@@ -109,6 +109,12 @@ public:
 
     // Menunjukkan barang di inventory
     void show(int page) const;
+    T getItemOnIndex(int index)
+    {
+        auto itr = storage.begin();
+        advance(itr, index);
+        return itr->first;
+    }
 };
 
 #endif // __INVENTORY_H__

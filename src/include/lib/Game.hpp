@@ -24,7 +24,9 @@ public:
     void battle();
     void interact();
     void learn();
+    void swap();
     void cut();
+    void breed();
 };
 
 #endif

@@ -21,7 +21,7 @@ Species::Species(string name, vector<Element> elem, vector<string> messages) : E
 {
     this->speciesNumber = -1;
     this->speciesName = name;
-    if (this->speciesName.size() > TAB_COUNT * 8)
+    if (this->speciesName.size() / 8 >= TAB_COUNT)
     {
         TAB_COUNT = (this->speciesName.size() + 8) / 8;
     }
@@ -51,7 +51,7 @@ void Species::show() const
 {
     cout << this->speciesNumber;
     cout << "\t" << this->speciesName;
-    for (int i = 0; i < TAB_COUNT; i++)
+    for (int i = 0; i < TAB_COUNT - (this->speciesName.size() / 8); i++)
     {
         cout << "\t";
     }
@@ -60,7 +60,11 @@ void Species::show() const
 
 void Species::simpleShow() const
 {
-    cout << this->speciesName << "\t";
+    cout << this->speciesName;
+    for (int i = 0; i < TAB_COUNT - (this->speciesName.size() / 8); i++)
+    {
+        cout << "\t";
+    }
     Elementum::show();
 }
 

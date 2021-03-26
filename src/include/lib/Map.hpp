@@ -34,6 +34,7 @@ private:
     void modifyTerrain(int, int, MapTerrain);
     void modifyEntity(int, int, Entity);
     bool isValidCoordinate(int, int);
+    bool canWildEngimonWalk(int, int, Entity);
 
 public:
     Map();

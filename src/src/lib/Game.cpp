@@ -37,7 +37,7 @@ void Game::quitGame()
 
 string Game::askCommand()
 {
-    vector<string> availableCommand = {"w", "a", "s", "d", "battle", "interact", "learn", "cut", "quit", "engidex"};
+    vector<string> availableCommand = {"w", "a", "s", "d", "battle", "interact", "swap", "learn", "cut", "quit", "engidex", "status", "breed"};
 
     while (true)
     {
@@ -85,6 +85,10 @@ void Game::processCommand(string command)
     {
         breed();
     }
+    else if (command == "status")
+    {
+        status();
+    }
     else if (command == "quit")
     {
         quitGame();
@@ -102,7 +106,18 @@ void Game::processCommand(string command)
         return;
     }
 }
-
+void Game::status()
+{
+    cout << "Showing Active Engimon : " << endl;
+    this->gameMap.getPlayer().getActiveEngimon().show();
+    cout << endl;
+    cout << "Showing Engimon List : " << endl;
+    this->gameMap.getPlayer().showEngimon();
+    cout << endl;
+    cout << "Showing Inventory List : " << endl;
+    this->gameMap.getPlayer().showSkillItem();
+    cout << endl;
+}
 void Game::movePlayer(string command)
 {
     if (command == "w")
@@ -159,7 +174,10 @@ void Game::battle()
     {
         this->gameMap.killEngimon(choosenEngimonLocation.first, choosenEngimonLocation.second);
     }
-    //if (this->gameMap.getPlayer().)
+    if (this->gameMap.getPlayer().isLost())
+    {
+        quitGame();
+    }
 }
 
 void Game::interact()

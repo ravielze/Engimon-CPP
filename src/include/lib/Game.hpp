@@ -21,6 +21,7 @@ private:
     void battle();
     void interact();
     void learn();
+    void status();
     void swap();
     void breed();
     void cut();

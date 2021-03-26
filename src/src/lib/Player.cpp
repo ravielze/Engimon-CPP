@@ -41,6 +41,7 @@ Player::Player()
     SkillItem si = Engidex::getInstance().createRandomSkillItem(starter.getFirstElement());
     starter.learn(si);
     starter.show();
+    starter.addExp(1500);
     cout << endl;
     this->engimonList + starter;
     this->activeEngimon = starter;
@@ -123,19 +124,25 @@ void Player::switchActiveEngimon()
 
 void Player::learn()
 {
+
     int engimonIndex;
     showEngimon();
     cout << "Choose Engimon : ";
     cin >> engimonIndex;
     cout << endl;
+    if (ItemList.getCapacity() == 0)
+    {
+        cout << "No skill list" << endl;
+        return;
+    }
     int skillIndex;
     showSkillItem();
     cout << "Choose Skill Item: ";
     cin >> skillIndex;
     cout << endl;
 
-    Engimon chosenEngimon = engimonList.getItemOnIndex(engimonIndex);
-    SkillItem chosenSkillItem = ItemList.getItemOnIndex(skillIndex);
+    Engimon chosenEngimon = engimonList.getItemOnIndex(engimonIndex - 1);
+    SkillItem chosenSkillItem = ItemList.getItemOnIndex(skillIndex - 1);
     this->engimonList - chosenEngimon;
     try
     {

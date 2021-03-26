@@ -389,10 +389,10 @@ bool Engimon::operator<<(Skill &skill)
 
 bool Engimon::operator>(const Engimon &other) const
 {
-    return false; //|| this->speciesName > other.speciesName;
+    return this->speciesName > other.speciesName || this->speciesNumber > other.speciesNumber;
 }
 
 bool Engimon::operator<(const Engimon &other) const
 {
-    return false; //|| this->speciesName < other.speciesName;
+    return this->speciesName < other.speciesName || this->speciesNumber < other.speciesNumber;
 }

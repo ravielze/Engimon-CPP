@@ -27,6 +27,7 @@ private:
 
 public:
     Engimon();
+    Engimon(const Engimon &);
     Engimon(Species &, EntitySource);
     Engimon(Species &, EntitySource, string);
 
@@ -70,4 +71,5 @@ public:
 
     void learn(const SkillItem &);
 };
+
 #endif // __ENGIMON_H__

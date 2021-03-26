@@ -19,6 +19,7 @@ private:
 
 public:
     Player();
+    Engimon getActiveEngimon();
     void addEngimon(Engimon);
     void removeEngimon(Engimon);
     void battle(Engimon);

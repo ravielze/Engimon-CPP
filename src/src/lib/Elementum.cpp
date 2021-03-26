@@ -13,6 +13,15 @@ Elementum::Elementum(vector<Element> otherElements)
     }
 }
 
+Elementum::Elementum(const Elementum &other)
+{
+    this->elements.clear();
+    for (Element e : other.elements)
+    {
+        this->elements.push_back(e);
+    }
+}
+
 bool Elementum::operator%(Element el) const
 {
     if (this->elements.size() > 0)

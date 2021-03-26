@@ -6,16 +6,45 @@ Engidex Engidex::instance;
 Engidex::Engidex()
 {
     this->speciesCount = 0;
+    // Ice
     this->operator+(Species("Jason <3 <3 <3", {Element::ICE}, {"gatau", "liat nanti"}));
+    this->operator+(Species("Cermin realita", {Element::ICE}, {"move on mas", "dia punya yang lain"}));
+    this->operator+(Species("Es kental manis", {Element::ICE}, {"ada lima varian rasa", "rasanya selangit"}));
+
+    // Electric
     this->operator+(Species("Tikus Listrik", {Element::ELECTRIC}, {"hachim hachim", "brrrrr"}));
+    this->operator+(Species("Antena", {Element::ELECTRIC}, {"Bad connection", "Lost connection"}));
+    this->operator+(Species("Lightning McQueen", {Element::ELECTRIC}, {"Kechaw", "Kechaw Kechaw"}));
+
+    // Fire
+    this->opeator + (Species("Cans lupus familiaris", {Element::FIRE}, {"guk-guk", "aik-aik", "rilis tubes"}));
+    this->operator+(Species("Spark Knight", {Element::FIRE}, {"da-da-da", "uuh-aah"}));
+    this->operator+(Species("Grenade Laut", {Element::FIRE}, {"BOOM", "DHUAR", "BLARR"}));
+
+    // Ground
+    this->operator+(Species("Penghuni Sekre", {Element::GROUND}, {"gabut itu mindset", "ngapain sok sibuk"}));
+    this->operator+(Species("Tubes 3 biji dedline sama", {Element::GROUND}, {"Mana Sempat", "Keburu Telat"}));
+    this->operator+(Species("Kaum Rebahan", {Element::GROUND}, {"chaos? apa tu", "rebahan dulu gan", "dedline masih lama, chill."}));
+
+    // Water
+    this->operator+(Species("Ikan", {Element::WATER}, {"swimming-swimming", "just keep swimming"}));
+    this->operator+(Species("Kutu air", {Element::WATER}, {"Jaga kebersihan kaki", "Kaki jangan lembab"}));
+    this->operator+(Species("Bintang Laut", {Element::WATER}, {"https://www.youtube.com/watch?v=DtL_giO-EB8"}));
+
+    // Fire x Electric
     this->operator+(Species("Cuma Keong", {Element::FIRE, Element::ELECTRIC}, {"gaskeun", "keos"}));
-    this->operator+(Species("Canis lupus familiaris", {Element::FIRE}, {"guk-guk", "aik-aik", "rilis tubes"}));
+    this->operator+(Species("Naga api kesetrum", {Element::FIRE, Element::ELECTRIC}, {"oof", "drrrttt"}));
+    this->operator+(Species("Laprak", {Element::FIRE, Element::ELECTRIC}, {"pasti mencetarkan", "perih dan membakar hati"}));
+
+    // Water x Ground
     this->operator+(Species("Belut Batu", {Element::WATER, Element::GROUND}, {"gelud sini", "meliat-liat gmn gt"}));
     this->operator+(Species("Kucing ITB", {Element::WATER, Element::GROUND}, {"bukan kucing biasa", "whiskas mana whiskas"}));
-    this->operator+(Species("Ikan", {Element::WATER}, {"swimming-swimming", "just keep swimming"}));
-    this->operator+(Species("Penghuni Sekre", {Element::GROUND}, {"gabut itu mindset", "ngapain sok sibuk"}));
-    this->operator+(Species("Dosen tercinta", {Element::WATER, Element::ICE}, {"absen sudah dibuka di six"}));
-    this->operator+(Species("Tubes 3 biji dedline sama", {Element::GROUND}, {"Mana Sempat", "Keburu Telat"}));
+    this->operator+(Species("Buaya Darat", {Element::WATER, Element::GROUND}, {"Sini sama abang", "Abang hanya suka kamu kok"}));
+
+    // Water x Ice
+    this->operator+(Species("Alarm", {Element::WATER, Element::ICE}, {"absen sudah dibuka di s*x"}));
+    this->operator+(Species("Ekhm Ekhm", {Element::WATER, Element::ICE}, {"https://www.youtube.com/watch?v=dQw4w9WgXcQ"}));
+    this->operator+(Species("Kelas basd*t", {Element::WATER, Element::ICE}, {"asumsi kalian sudah mempelajari materi terkait", "kerjakan latihan di s*x"}));
 }
 
 void Engidex::show(int page) const
@@ -59,6 +88,11 @@ Species Engidex::getSpeciesByString(string speciesName)
     return Species();
 }
 
+Species Engidex::getSpeciesBySpeciesNumber(int number)
+{
+    return speciesStorage[number];
+}
+
 Engidex &Engidex::operator=(const Engidex &other)
 {
     this->speciesStorage.clear();
@@ -82,18 +116,6 @@ bool Engidex::operator%(const Species &x) const
     for (int i = 0; i < this->speciesCount; i++)
     {
         if (this->speciesStorage[i] == x)
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
-bool Engidex::operator%(const SkillItem &x) const
-{
-    for (int i = 0; i < this->skillCount; i++)
-    {
-        if (this->skillStorage[i] == x)
         {
             return true;
         }

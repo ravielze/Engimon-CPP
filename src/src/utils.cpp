@@ -48,54 +48,54 @@ string mapLegend(Entity e, MapTerrain t)
     switch (e)
     {
     case Entity::W:
-        return "W";
+        return "W ";
     case Entity::w:
-        return "w";
+        return "w ";
     case Entity::I:
-        return "I";
+        return "I ";
     case Entity::i:
-        return "i";
+        return "i ";
     case Entity::F:
-        return "F";
+        return "F ";
     case Entity::f:
-        return "f";
+        return "f ";
     case Entity::G:
-        return "G";
+        return "G ";
     case Entity::g:
-        return "g";
+        return "g ";
     case Entity::E:
-        return "E";
+        return "E ";
     case Entity::e:
-        return "e";
+        return "e ";
     case Entity::L:
-        return "L";
+        return "L ";
     case Entity::l:
-        return "l";
+        return "l ";
     case Entity::S:
-        return "S";
+        return "S ";
     case Entity::s:
-        return "s";
+        return "s ";
     case Entity::N:
-        return "N";
+        return "N ";
     case Entity::n:
-        return "n";
+        return "n ";
     case Entity::P:
-        return "P";
+        return "P ";
     case Entity::X:
-        return "X";
+        return "X ";
     case Entity::T:
-        return "T";
+        return "\033[37mT\033[0m ";
     case Entity::R:
-        return "R";
+        return "\033[33mR\033[0m ";
     default:
         break;
     }
     switch (t)
     {
     case MapTerrain::GL:
-        return "\033[1;32m- ";
+        return "\033[1;32m-\033[0m ";
     case MapTerrain::o:
-        return "\033[1;34mo ";
+        return "\033[1;34mo\033[0m ";
     }
     return "?";
 }
@@ -130,4 +130,32 @@ EntityType mapEntityType(Entity e)
         return EntityType::STRUCTURE;
     }
     return EntityType::NONE;
+}
+
+bool chanceFraction(int chance)
+{
+    int x = rand();
+    int y = rand();
+    int xyxor = x ^ y;
+    int ch = xyxor % chance;
+    return (ch == 0);
+}
+
+bool chancePercent(int chance)
+{
+    int x = rand();
+    int y = rand();
+    int xyxor = x ^ y;
+    int mod = xyxor % 100;
+    return (mod < chance);
+}
+
+int randomInt(int min, int max)
+{
+    int x = rand();
+    int y = rand();
+    int xyxor = x ^ y;
+    int mod = max - min + 1;
+    int i = (xyxor % mod) + min;
+    return i;
 }

@@ -2,9 +2,31 @@
 
 Player::Player()
 {
+    cout << "Hello there! Welcome to the world of engimon! \n";
+    cout << "My name is Cemara! People call me the engimon Prof! \n";
+    cout << "This world is inhabited by creatures called engimon! For some people, engimon are blessing :). \n";
+    cout << "Others use them for fights. Myself...I study engimon just for fun, obviously.\n";
     this->engimonList = Inventory<Engimon>(6);
     this->ItemList = Inventory<SkillItem>(30);
     this->facing = Direction::NORTH;
+    cout << "There are 3 Engimon here! Haha! They are inside the Engi Balls.\n";
+    cout << "When I was young, I was a serious Engimon trainer! In my old age, I only have 3 left, but you can have one! Choose!\n";
+    Engidex::getInstance().getSpeciesBySpeciesNumber(0).show();
+    cout << endl;
+    Engidex::getInstance().getSpeciesBySpeciesNumber(3).show();
+    cout << endl;
+    Engidex::getInstance().getSpeciesBySpeciesNumber(6).show();
+    cout << endl;
+    int index;
+    cin >> index;
+    Species starterSpecies = Engidex::getInstance().getSpeciesBySpeciesNumber(index - 1); // Sabi di random ini
+    Engimon starter = Engimon(starterSpecies, EntitySource::WILD);
+    this->engimonList + starter;
+}
+
+Engimon Player::getActiveEngimon()
+{
+    return this->activeEngimon;
 }
 
 void Player::addEngimon(Engimon Engi)

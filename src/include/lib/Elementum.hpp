@@ -13,7 +13,10 @@ protected:
 
 public:
     Elementum();
+    //TODO Elementum copy constructor
     Elementum(vector<Element> otherElements);
+
+    Elementum(const Elementum &other);
 
     //Check apakah entitas ini memiliki suatu element
     bool operator%(Element) const;

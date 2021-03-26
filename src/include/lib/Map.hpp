@@ -17,24 +17,31 @@ class Map
 private:
     vector<vector<MapTerrain>> storageTerrain;
     vector<vector<Entity>> storageEntity;
+    vector<vector<Engimon>> storageWildEngimon;
     int sizeMap;
     Player player;
     pair<int, int> playerLocation;
     pair<int, int> engimonLocation;
-    map<Entity, Engimon> wildEngimonData;
 
     void generateTerrain();
     void generateEngimon();
     void moveWildEngimon();
+    void spawnPlayer();
     bool isObstruct(int, int);
 
     vector<Engimon> getSurroundingEngimon(int, int);
     Entity getEntity(int, int);
 
+    void modifyTerrain(int, int, MapTerrain);
+    void modifyEntity(int, int, Entity);
+    bool isValidCoordinate(int, int);
+    int countSurroundingEntity(int, int, Entity);
+
 public:
     Map();
     void show() const;
     void movePlayer(Direction);
+    Player getPlayer();
 };
 
 #endif

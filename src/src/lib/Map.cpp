@@ -1,75 +1,193 @@
 #include "lib/Map.hpp"
+#define VEIN_CHANCE 65
+#define ENGIMON_MOVE_1_PER_CHANCE 3
+#define TREE_CHANCE 10
+#define VEIN_TREE_CHANCE 32
+#define ROCK_CHANCE 9
+#define TREE_LIMIT 110
+
+Player Map::getPlayer()
+{
+    return this->player;
+}
+
+bool Map::isValidCoordinate(int x, int y)
+{
+    return (x >= 0 && x < this->sizeMap && y >= 0 && y < this->sizeMap);
+}
+
+void Map::modifyTerrain(int x, int y, MapTerrain t)
+{
+    if (!isValidCoordinate(x, y))
+    {
+        return;
+    }
+
+    this->storageTerrain[y][x] = t;
+}
+
+void Map::modifyEntity(int x, int y, Entity e)
+{
+    if (!isValidCoordinate(x, y))
+    {
+        return;
+    }
+    if (e == Entity::T && this->storageTerrain[y][x] != MapTerrain::GL)
+    {
+        return;
+    }
+    if (e == Entity::R && this->storageTerrain[y][x] != MapTerrain::o)
+    {
+        return;
+    }
+
+    this->storageEntity[y][x] = e;
+}
 
 void Map::generateTerrain()
 {
     srand(time(NULL) % getpid());
-    int waterVein = (rand() % 7) + 2; //2 sampai 8
-    int waterPond = (rand() % 5) + 3; //3 sampai 7
+    int waterVein = randomInt(5, 10);
+    int waterPond = randomInt(4, 8);
     for (int i = 0; i < waterPond; i++)
     {
-        int centerX = rand() % this->sizeMap;
-        int centerY = rand() % this->sizeMap;
+        int centerX = randomInt(0, this->sizeMap - 1);
+        int centerY = randomInt(0, this->sizeMap - 1);
         int currentWaterVein = waterVein;
         while (currentWaterVein > 0)
         {
             for (int j = -1; j <= 1; j++)
             {
-                if (centerX + j < 0 || centerX + j >= this->sizeMap)
+                if (chancePercent(VEIN_CHANCE))
                 {
-                    continue;
-                }
-                int chance = rand() % 100;
-                if (chance >= 50)
-                {
-                    this->storageTerrain[centerY][centerX + j] = MapTerrain::o;
+                    modifyTerrain(centerX, centerY + j, MapTerrain::o);
+                    if (chancePercent(ROCK_CHANCE))
+                    {
+                        modifyEntity(centerX, centerY, Entity::R);
+                    }
                 }
             }
             for (int j = -1; j <= 1; j++)
             {
-                if (centerY + j < 0 || centerY + j >= this->sizeMap)
+                if (chancePercent(VEIN_CHANCE))
                 {
-                    continue;
-                }
-                int chance = rand() % 100;
-                if (chance >= 50)
-                {
-                    this->storageTerrain[centerY + j][centerX] = MapTerrain::o;
-                }
-            }
-            this->storageTerrain[centerY][centerX] = MapTerrain::o;
-            int countWater = 0;
-            for (int k = -1; k <= 1; k++)
-            {
-                for (int l = -1; l <= 1; l++)
-                {
-                    if (centerY + l < 0 || centerY + l >= this->sizeMap || centerX + k < 0 || centerX + k >= this->sizeMap)
+                    modifyTerrain(centerY + j, centerX, MapTerrain::o);
+                    if (chancePercent(ROCK_CHANCE))
                     {
-                        continue;
-                    }
-                    if (this->storageTerrain[centerY + l][centerX + k] == MapTerrain::o)
-                    {
-                        countWater++;
+                        modifyEntity(centerX, centerY, Entity::R);
                     }
                 }
             }
-            int dCenterX = rand() % 3 - 1; //-1 sampai 1
-            int dCenterY = rand() % 3 - 1;
-            while (!(centerY + dCenterY >= 0 && centerY + dCenterY < this->sizeMap && centerX + dCenterX >= 0 && centerX + dCenterX < this->sizeMap))
+            modifyTerrain(centerY, centerX, MapTerrain::o);
+            int dCenterX = randomInt(-1, 1);
+            int dCenterY = randomInt(-1, 1);
+            while (!(isValidCoordinate(centerX + dCenterX, centerY + dCenterY)))
             {
-                dCenterY = rand() % 3 - 1;
-                dCenterX = rand() % 3 - 1;
+                dCenterY = randomInt(-1, 1);
+                dCenterX = randomInt(-1, 1);
             }
-            this->storageTerrain[centerY + dCenterY][centerX + dCenterX] = MapTerrain::o;
             centerX += dCenterX;
             centerY += dCenterY;
             currentWaterVein--;
+        }
+    }
+
+    int treeLimit = TREE_LIMIT;
+    for (int i = 0; i < this->sizeMap; i++)
+    {
+        if (treeLimit <= 0)
+        {
+            break;
+        }
+        for (int j = 0; j < this->sizeMap; j++)
+        {
+            if (treeLimit <= 0)
+            {
+                break;
+            }
+            if (this->storageTerrain[j][i] == MapTerrain::GL)
+            {
+                if (chancePercent(TREE_CHANCE))
+                {
+                    int treeVein = randomInt(1, 3); //3 to 5
+                    int treeCenterX = i;
+                    int treeCenterY = j;
+                    while (treeVein > 0)
+                    {
+                        for (int k = -1; k <= 1; k++)
+                        {
+                            if (chancePercent(VEIN_TREE_CHANCE))
+                            {
+                                modifyEntity(treeCenterX, treeCenterY + k, Entity::T);
+                                treeLimit--;
+                            }
+                        }
+                        for (int k = -1; k <= 1; k++)
+                        {
+                            if (chancePercent(VEIN_TREE_CHANCE))
+                            {
+                                modifyEntity(treeCenterX + k, treeCenterY, Entity::T);
+                                treeLimit--;
+                            }
+                        }
+                        modifyEntity(treeCenterY, treeCenterX, Entity::T);
+                        int dCenterX = randomInt(-1, 1);
+                        int dCenterY = randomInt(-1, 1);
+                        while (!(isValidCoordinate(treeCenterX + dCenterX, treeCenterY + dCenterY)))
+                        {
+                            dCenterY = randomInt(-1, 1);
+                            dCenterX = randomInt(-1, 1);
+                        }
+                        treeCenterX += dCenterX;
+                        treeCenterY += dCenterY;
+                        treeVein--;
+                    }
+                }
+            }
         }
     }
 }
 
 void Map::generateEngimon()
 {
-    //TODO
+    srand(time(NULL) % getpid());
+    int amountsmallEngimon = rand() % 8 + 3; //3 sampai 10
+    int amountbigEngimon = rand() % 4 + 2;   //2 sampai 5
+}
+
+void Map::spawnPlayer()
+{
+    int centerX = randomInt(0, this->sizeMap - 1);
+    int centerY = randomInt(0, this->sizeMap - 1);
+    while (this->storageTerrain[centerY][centerX] != MapTerrain::GL || isObstruct(centerX, centerY) || countSurroundingEntity(centerX, centerY, Entity::T) >= 5)
+    {
+        int centerX = randomInt(0, this->sizeMap - 1);
+        int centerY = randomInt(0, this->sizeMap - 1);
+    }
+    this->storageEntity[centerY][centerX] = Entity::P;
+    this->playerLocation.first = centerX;
+    this->playerLocation.second = centerY;
+}
+
+int Map::countSurroundingEntity(int xi, int yi, Entity ent)
+{
+    int count = 0;
+
+    for (int y = yi - 1; y <= yi + 1; y++)
+    {
+        for (int x = xi - 1; xi <= xi + 1; x++)
+        {
+            if (x == xi and y == yi)
+            {
+                continue;
+            }
+            if (ent == this->storageEntity[y][x])
+            {
+                count++;
+            }
+        }
+    }
+    return count;
 }
 
 bool Map::isObstruct(int x, int y)
@@ -84,11 +202,15 @@ bool Map::isObstruct(int x, int y)
 
 Map::Map()
 {
-    this->sizeMap = 15;
+    this->sizeMap = 20;
     this->storageEntity = vector<vector<Entity>>(this->sizeMap, vector<Entity>(this->sizeMap, Entity::NONE));
     this->storageTerrain = vector<vector<MapTerrain>>(this->sizeMap, vector<MapTerrain>(this->sizeMap, MapTerrain::GL));
-    this->playerLocation = pair<int, int>(0, 0);
+    this->storageWildEngimon = vector<vector<Engimon>>(this->sizeMap, vector<Engimon>(this->sizeMap, Engimon()));
+    this->playerLocation = pair<int, int>(-1, -1);
+    this->engimonLocation = pair<int, int>(-1, -1);
     this->generateTerrain();
+    this->generateEngimon();
+    this->spawnPlayer();
 }
 
 void Map::show() const
@@ -105,11 +227,6 @@ void Map::show() const
 
 void Map::movePlayer(Direction direct)
 {
-    // this->engimonLocation.first = this->playerLocation.first;
-    // this->engimonLocation.second = this->playerLocation.second;
-    pair<int, int> tempLocation;
-    tempLocation.first = this->playerLocation.first;
-    tempLocation.second = this->playerLocation.second;
     int x = this->playerLocation.first;
     int y = this->playerLocation.second;
     switch (direct)
@@ -119,9 +236,11 @@ void Map::movePlayer(Direction direct)
         {
             return;
         }
-        if (this->storageEntity[this->playerLocation.first][this->playerLocation.second + 1] == Entity::NONE)
+        if (this->storageEntity[x][y + 1] == Entity::NONE)
         {
-            this->playerLocation = pair<int, int>(this->playerLocation.first, this->playerLocation.second + 1);
+            this->playerLocation = pair<int, int>(x, y + 1);
+            this->storageEntity[y][x] = Entity::NONE;
+            this->storageEntity[y + 1][x] = Entity::P;
         }
 
     case Direction::WEST:
@@ -129,9 +248,11 @@ void Map::movePlayer(Direction direct)
         {
             return;
         }
-        if (this->storageEntity[this->playerLocation.first - 1][this->playerLocation.second] == Entity::NONE)
+        if (this->storageEntity[x - 1][y] == Entity::NONE)
         {
-            this->playerLocation = pair<int, int>(this->playerLocation.first - 1, this->playerLocation.second);
+            this->playerLocation = pair<int, int>(x - 1, y);
+            this->storageEntity[y][x] = Entity::NONE;
+            this->storageEntity[y][x - 1] = Entity::P;
         }
 
     case Direction::EAST:
@@ -139,9 +260,11 @@ void Map::movePlayer(Direction direct)
         {
             return;
         }
-        if (this->storageEntity[this->playerLocation.first + 1][this->playerLocation.second] == Entity::NONE)
+        if (this->storageEntity[x + 1][y] == Entity::NONE)
         {
-            this->playerLocation = pair<int, int>(this->playerLocation.first + 1, this->playerLocation.second);
+            this->playerLocation = pair<int, int>(x + 1, y);
+            this->storageEntity[y][x] = Entity::NONE;
+            this->storageEntity[y][x + 1] = Entity::P;
         }
 
     case Direction::SOUTH:
@@ -149,18 +272,19 @@ void Map::movePlayer(Direction direct)
         {
             return;
         }
-        if (this->storageEntity[this->playerLocation.first][this->playerLocation.second - 1] == Entity::NONE)
+        if (this->storageEntity[x][y - 1] == Entity::NONE)
         {
-            this->playerLocation = pair<int, int>(this->playerLocation.first, this->playerLocation.second - 1);
+            this->playerLocation = pair<int, int>(x, y - 1);
+            this->storageEntity[y][x] = Entity::NONE;
+            this->storageEntity[y - 1][x] = Entity::P;
         }
     }
-    this->engimonLocation.first = tempLocation.first;
-    this->engimonLocation.second = tempLocation.second;
+    this->engimonLocation.first = x;
+    this->engimonLocation.second = y;
+    //engimon sendiri nabrak blom dibuat
 
     // Engimon juga move
     moveWildEngimon();
-
-    // Kalau wild engimon nabrak player, wild engimon aja yang direposisi
 }
 
 void Map::moveWildEngimon()
@@ -173,46 +297,62 @@ void Map::moveWildEngimon()
         for (y = 0; y < this->storageEntity.size(); y++)
         {
             Entity ent = this->storageEntity[y][x];
-            pair<int, int> position = pair<int, int>(x, y);
-
-            int moveCommand = rand() % 4;
-
-            switch (moveCommand)
+            Engimon engi;
+            engi = this->storageWildEngimon[y][x];
+            if (mapEntityType(ent) == EntityType::WILD_ENGIMON)
             {
-            // Bergerak ke north
-            case (0):
-                if (!isObstruct(x, y - 1))
+                if (chanceFraction(ENGIMON_MOVE_1_PER_CHANCE))
                 {
-                    this->storageEntity[y][x] = Entity::NONE;
-                    this->storageEntity[y - 1][x] = ent;
-                    break;
-                }
+                    pair<int, int> position = pair<int, int>(x, y);
 
-            // Bergerak ke west
-            case (1):
-                if (!isObstruct(x + 1, y))
-                {
-                    this->storageEntity[y][x] = Entity::NONE;
-                    this->storageEntity[y][x + 1] = ent;
-                    break;
-                }
+                    int moveCommand = randomInt(0, 4);
 
-            // Bergerak ke east
-            case (2):
-                if (!isObstruct(x - 1, y))
-                {
-                    this->storageEntity[y][x] = Entity::NONE;
-                    this->storageEntity[y][x - 1] = ent;
-                    break;
-                }
+                    switch (moveCommand)
+                    {
+                    // Bergerak ke north
+                    case (0):
+                        if (!isObstruct(x, y - 1))
+                        {
+                            this->storageEntity[y][x] = Entity::NONE;
+                            this->storageEntity[y - 1][x] = ent;
+                            this->storageWildEngimon[y][x] = Engimon();
+                            this->storageWildEngimon[y - 1][x] = engi;
+                            break;
+                        }
 
-            // Bergerak ke south
-            case (3):
-                if (!isObstruct(x, y + 1))
-                {
-                    this->storageEntity[y][x] = Entity::NONE;
-                    this->storageEntity[y + 1][x] = ent;
-                    break;
+                    // Bergerak ke west
+                    case (1):
+                        if (!isObstruct(x + 1, y))
+                        {
+                            this->storageEntity[y][x] = Entity::NONE;
+                            this->storageEntity[y][x + 1] = ent;
+                            this->storageWildEngimon[y][x] = Engimon();
+                            this->storageWildEngimon[y][x + 1] = engi;
+                            break;
+                        }
+
+                    // Bergerak ke east
+                    case (2):
+                        if (!isObstruct(x - 1, y))
+                        {
+                            this->storageEntity[y][x] = Entity::NONE;
+                            this->storageEntity[y][x - 1] = ent;
+                            this->storageWildEngimon[y][x] = Engimon();
+                            this->storageWildEngimon[y][x - 1] = engi;
+                            break;
+                        }
+
+                    // Bergerak ke south
+                    case (3):
+                        if (!isObstruct(x, y + 1))
+                        {
+                            this->storageEntity[y][x] = Entity::NONE;
+                            this->storageEntity[y + 1][x] = ent;
+                            this->storageWildEngimon[y][x] = Engimon();
+                            this->storageWildEngimon[y + 1][x] = engi;
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -231,9 +371,9 @@ vector<Engimon> Map::getSurroundingEngimon(int xi, int yi)
             {
                 continue;
             }
-            if (getEntity(x, y) != Entity::NONE)
+            if (mapEntityType(getEntity(x, y)) == EntityType::WILD_ENGIMON)
             {
-                surroundingEngimon.push_back(wildEngimonData[getEntity(x, y)]);
+                surroundingEngimon.push_back(this->storageWildEngimon[y][x]);
             }
         }
     }

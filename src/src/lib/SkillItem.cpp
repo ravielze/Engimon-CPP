@@ -13,6 +13,12 @@ SkillItem::SkillItem(string itemName, Skill &skill, ItemType it) : Skill(skill)
     this->itemType = it;
 }
 
+SkillItem::SkillItem(const SkillItem &other) : Skill(other)
+{
+    this->itemName = other.itemName;
+    this->itemType = other.itemType;
+}
+
 void SkillItem::show() const
 {
     cout << this->itemName << "\t";

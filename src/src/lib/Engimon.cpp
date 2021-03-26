@@ -10,6 +10,18 @@ Engimon::Engimon() : livingSource(EntitySource::UNKNOWN)
     this->cum_exp = 0;
 }
 
+Engimon::Engimon(const Engimon &engimon) : Species(engimon), livingSource(engimon.livingSource)
+{
+    Species::operator=(engimon);
+    this->parent.first = engimon.parent.first;
+    this->parent.second = engimon.parent.second;
+    this->level = engimon.level;
+    this->exp = engimon.exp;
+    this->cum_exp = engimon.cum_exp;
+    this->skills = vector<Skill>(engimon.skills);
+    this->name = engimon.name;
+}
+
 Engimon::Engimon(Species &s, EntitySource es) : Species(s), livingSource(es)
 {
     this->level = 1;
@@ -35,7 +47,8 @@ Engimon &Engimon::operator=(const Engimon &engimon)
     this->level = engimon.level;
     this->exp = engimon.exp;
     this->cum_exp = engimon.cum_exp;
-    this->skills = engimon.skills;
+    this->skills = vector<Skill>(engimon.skills);
+    this->name = engimon.name;
 
     return *this;
 }

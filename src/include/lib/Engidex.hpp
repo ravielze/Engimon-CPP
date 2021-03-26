@@ -31,6 +31,8 @@ public:
     Species getDualElementEngimon(Element, Element);
     Species getSpeciesByString(string);
 
+    Species getSpeciesBySpeciesNumber(int number);
+
     //Operator Assignment
     Engidex &operator=(const Engidex &);
 

@@ -14,7 +14,10 @@ private:
 
 public:
     SkillItem();
+    //TODO skillitem copy constructor
     SkillItem(string itemName, Skill &skill, ItemType it);
+
+    SkillItem(const SkillItem &other);
 
     void show() const;
 

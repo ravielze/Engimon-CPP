@@ -2,7 +2,7 @@
 
 ElementManager ElementManager::instance;
 
- void ElementManager::setMultiplier(Element attacker, Element defender, double multiplier)
+void ElementManager::setMultiplier(Element attacker, Element defender, double multiplier)
 {
     pair<Element, Element> elementPair(attacker, defender);
     ElementsMultiplier[elementPair] = multiplier;
@@ -28,6 +28,10 @@ double ElementManager::getTotalMultiplier(vector<Element> attacker, vector<Eleme
 }
 double ElementManager::getMultiplier(Element atacker, Element defender)
 {
+    if (atacker == Element::NONE || defender == Element::NONE)
+    {
+        return 0;
+    }
     return ElementsMultiplier[pair<Element, Element>(atacker, defender)];
 }
 

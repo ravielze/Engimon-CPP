@@ -14,7 +14,7 @@ Skill::Skill(string name, double power, int masteryLevel, vector<Element> elemen
     this->masteryLevel = masteryLevel;
 }
 
-Skill::Skill(const Skill &other) : Elementum(other.elements)
+Skill::Skill(const Skill &other) : Elementum(other)
 {
     this->name = other.name;
     this->power = other.power;

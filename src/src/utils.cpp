@@ -80,7 +80,7 @@ string mapLegend(Entity e, MapTerrain t)
     case Entity::n:
         return "n ";
     case Entity::P:
-        return "P ";
+        return "\033[31mP\033[0m ";
     case Entity::X:
         return "X ";
     case Entity::T:

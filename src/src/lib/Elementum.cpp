@@ -3,118 +3,113 @@
 
 Elementum::Elementum()
 {
+    this->elementAmount = 0;
+    this->firstElement = Element::NONE;
+    this->secondElement = Element::NONE;
 }
 
 Elementum::Elementum(vector<Element> otherElements)
 {
-    for (auto x : otherElements)
+    if (otherElements.size() >= 1)
     {
-        this->elements.push_back(x);
+        this->firstElement = otherElements[0];
     }
+    if (otherElements.size() >= 2)
+    {
+        this->secondElement = otherElements[1];
+    }
+    this->elementAmount = (otherElements.size() >= 2) ? 2 : otherElements.size();
+}
+
+Element Elementum::getFirstElement() const
+{
+    return this->firstElement;
+}
+
+Element Elementum::getSecondElement() const
+{
+    return this->secondElement;
 }
 
 Elementum::Elementum(const Elementum &other)
 {
-    this->elements.clear();
-    for (Element e : other.elements)
-    {
-        this->elements.push_back(e);
-    }
+    this->elementAmount = other.elementAmount;
+    this->firstElement = other.getFirstElement();
+    this->secondElement = other.getSecondElement();
 }
 
 bool Elementum::operator%(Element el) const
 {
-    if (this->elements.size() > 0)
+    if (getFirstElement() != Element::NONE and el == getFirstElement())
     {
-        for (auto x : this->elements)
-        {
-            if (x == el)
-            {
-                return true;
-            }
-        }
+        return true;
+    }
+    if (getSecondElement() != Element::NONE and el == getSecondElement())
+    {
+        return true;
     }
     return false;
 }
 
 bool Elementum::operator%(const Elementum &el) const
 {
-    for (Element e : this->elements)
+    if (this->elementAmount == 2)
     {
-        if (el % e)
-        {
-            return true;
-        }
+        return this->operator%(el.getFirstElement()) || this->operator%(el.getSecondElement());
+    }
+    else if (this->elementAmount == 1)
+    {
+        return this->operator%(el.getFirstElement());
     }
     return false;
 }
 
 int Elementum::getElementCount() const
 {
-    return this->elements.size();
+    return this->elementAmount;
 }
 
 double Elementum::getTotalMultiplier(const Elementum &other) const
 {
 
-    double totalMultiplier = 0;
-    for (auto ourElement : this->elements)
-    {
-        double maxMultiplier = 0;
-        for (auto enemyElement : other.elements)
-        {
-            double multiplier = ElementManager::getInstance().getMultiplier(ourElement, enemyElement);
-            if (multiplier > maxMultiplier)
-            {
-                maxMultiplier = multiplier;
-            }
-        }
-        totalMultiplier += maxMultiplier;
-    }
-    return totalMultiplier > 2 ? 2 : totalMultiplier;
+    double firstMultiplier = max(ElementManager::getInstance().getMultiplier(getFirstElement(), other.getFirstElement()), ElementManager::getInstance().getMultiplier(getFirstElement(), other.getSecondElement()));
+    double secondMultiplier = max(ElementManager::getInstance().getMultiplier(getSecondElement(), other.getFirstElement()), ElementManager::getInstance().getMultiplier(getSecondElement(), other.getSecondElement()));
+
+    return max(firstMultiplier, secondMultiplier);
 }
 
 bool Elementum::operator==(const Elementum &other) const
 {
-    if (other.elements.size() != this->elements.size())
+    if (this->elementAmount != other.elementAmount)
     {
         return false;
     }
-    for (auto x : other.elements)
-    {
-        if (!(this->operator%(x)))
-        {
-            return false;
-        }
-    }
-    return true;
+    return this->operator%(other.getFirstElement()) && this->operator%(other.getSecondElement());
 }
 
 Elementum &Elementum::operator=(const Elementum &other)
 {
-    this->elements.clear();
-    for (auto el : other.elements)
-    {
-        this->elements.push_back(el);
-    }
+    // this->elements.clear();
+    // for (auto el : other.elements)
+    // {
+    //     this->elements.push_back(el);
+    // }
+    this->firstElement = other.getFirstElement();
+    this->secondElement = other.getSecondElement();
+    this->elementAmount = other.getElementCount();
     return *this;
 }
 
 void Elementum::show() const
 {
     cout << "[";
-    bool first = true;
-    for (auto el : this->elements)
+    if (elementAmount >= 1)
     {
-        if (first)
-        {
-            first = false;
-        }
-        else
-        {
-            cout << ", ";
-        }
-        cout << convertElementToString(el);
+        cout << convertElementToString(this->firstElement);
+    }
+    if (elementAmount == 2)
+    {
+        cout << ", " << convertElementToString(this->secondElement);
     }
     cout << "]";
 }

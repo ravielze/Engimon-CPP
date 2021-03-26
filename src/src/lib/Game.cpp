@@ -41,7 +41,7 @@ string Game::askCommand()
 
 void Game::processCommand(string command)
 {
-    if (command == "w" || command == "a" || command = "s" || command == "d")
+    if (command == "w" || command == "a" || command == "s" || command == "d")
     {
         movePlayer(command);
         return;
@@ -64,7 +64,7 @@ void Game::processCommand(string command)
     // }
 }
 
-void movePlayer(string command)
+void Game::movePlayer(string command)
 {
     // switch (command)
     // {
@@ -85,19 +85,30 @@ void movePlayer(string command)
     // }
 }
 
-void battle()
+void Game::battle()
 {
+    pair<int, int> playerLocation = gameMap.getPlayerLocation();
+    map<pair<int, int>, Engimon> surroundingEngimon = gameMap.getSurroundingEngimon(playerLocation.first, playerLocation.second);
+    if (surroundingEngimon.empty()) // Gak ada yang bisa dibattle
+    {
+        cout << "No surrounding Engimon to battle" << endl;
+        return;
+    }
 }
 
-void interact()
+void Game::interact()
 {
-    //this->gameMap.getPlayer().getActiveEngimon().sendMessage();
+    this->gameMap.getPlayer().getActiveEngimon().sendMessage();
+    //harusnya yg baris di atas dh bener
+    //Udah
 }
 
-void learn()
+void Game::learn()
 {
+    //blom ada skillnya
 }
 
-void cut()
+void Game::cut()
 {
+    //elemen air, bs water cutter :V, HEM subur pohonnya nanti, industrial water cutter sadis woy wwkwk, limbah pump
 }

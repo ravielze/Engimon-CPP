@@ -9,12 +9,17 @@ using namespace std;
 class Elementum
 {
 protected:
-    vector<Element> elements;
+    Element firstElement;
+    Element secondElement;
+    int elementAmount;
 
 public:
     Elementum();
     //TODO Elementum copy constructor
     Elementum(vector<Element> otherElements);
+
+    Element getFirstElement() const;
+    Element getSecondElement() const;
 
     Elementum(const Elementum &other);
 

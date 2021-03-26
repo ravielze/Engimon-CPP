@@ -12,6 +12,7 @@ protected:
     int speciesNumber;
     string speciesName;
     vector<string> message;
+    static int TAB_COUNT;
 
 public:
     Species();
@@ -25,6 +26,8 @@ public:
 
     //Show species ke layar
     void show() const;
+
+    void simpleShow() const;
 
     //Check apakah species sama atau tidak
     bool operator==(const Species &) const;

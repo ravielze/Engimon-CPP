@@ -157,37 +157,20 @@ void Map::generateEngimon()
 
 void Map::spawnPlayer()
 {
-    int centerX = randomInt(0, this->sizeMap - 1);
-    int centerY = randomInt(0, this->sizeMap - 1);
-    while (this->storageTerrain[centerY][centerX] != MapTerrain::GL || isObstruct(centerX, centerY) || countSurroundingEntity(centerX, centerY, Entity::T) >= 5)
+    int x, y;
+    for (x = 0; x < this->sizeMap - 1; x++)
     {
-        int centerX = randomInt(0, this->sizeMap - 1);
-        int centerY = randomInt(0, this->sizeMap - 1);
-    }
-    this->storageEntity[centerY][centerX] = Entity::P;
-    this->playerLocation.first = centerX;
-    this->playerLocation.second = centerY;
-}
-
-int Map::countSurroundingEntity(int xi, int yi, Entity ent)
-{
-    int count = 0;
-
-    for (int y = yi - 1; y <= yi + 1; y++)
-    {
-        for (int x = xi - 1; xi <= xi + 1; x++)
+        for (y = this->sizeMap - 1; y > 0; y--)
         {
-            if (x == xi and y == yi)
+            if ((this->storageTerrain[y][x] == MapTerrain::GL && !isObstruct(x, y)))
             {
-                continue;
-            }
-            if (ent == this->storageEntity[y][x])
-            {
-                count++;
+                break;
             }
         }
     }
-    return count;
+    this->storageEntity[y][x] = Entity::P;
+    this->playerLocation.first = x;
+    this->playerLocation.second = y;
 }
 
 bool Map::isObstruct(int x, int y)
@@ -359,9 +342,9 @@ void Map::moveWildEngimon()
     }
 }
 
-vector<Engimon> Map::getSurroundingEngimon(int xi, int yi)
+map<pair<int, int>, Engimon> Map::getSurroundingEngimon(int xi, int yi)
 {
-    vector<Engimon> surroundingEngimon;
+    map<pair<int, int>, Engimon> surroundingEngimon;
 
     for (int y = yi - 1; y <= yi + 1; y++)
     {
@@ -373,7 +356,7 @@ vector<Engimon> Map::getSurroundingEngimon(int xi, int yi)
             }
             if (mapEntityType(getEntity(x, y)) == EntityType::WILD_ENGIMON)
             {
-                surroundingEngimon.push_back(this->storageWildEngimon[y][x]);
+                surroundingEngimon.insert({pair<int, int>(x, y), this->storageWildEngimon[y][x]});
             }
         }
     }

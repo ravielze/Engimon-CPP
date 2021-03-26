@@ -1,19 +1,19 @@
 #include "lib/Species.hpp"
+int Species::TAB_COUNT = 1;
 
-Species::Species()
+Species::Species() : message(vector<string>(0))
 {
     this->speciesNumber = -1;
     this->speciesName = "";
 }
 
-Species::Species(const Species &aspecies) : Elementum(aspecies.elements)
+Species::Species(const Species &aspecies) : Elementum(aspecies)
 {
     this->speciesNumber = aspecies.speciesNumber;
     this->speciesName = aspecies.speciesName;
-    this->message.clear();
-    for (int i = 0; i < aspecies.message.size(); i++)
+    if (aspecies.message.capacity() > 0)
     {
-        this->message.push_back(aspecies.message[i]);
+        this->message = vector<string>(aspecies.message);
     }
 }
 
@@ -21,7 +21,14 @@ Species::Species(string name, vector<Element> elem, vector<string> messages) : E
 {
     this->speciesNumber = -1;
     this->speciesName = name;
-    this->message = messages;
+    if (this->speciesName.size() > TAB_COUNT * 8)
+    {
+        TAB_COUNT = (this->speciesName.size() + 8) / 8;
+    }
+    if (messages.capacity() > 0)
+    {
+        this->message = messages;
+    }
 }
 
 void Species::sendMessage() const
@@ -43,13 +50,23 @@ string Species::getSpeciesName() const
 void Species::show() const
 {
     cout << this->speciesNumber;
-    cout << "\t" << this->speciesName << "\t";
+    cout << "\t" << this->speciesName;
+    for (int i = 0; i < TAB_COUNT; i++)
+    {
+        cout << "\t";
+    }
+    Elementum::show();
+}
+
+void Species::simpleShow() const
+{
+    cout << this->speciesName << "\t";
     Elementum::show();
 }
 
 bool Species::operator==(const Species &aspecies) const
 {
-    return (this->speciesNumber == aspecies.speciesNumber && Elementum::operator==(aspecies.elements));
+    return (this->speciesNumber == aspecies.speciesNumber && Elementum::operator==(aspecies));
 }
 
 Species &Species::operator=(const Species &aspecies)
@@ -57,11 +74,15 @@ Species &Species::operator=(const Species &aspecies)
     Elementum::operator=(aspecies);
     this->speciesNumber = aspecies.speciesNumber;
     this->speciesName = aspecies.speciesName;
-    this->message.clear();
-    for (int i = 0; i < aspecies.message.size(); i++)
+    if (aspecies.message.size() > 0)
     {
-        this->message[i] = aspecies.message[i];
+        this->message = vector<string>(aspecies.message);
     }
+    // this->message.clear();
+    // for (int i = 0; i < aspecies.message.size(); i++)
+    // {
+    //     this->message[i] = aspecies.message[i];
+    // }
     return *this;
 }
 

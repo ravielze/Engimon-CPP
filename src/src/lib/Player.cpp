@@ -11,16 +11,38 @@ Player::Player()
     this->facing = Direction::NORTH;
     cout << "There are 3 Engimon here! Haha! They are inside the Engi Balls.\n";
     cout << "When I was young, I was a serious Engimon trainer! In my old age, I only have 3 left, but you can have one! Choose!\n";
-    Engidex::getInstance().getSpeciesBySpeciesNumber(0).show();
+    int index = -1;
+    while (index < 1 || index > 3)
+    {
+        cout << "1.\t";
+        Engidex::getInstance().getSpeciesBySpeciesNumber(0).simpleShow();
+        cout << endl;
+        cout << "2.\t";
+        Engidex::getInstance().getSpeciesBySpeciesNumber(3).simpleShow();
+        cout << endl;
+        cout << "3.\t";
+        Engidex::getInstance().getSpeciesBySpeciesNumber(6).simpleShow();
+        cout << endl
+             << "Pick Number: ";
+        cin >> index;
+    }
     cout << endl;
-    Engidex::getInstance().getSpeciesBySpeciesNumber(3).show();
-    cout << endl;
-    Engidex::getInstance().getSpeciesBySpeciesNumber(6).show();
-    cout << endl;
-    int index;
-    cin >> index;
-    Species starterSpecies = Engidex::getInstance().getSpeciesBySpeciesNumber(index - 1); // Sabi di random ini
+    Species starterSpecies;
+    if (index == 1)
+    {
+        starterSpecies = Engidex::getInstance().getSpeciesBySpeciesNumber(0);
+    }
+    else if (index == 2)
+    {
+        starterSpecies = Engidex::getInstance().getSpeciesBySpeciesNumber(3);
+    }
+    else if (index == 3)
+    {
+        starterSpecies = Engidex::getInstance().getSpeciesBySpeciesNumber(6);
+    }
     Engimon starter = Engimon(starterSpecies, EntitySource::WILD);
+    starter.show();
+    cout << endl;
     this->engimonList + starter;
 }
 

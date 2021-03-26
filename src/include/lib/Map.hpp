@@ -29,19 +29,20 @@ private:
     void spawnPlayer();
     bool isObstruct(int, int);
 
-    vector<Engimon> getSurroundingEngimon(int, int);
     Entity getEntity(int, int);
 
     void modifyTerrain(int, int, MapTerrain);
     void modifyEntity(int, int, Entity);
     bool isValidCoordinate(int, int);
-    int countSurroundingEntity(int, int, Entity);
 
 public:
     Map();
     void show() const;
     void movePlayer(Direction);
     Player getPlayer();
+    map<pair<int, int>, Engimon> getSurroundingEngimon(int, int);
+
+    pair<int, int> getPlayerLocation();
 };
 
 #endif

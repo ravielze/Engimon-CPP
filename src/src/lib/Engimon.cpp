@@ -107,7 +107,11 @@ void Engimon::show() const
 {
     // Nanti lah ya hehe
     Species::show();
-    cout << "Name \t: " << name << endl;
+    cout << endl;
+    if (this->name != this->speciesName)
+    {
+        cout << "Name \t: " << name << endl;
+    }
     cout << "Engimon Source : " << convertEntitySourceToString(this->getEntitySource()) << endl;
     if (this->getEntitySource() == EntitySource::BREEDING)
     {
@@ -236,36 +240,36 @@ Engimon Engimon::operator+(const Engimon &other) const
     Element parentAElement;
     Element parentBElement;
     Species childSpecies;
-    if (this->elements.size() > 1)
+    if (this->getElementCount() > 1)
     {
-        if (elementManager.getMultiplier(this->elements[0], this->elements[1]) > elementManager.getMultiplier(this->elements[1], this->elements[0]))
+        if (elementManager.getMultiplier(this->getFirstElement(), this->getSecondElement()) > elementManager.getMultiplier(this->getSecondElement(), this->getFirstElement()))
         {
-            parentAElement = this->elements[0];
+            parentAElement = this->getFirstElement();
         }
         else
         {
-            parentAElement = this->elements[1];
+            parentAElement = this->getSecondElement();
         }
     }
     else
     {
-        parentAElement = this->elements[0];
+        parentAElement = this->getFirstElement();
     }
 
-    if (other.elements.size() > 1)
+    if (other.getElementCount() > 1)
     {
-        if (elementManager.getMultiplier(other.elements[0], other.elements[1]) > elementManager.getMultiplier(other.elements[1], other.elements[0]))
+        if (elementManager.getMultiplier(other.getFirstElement(), other.getSecondElement()) > elementManager.getMultiplier(other.getSecondElement(), other.getFirstElement()))
         {
-            parentBElement = other.elements[0];
+            parentAElement = other.getFirstElement();
         }
         else
         {
-            parentBElement = other.elements[1];
+            parentAElement = other.getSecondElement();
         }
     }
     else
     {
-        parentBElement = other.elements[0];
+        parentAElement = other.getFirstElement();
     }
 
     if (parentAElement == parentBElement)

@@ -17,7 +17,7 @@ Engidex::Engidex()
     this->operator+(Species("Lightning McQueen", {Element::ELECTRIC}, {"Kechaw", "Kechaw Kechaw"}));
 
     // Fire
-    this->opeator + (Species("Cans lupus familiaris", {Element::FIRE}, {"guk-guk", "aik-aik", "rilis tubes"}));
+    this->operator+(Species("Cans lupus familiaris", {Element::FIRE}, {"guk-guk", "aik-aik", "rilis tubes"}));
     this->operator+(Species("Spark Knight", {Element::FIRE}, {"da-da-da", "uuh-aah"}));
     this->operator+(Species("Grenade Laut", {Element::FIRE}, {"BOOM", "DHUAR", "BLARR"}));
 

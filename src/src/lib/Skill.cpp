@@ -7,11 +7,11 @@ Skill::Skill() : Elementum()
     this->masteryLevel = 1;
 }
 
-Skill::Skill(string name, double power, int masteryLevel, vector<Element> elements) : Elementum(elements)
+Skill::Skill(string name, double power, vector<Element> elements) : Elementum(elements)
 {
     this->name = name;
     this->power = power;
-    this->masteryLevel = masteryLevel;
+    this->masteryLevel = 1;
 }
 
 Skill::Skill(const Skill &other) : Elementum(other)

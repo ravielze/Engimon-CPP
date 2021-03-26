@@ -45,6 +45,7 @@ public:
     static Engidex &getInstance();
 
     Species &getRandomSpecies(Element) const;
+    Species &getRandomSpecies(Element, Element) const;
     SkillItem createRandomSkillItem(Element) const;
 };
 #endif // __ENGIDEX_H__

@@ -153,6 +153,17 @@ void Map::generateEngimon()
     srand(time(NULL) % getpid());
     int amountsmallEngimon = randomInt(3, 10); //3 sampai 10
     int amountbigEngimon = randomInt(2, 5);    //2 sampai 5
+    vector<Entity> entities(amountsmallEngimon + amountbigEngimon);
+    vector<Engimon> engimon(amountsmallEngimon + amountbigEngimon);
+    for (int i = 0; i < amountsmallEngimon; i++)
+    {
+        int randomSmall = (randomInt(0, 7) * 2) + 1;
+        Entity currentEntity = static_cast<Entity>(randomSmall);
+        entities.push_back(currentEntity);
+        switch (currentEntity)
+        {
+        }
+    }
 }
 
 void Map::spawnPlayer()

@@ -109,7 +109,7 @@ public:
 
     // Menunjukkan barang di inventory
     void show(int page) const;
-    T getItemOnIndex(int index)
+    T &getItemOnIndex(int index)
     {
         auto itr = storage.begin();
         advance(itr, index);

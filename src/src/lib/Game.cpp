@@ -124,8 +124,11 @@ void Game::battle()
     advance(itr, index - 1);
     choosenEngimonLocation = itr->first;
     choosenEngimon = itr->second;
-
-    this->gameMap.getPlayer().battle(choosenEngimon);
+    bool isWinning = this->gameMap.getPlayer().battle(choosenEngimon);
+    if (isWinning)
+    {
+        // TODO: Hilangkan engimon dari map
+    }
 }
 
 void Game::interact()
@@ -135,18 +138,11 @@ void Game::interact()
 
 void Game::learn()
 {
-    //blom ada skillnya
-    // son,
 }
 
 void Game::swap()
 {
-    // this->gameMap.getPlayer().showEngimon();
-    // int idxchoosenpokemon;
-    // cout << "Pilih indeks engimon : ";
-    // cin >> idxchoosenpokemon;
-
-    // this->gameMap.getPlayer().switchActiveEngimon(choosenEngimon);
+    this->gameMap.getPlayer().switchActiveEngimon();
 }
 
 void Game::cut()

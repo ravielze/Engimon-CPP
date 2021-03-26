@@ -60,7 +60,7 @@ void Player::removeEngimon(Engimon Engi)
     this->engimonList = this->engimonList - Engi;
 }
 
-void Player::battle(Engimon wildEngimon)
+bool Player::battle(Engimon wildEngimon)
 {
     try
     {
@@ -76,6 +76,7 @@ void Player::battle(Engimon wildEngimon)
             cout << "Oops your engimon inventory is full" << endl;
         }
         // TODO : Generate random skill item
+        return true;
     }
     catch (Exception e)
     {
@@ -83,15 +84,8 @@ void Player::battle(Engimon wildEngimon)
 
         cout << "Cacad engimon lu..." << endl;
         bool canRemove = engimonList - activeEngimon;
-
-        // Show engimon list
-        engimonList.show(1);
-
-        // Pilih engimon untuk diganti
-        int index;
-        cout << "Choose engimon index to replace : ";
-        cin >> index;
-        switchActiveEngimon(engimonList.getItemOnIndex(index - 1));
+        switchActiveEngimon();
+        return false;
     }
     // pake method battle dari engimon jgn lupa try catch dri battle
 
@@ -108,19 +102,46 @@ void Player::battle(Engimon wildEngimon)
     // }
 }
 
-void Player::switchActiveEngimon(Engimon engi)
+void Player::switchActiveEngimon()
 {
-    if (this->engimonList ^ engi)
+    showEngimon();
+    cout << "Engimon number to switch : " << endl;
+    int index;
+    cin >> index;
+
+    this->activeEngimon = engimonList.getItemOnIndex(index - 1);
+}
+
+void Player::learn()
+{
+    int engimonIndex;
+    showEngimon();
+    cin >> engimonIndex;
+    int skillIndex;
+    showSkillItem();
+    cin >> skillIndex;
+    try
     {
-        this->activeEngimon = engi;
+        engimonList.getItemOnIndex(engimonIndex).learn(ItemList.getItemOnIndex(skillIndex));
     }
-    else
+    catch (Exception e)
     {
-        throw Exception::UNKNOWN_ENGIMON;
+        // Engimon gabisa learn skill
     }
 }
 
 void Player::interact()
 {
     this->activeEngimon.sendMessage();
+}
+
+void Player::showEngimon()
+{
+    engimonList.show(1);
+}
+
+void Player::showSkillItem()
+{
+    ItemList.show(1);
+    // TODO : Show semua, ini baru sebagian aja
 }

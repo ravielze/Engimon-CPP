@@ -34,7 +34,7 @@ Engidex::Engidex()
     // Fire x Electric
     this->operator+(Species("Cuma Keong", {Element::FIRE, Element::ELECTRIC}, {"gaskeun", "keos"}));
     this->operator+(Species("Naga api kesetrum", {Element::FIRE, Element::ELECTRIC}, {"oof", "drrrttt"}));
-    this->operator+(Species("Laprak", {Element::FIRE, Element::ELECTRIC}, {"pasti mencetarkan", "perih dan membakar hati"}));
+    this->operator+(Species("Laprak", {Element::FIRE, Element::ELECTRIC}, {"menggelitik dan mencetarkan", "perih dan membakar hati"}));
 
     // Water x Ground
     this->operator+(Species("Belut Batu", {Element::WATER, Element::GROUND}, {"gelud sini", "meliat-liat gmn gt"}));
@@ -45,6 +45,34 @@ Engidex::Engidex()
     this->operator+(Species("Alarm", {Element::WATER, Element::ICE}, {"absen sudah dibuka di s*x"}));
     this->operator+(Species("Ekhm Ekhm", {Element::WATER, Element::ICE}, {"https://www.youtube.com/watch?v=dQw4w9WgXcQ"}));
     this->operator+(Species("Kelas basd*t", {Element::WATER, Element::ICE}, {"asumsi kalian sudah mempelajari materi terkait", "kerjakan latihan di s*x"}));
+
+    // Add skill SkillItem(string itemName, Skill skill, ItemType it);
+    // Ice
+    this->operator+(SkillItem("Tergelincir es", Skill("Tergelincir Es", 1, {Element::ICE}), ItemType::HM));
+    this->operator+(SkillItem("terserah kamu aja", Skill("terserah kamu aja", 2, {Element::ICE}), ItemType::HM));
+    this->operator+(SkillItem("tatapan dingin", Skill("tatapan dingin", 2, {Element::ICE}), ItemType::HM));
+    this->operator+(SkillItem("Penenggelam Titanic", Skill("Penenggelam Titanic", 3, {Element::ICE}), ItemType::HM));
+
+    // Electric
+    this->operator+(SkillItem("Rolling Thunder", Skill("Rolling Thunder", 1, {Element::ELECTRIC}), ItemType::HM));
+    this->operator+(SkillItem("Driving Thunder", Skill("Driving Thunder", 2, {Element::ELECTRIC}), ItemType::HM));
+    this->operator+(SkillItem("Colokan listrik", Skill("Colokan listrik", 2, {Element::ELECTRIC}), ItemType::HM));
+    this->operator+(SkillItem("Thunder Apocalypse", Skill("Thunder Apocalypse", 3, {Element::ELECTRIC}), ItemType::HM));
+
+    // Fire
+    this->operator+(SkillItem("Mata Api", Skill("Mata Api", 1, {Element::FIRE}), ItemType::HM));
+    this->operator+(SkillItem("Hell Fire", Skill("Hell Fire", 2, {Element::FIRE}), ItemType::HM));
+    this->operator+(SkillItem("Baron Bunny", Skill("Baron Bunny", 3, {Element::FIRE}), ItemType::HM));
+
+    // Ground
+    this->operator+(SkillItem("Goyangan Albedo", Skill("Goyangan Albedo", 1, {Element::GROUND}), ItemType::HM));
+    this->operator+(SkillItem("Tiang Batu", Skill("Tiang Batu", 2, {Element::GROUND}), ItemType::HM));
+    this->operator+(SkillItem("Tendou Bashou", Skill("Tendou Bashou", 3, {Element::GROUND}), ItemType::HM));
+
+    // Water
+    this->operator+(SkillItem("Swimming swimming", Skill("Swimming swimming", 1, {Element::WATER}), ItemType::HM));
+    this->operator+(SkillItem("Siraman rohani", Skill("Siraman rohani", 2, {Element::WATER}), ItemType::HM));
+    this->operator+(SkillItem("Barbara Ikuyo", Skill("Barbara Ikuyo", 3, {Element::WATER}), ItemType::HM));
 }
 
 void Engidex::show(int page) const
@@ -159,9 +187,31 @@ Engidex &Engidex::getInstance()
 Species &Engidex::getRandomSpecies(Element element) const
 {
     srand(time(NULL));
-    int index = randomInt(0, this->speciesStorage.size() - 1);
-    Species x = this->speciesStorage[index];
-    return x;
+    vector<Species &> sameElement;
+    for (Species t : this->speciesStorage)
+    {
+        if (t % element)
+        {
+            sameElement.push_back(t);
+        }
+    }
+    int index = randomInt(0, sameElement.size() - 1);
+    return sameElement[index];
+}
+
+Species &Engidex::getRandomSpecies(Element element, Element element2) const
+{
+    srand(time(NULL));
+    vector<Species &> sameElement;
+    for (Species t : this->speciesStorage)
+    {
+        if (t % element && t % element2)
+        {
+            sameElement.push_back(t);
+        }
+    }
+    int index = randomInt(0, sameElement.size() - 1);
+    return sameElement[index];
 }
 
 SkillItem Engidex::createRandomSkillItem(Element element) const

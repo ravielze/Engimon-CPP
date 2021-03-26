@@ -15,7 +15,7 @@ protected:
 public:
     Skill();
     Skill(const Skill &);
-    Skill(string name, double power, int masteryLevel, vector<Element> elements);
+    Skill(string name, double power, vector<Element> elements);
 
     string getName() const;
     double getPower() const;

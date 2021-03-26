@@ -4,11 +4,11 @@
 enum class Element
 {
     NONE,
-    FIRE,
     WATER,
-    ELECTRIC,
+    ICE,
+    FIRE,
     GROUND,
-    ICE
+    ELECTRIC
 };
 
 #endif // __ELEMENT_H__

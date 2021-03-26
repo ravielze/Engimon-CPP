@@ -7,7 +7,7 @@ SkillItem::SkillItem() : Skill()
     this->itemType = ItemType::UNKNOWN;
 }
 
-SkillItem::SkillItem(string itemName, Skill &skill, ItemType it) : Skill(skill)
+SkillItem::SkillItem(string itemName, Skill skill, ItemType it) : Skill(skill)
 {
     this->itemName = itemName;
     this->itemType = it;

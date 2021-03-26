@@ -21,10 +21,12 @@ public:
     Engimon getActiveEngimon();
     void addEngimon(Engimon);
     void removeEngimon(Engimon);
-    void battle(Engimon);
-    void switchActiveEngimon(Engimon);
+    bool battle(Engimon);
+    void switchActiveEngimon();
     void interact();
     void showEngimon();
+    void showSkillItem();
+    void learn();
 };
 
 #endif
